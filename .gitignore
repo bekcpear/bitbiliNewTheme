@@ -1,0 +1,8 @@
+*.swp
+.yarnclean
+node_modules
+yarn-error.log
+dist/templates
+dist/assets
+src/templates-old
+config/__pycache__

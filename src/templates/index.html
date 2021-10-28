@@ -1,0 +1,23 @@
+{#
+Author: cwittlut <i@bitbili.net>
+License: GPLv2
+#}
+{% extends "base.html" %}
+
+{% block main %}
+
+    <div id="blackboard">
+      <div id="desc">{{ SITE.desc }}</div>
+      <div id="author">
+        <img src="{{ SITE.author.profile.avatar}}" />
+        <span id="real_name">{{ SITE.author.name }}</span>
+        <span id="username">@{{ SITE.author.username|trim('@') }}</span>
+        <span id="bio">{{ SITE.author.profile.bio }}</span>
+      </div>
+    </div>
+
+    <div id="articles_list">
+    {% include "includes/article_list.html" %}
+    </div>
+
+{% endblock main %}

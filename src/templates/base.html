@@ -1,0 +1,167 @@
+{#
+Author: cwittlut <i@bitbili.net>
+License: GPLv2
+#}
+{# url macro #}
+{% macro _url(path, hash=False, relative=True) %}
+  {% set path = path|trim %}
+  {% if path[:4] == "http" -%}
+    {{ path }}
+  {%- else %}
+    {% if not relative %}
+      {% set domain = SITE.url|trim('/') %}
+    {% else %}
+      {% set domain = "" %}
+    {% endif %}
+    {% if hash -%}
+      {{ domain + '/' + path|trim('/') + '?s=' + _md5_hash(path) }}
+    {%- else -%}
+      {{ domain + '/' + path|trim('/') }}
+    {%- endif %}
+  {% endif %}
+{% endmacro %}
+{# rst url macro #}
+{% macro _rst_url(url) -%}
+  {{ url.rstrip(".html") + '.rst.html' }}
+{%- endmacro %}
+{# title macro #}
+{% macro _title(path) -%}
+  {% block title %}{{ SITE.name }}{% endblock %}
+{%- endmacro %}
+{# some dict #}
+{% set langname   = dict(zh="zh-Hans", zh_hans="zh-Hans", en="en-US") %}
+{% set localename = dict(zh="zh_CN", zh_hans="zh_CN", en="en_US") %}
+{% block html %}
+<!DOCTYPE html>
+<html lang="{% block html_lang %}{{ DEFAULT_LANG }}{% endblock %}">
+<head>
+  <meta charset="utf-8">
+
+  <title>{{ _title() }}</title>
+
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,shrink-to-fit=no" />
+
+  <meta name="theme-color" content="{{ SITE.color }}" />
+  <meta name="msapplication-navbutton-color" content="{{ SITE.color }}" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="{{ SITE.color }}" />
+
+  <link rel="manifest" href="{{ _url(SITE.manifest, True) }}" />
+
+  {# normal icon, in multiples of 48x48 #}
+  <link rel="icon" type="image/png" href="{{ _url(ICON.normal.path, True) }}" sizes="{{ ICON.normal.size }}" />
+  {# icon for touch screen #}
+  <link rel="apple-touch-icon" type="image/png" href="{{ _url(ICON.touch.path, True) }}" sizes="{{ ICON.touch.size }}" />
+  {# for Safari Pinned Tab Icon #}
+  <link rel="mask-icon" href="{{ _url(ICON.mask.path, True) }}" color="{{ SITE.color }}" />
+
+{% block canonical_rel %}
+  <link rel="canonical" href="{{ SITE.url }}">
+{% endblock canonical_rel %}
+
+{% block extra_meta_tags %}
+  <meta name="author" content="{{ SITE.author.username }}" />
+  <meta name="description" content="{{ SITE.desc }}" />
+{% endblock extra_meta_tags %}
+
+{# Open Graph tags #}
+{% block opengraph %}
+  <meta property="og:site_name" content="{{ SITE.name }}" />
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="{{ SITE.name }}" />
+  <meta property="og:locale" content="{{ localename[DEFAULT_LANG] }}" />
+{# prepare for multiple languages env
+  <meta property="og:locale:alternate" content="" />
+#}
+  <meta property="og:url" content="{{ SITE.url }}" />
+  <meta property="og:description" content="{{ SITE.desc }}" />
+  <meta property="og:image" content="{{ _url(SITE.og.image.path) }}" />
+{% endblock opengraph %}
+
+  <link href="{{ _url(CSS.common, True) }}" rel="stylesheet" />
+
+{% block extra_css_src %}
+{% endblock extra_css_src %}
+
+{% block extra_css_inline %}
+{% endblock extra_css_inline %}
+
+{% if FEED_ATOM %}
+  <link href="{{ _url(FEED_ATOM) }}" type="application/atom+xml" rel="alternate" title="{{ SITE.long_name }} ATOM Feed" />
+{% endif %}
+{% if FEED_RSS %}
+  <link href="{{ _url(FEED_RSS) }}" type="application/rss+xml" rel="alternate" title="{{ SITE.long_name }} RSS Feed" />
+{% endif %}
+
+{% block schema_meta %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": "{{ SITE.name }}",
+      "url": "{{ SITE.url }}",
+      "author": {
+        "@type": "Person",
+        "name": "{{ SITE.author.username }}"
+      }
+    }
+  </script>
+{% endblock schema_meta %}
+
+{% block scripts_before %}
+{% endblock scripts_before %}
+
+  <script type="module">
+    import {Workbox} from '{{ _url("/assets/js/workbox-window.prod.mjs", True) }}';
+    if ('serviceWorker' in navigator) {
+      const wb = new Workbox('/sw.js');
+      var fetchDidFail = false;
+      var handlerDidCompleteStatus = 0;
+      var notificationDisplayed = false;
+      navigator.serviceWorker.addEventListener('message', async (event) => {
+        if (event.data.type === 'FETCH_DID_FAIL') {
+          fetchDidFail = true;
+        }
+        if (event.data.type === 'HANDLER_DID_COMPLETE') {
+          handlerDidCompleteStatus = event.data.status;
+        }
+        if ( fetchDidFail && handlerDidCompleteStatus === 200 && ! notificationDisplayed ) {
+          {# carry on cache mode #}
+          notificationDisplayed = true;
+          {# display notification #}
+          var popup         = document.createElement("div");
+          var popupText     = document.createTextNode("当前处于离线浏览状态");
+          var popupLink     = document.createElement("a");
+          var popupLinkText = document.createTextNode("X");
+          popupLink.addEventListener("click", () => {
+              document.body.removeChild(popup);
+          });
+          popupLink.appendChild(popupLinkText);
+          popup.appendChild(popupText);
+          popup.appendChild(popupLink);
+          popup.className   = "popup";
+          document.body.appendChild(popup);
+        }
+      });
+      wb.register();
+    }
+  </script>
+
+</head>
+<body>
+  <div style="display:none" id="title">{{ _title() }}</div>
+
+{% include 'includes/header.html' %}
+
+  <main>
+  {% block main %}
+  {% endblock main %}
+  </main>
+
+{% include 'includes/footer.html' %}
+
+{% block scripts_after %}
+{% endblock scripts_after %}
+
+</body>
+</html>
+{% endblock html %}

@@ -1,0 +1,193 @@
+{#
+Author: cwittlut <i@bitbili.net>
+License: GPLv2
+#}
+{% extends "base.html" %}
+{% block html_lang %}{{ langname[article.lang] }}{% endblock %}
+{% block title %}{{ article.title|striptags }}&ensp;-&ensp;{{ SITE.long_name }}{% endblock %}
+
+{% block canonical_rel %}
+  <link rel="canonical" href="{{ _url(article.url) }}">
+{% endblock canonical_rel %}
+
+{% block extra_meta_tags %}
+  {% if article.author %}
+    <meta name="author" content="{{ article.author }}" />
+  {% else %}
+    <meta name="author" content="{{ SITE.author.username }}" />
+  {% endif %}
+  {% if article.mykeywords %}
+    <meta name="keywords" content="{{ article.mykeywords }}" />
+  {% elif article.tags %}
+    <meta name="keywords" content="{{ article.tags|join(',')|striptags }}" />
+  {% endif %}
+  {% if article.description and article.summary %}
+    <meta name="description" content="{{ article.description }} | {{ article.summary|striptags|escape }}" />
+  {% elif article.summary %}
+    <meta name="description" content="{{ article.summary|striptags|escape }}" />
+  {% endif %}
+{% endblock extra_meta_tags %}
+
+{% block opengraph %}
+  <meta property="og:site_name" content="{{ SITE.name }}" />
+  <meta property="og:title" content="{{ article.title|striptags|escape }}" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="{{ article.date.isoformat() }}" />
+  {% if article.modified %}
+    <meta property="article:modified_time" content="{{ article.modified.isoformat() }}" />
+  {% endif %}
+  {% if article.category %}
+    <meta property="article:section" content="{{ article.category }}" />
+  {% endif %}
+  {% for tag in article.tags %}
+    <meta property="article:tag" content="{{ tag }}" />
+  {% endfor %}
+  {% if SITE.author.profile.url %}
+    <meta property="article:author" content="{{ SITE.author.profile.url }}" />
+  {% endif %}
+  <meta property="og:url" content="{{ _url(article.url) }}" />
+  {% if article.locale %}
+  <meta property="og:locale" content="{{ article.locale }}" />
+  {% elif article.lang %}
+  <meta property="og:locale" content="{{ localename[article.lang] }}" />
+  {% endif %}
+  {% if article.description and article.summary %}
+    <meta property="og:description" content="{{ article.description }} | {{ article.summary|striptags|escape }}" />
+  {% elif article.summary %}
+    <meta property="og:description" content="{{ article.summary|striptags|escape }}" />
+  {% endif %}
+  {% if article.featured_image %}
+    <meta property="og:image" content="{{ _url(article.featured_image) }}" />
+  {% else %}
+    <meta property="og:image" content="{{ _url(SITE.og.image.path) }}" />
+  {% endif %}
+{% endblock opengraph %}
+
+{% block extra_css_inline %}
+  {% if article.lang[:2] == "zh" and not article.noindent %}
+    <style>
+p {
+  text-indent: 2em;
+}
+    </style>
+  {% endif %}
+{% endblock extra_css_inline %}
+
+{% block schema_meta %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ _url(article.url) }}"
+      },
+      "headline": "{{ article.title|striptags }}",
+      "datePublished": "{{ article.date.isoformat() }}",
+      {% if article.modified %}
+      "dateModified": "{{ article.modified.isoformat() }}",
+      {% endif %}
+      "author": {
+        "@type": "Person",
+        "name": "{{ article.author }}"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "{{ SITE.name }}",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "{{ _url(LOGO.square.png.path) }}",
+          "width": {{ LOGO.square.png.width }},
+          "height": {{ LOGO.square.png.height }}
+        }
+      },
+      "image": [
+      {% if article.featured_image %}
+        "{{ _url(article.featured_image) }}"
+      {% else %}
+        "{{ _url(SITE.og.image.path) }}"
+      {% endif %}
+      ],
+      {% if article.description and article.summary %}
+      "description": "{{ article.description }} | {{ article.summary|striptags|escape }}"
+      {% elif article.summary %}
+      "description": "{{ article.summary|striptags|escape }}"
+      {% endif %}
+    }
+  </script>
+{% endblock schema_meta %}
+
+{% block main %}
+
+    {% if article.toc %}
+      <aside>
+        <div id="toc">
+          {{ article.toc }}
+        </div>
+      </aside>
+    {% endif %}
+
+    <article>
+      {# article header start #}
+      <div id="header">
+
+        <div id="headline">
+          <h1>{{ article.title }}</h1>
+        </div>
+
+        {% if article.tags %}
+          <div id='tags'>
+            {% for tag in article.tags %}
+              <a href="/{{ tag.url }}">{{ tag }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% include "includes/extra_info_of_article_and_page.html" %}
+
+        <div id='info'>
+          {% if article.modified %}
+            <time class="modified" datetime="{{ article.modified.isoformat() }}" title="{{ article.modified.strftime('%A %H:%M %Z') }}">{{ article.locale_modified }}</time>
+          {% endif %}
+          {% if article.date %}
+            <time class="published" datetime="{{ article.date.isoformat() }}" title="{{ article.date.strftime('%A %H:%M %Z') }}">{{ article.locale_date }}</time>
+          {% endif %}
+          {% if article.license %}
+            <div id="extra_license_info">{{ article.license }}</div>
+          {% endif %}
+        </div>
+      </div>
+      {# article header end #}
+
+      <div id="content">
+        {{ article.content }}
+      </div>
+    </article>
+
+    <div id='prevnext' class="hidden-print">
+      {% if article.prev_article %}
+        <a id="prev" href="/{{article.prev_article.url}}">
+          {{article.prev_article.title}}
+        </a>
+      {% endif %}
+      {% if article.next_article %}
+        <a id="next" href="/{{article.next_article.url}}">
+          {{article.next_article.title}}
+        </a>
+      {% endif %}
+    </div>
+
+    {% if article.related_posts %}
+      <div id="related-posts" class="hidden-print">
+        <h4>{{ RELATED_POSTS_TEXT|default('Related Posts:') }}</h4>
+        <ul>
+          {% for related_post in article.related_posts %}
+            <li><a href="/{{ related_post.url }}">{{ related_post.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {% include 'includes/comments.html' %}
+
+{% endblock main %}

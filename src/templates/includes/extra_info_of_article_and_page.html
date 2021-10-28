@@ -1,0 +1,18 @@
+{#
+Author: cwittlut <i@bitbili.net>
+License: GPLv2
+#}
+        <div id="ctrl">
+          <a id="commentsCount" class="hidden-print" href="#comments" >
+            <span class="disqus-comment-count" data-disqus-identifier="{{ article.slug }}"></span>
+          </a>
+          <a id="showSourceCode" class="hidden-print" href="{{ _rst_url(_url(article.url)) }}"></a>
+          <a id="share" class="hidden-print" href="#">
+            <ul>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+          </a>
+        </div>
+
