@@ -1,5 +1,5 @@
 {
-  "name": "starrySky",
+  "name": "bitbiliTheme2",
   "version": "1.0.0",
   "description": "A theme made by cwittlut for pelican",
   "author": "cwittlut",
@@ -8,7 +8,8 @@
   "scripts": {
     "generateSW": "workbox injectManifest workbox-config.js && webpack",
     "minifyJS": "uglifyjs src/js/tool.js src/js/bchk.js -o static/js/main.min.js",
-    "copyWBJS": "cp node_modules/workbox-window/build/workbox-window.prod.mjs* dist/"
+    "copyWBJS": "cp node_modules/workbox-window/build/workbox-window.prod.mjs* dist/",
+    "generateTemplates": "rm -rf dist/templates && cp -a src/templates dist/"
   },
   "dependencies": {
     "workbox-background-sync": "^6.3.0",

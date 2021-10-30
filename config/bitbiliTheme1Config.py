@@ -6,14 +6,14 @@ from __future__ import unicode_literals
 this file should be imported from pelican config file
 e.g.:
 
-THEME = './starrySky/dist'
+THEME = './bitbiliTheme1/dist'
 import os
 import sys
-sys.path.append(os.path.join(os.curdir, 'starrySky/config'))
-from starrySkyConfig import *
+sys.path.append(os.path.join(os.curdir, 'bitbiliTheme1/config'))
+from bitbiliTheme1Config import *
 """
 
-_theme_dir="/home/ryan/Git/starrySky/dist"
+_theme_dir="/home/ryan/Git/bitbiliTheme1/dist"
 
 # Custom settings:
 # all paths are relative to SITE.url
@@ -89,7 +89,7 @@ CSS = {
         }
 
 JS = {
-        "common": ""
+        "common": "assets/js/common.js"
         }
 
 
@@ -97,13 +97,56 @@ JS = {
 ############
 ############
 # theme specific settings, should not be modified normally
-THEME_STATIC_DIR   = 'assets'
-THEME_STATIC_PATHS = ['assets']
-JINJA_ENVIRONMENT  = {
+THEME_STATIC_DIR          = 'assets'
+THEME_STATIC_PATHS        = ['assets']
+JINJA_ENVIRONMENT         = {
         'trim_blocks': True,
         'lstrip_blocks': True
         }
-PAGINATION_PATTERNS = (
+
+ARTICLE_LANG_URL          = '{lang}/{slug}.html'
+ARTICLE_LANG_SAVE_AS      = ARTICLE_LANG_URL
+DRAFT_LANG_URL            = '{lang}/drafts/{slug}.html'
+DRAFT_LANG_SAVE_AS        = DRAFT_LANG_URL
+PAGE_LANG_URL             = '{lang}/pages/{slug}.html'
+PAGE_LANG_SAVE_AS         = PAGE_LANG_URL
+DRAFT_PAGE_LANG_URL       = '{lang}/drafts/pages/{slug}.html'
+DRAFT_PAGE_LANG_SAVE_AS   = DRAFT_PAGE_LANG_URL
+
+FEED_ATOM                 = None
+FEED_ATOM_URL             = None
+FEED_RSS                  = 'feeds/rss.xml'
+FEED_RSS_URL              = FEED_RSS
+FEED_ALL_ATOM             = None
+FEED_ALL_ATOM_URL         = None
+FEED_ALL_RSS              = 'feeds/all.rss.xml'
+FEED_ALL_RSS_URL          = FEED_ALL_RSS
+CATEGORY_FEED_ATOM        = None
+CATEGORY_FEED_ATOM_URL    = None
+CATEGORY_FEED_RSS         = 'feeds/category/{slug}.rss.xml'
+CATEGORY_FEED_RSS_URL     = CATEGORY_FEED_RSS
+AUTHOR_FEED_ATOM          = None
+AUTHOR_FEED_ATOM_URL      = None
+AUTHOR_FEED_RSS           = 'feeds/author/{slug}.rss.xml'
+AUTHOR_FEED_RSS_URL       = AUTHOR_FEED_RSS
+TAG_FEED_ATOM             = None
+TAG_FEED_ATOM_URL         = None
+TAG_FEED_RSS              = 'feeds/tag/{slug}.rss.xml'
+TAG_FEED_RSS_URL          = TAG_FEED_RSS
+RSS_FEED_SUMMARY_ONLY     = True
+TRANSLATION_FEED_ATOM     = None
+TRANSLATION_FEED_ATOM_URL = None
+TRANSLATION_FEED_RSS      = '{lang}/feeds/all.rss.xml'
+TRANSLATION_FEED_RSS_URL  = TRANSLATION_FEED_RSS
+
+AUTHOR_URL                = 'author/{slug}/'
+AUTHOR_SAVE_AS            = 'author/{slug}/index.html'
+CATEGORY_URL              = 'category/{slug}/'
+CATEGORY_SAVE_AS          = 'category/{slug}/index.html'
+TAG_URL                   = 'tag/{slug}/'
+TAG_SAVE_AS               = 'tag/{slug}/index.html'
+
+PAGINATION_PATTERNS       = (
         (1, '{url}', '{save_as}'),
         (2, '{base_name}/page/{number}/', '{base_name}/page/{number}/index.html'),
 )

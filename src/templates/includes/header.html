@@ -1,0 +1,23 @@
+{#
+Author: cwittlut <i@bitbili.net>
+License: GPLv2
+#}
+
+<header>
+  <img id="logo" src="{{ _url(LOGO.square.svg.path) }}" />
+  <ul>
+    <li id="color_pattern"></li>
+    <li id="search">
+      <form action="{{ _url('/search.html') }}" method="get">
+        <input type="search" name="search">
+        <button type="submit">Search</button>
+      </form>
+    </li>
+    <li id="blogroll">
+      <a href="{{ _url(BLOGROLL_PAGE) }}">Blogroll</a>
+    </li>
+    <li id="rss_link">
+      <a href="{{ _url('feeds/rss.xml') }}">RSS</a>
+    </li>
+  </ul>
+</header>
