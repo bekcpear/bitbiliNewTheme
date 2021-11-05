@@ -6,3 +6,10 @@ dist/templates
 dist/assets
 src/templates-old
 config/__pycache__
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

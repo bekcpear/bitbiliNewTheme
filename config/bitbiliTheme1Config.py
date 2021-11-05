@@ -115,7 +115,7 @@ DRAFT_PAGE_LANG_SAVE_AS   = DRAFT_PAGE_LANG_URL
 
 FEED_ATOM                 = None
 FEED_ATOM_URL             = None
-FEED_RSS                  = 'feeds/rss.xml'
+FEED_RSS                  = 'feeds/main.rss.xml'
 FEED_RSS_URL              = FEED_RSS
 FEED_ALL_ATOM             = None
 FEED_ALL_ATOM_URL         = None

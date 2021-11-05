@@ -1,5 +1,5 @@
 {
-  "name": "bitbiliTheme2",
+  "name": "bitbiliTheme1",
   "version": "1.0.0",
   "description": "A theme made by cwittlut for pelican",
   "author": "cwittlut",
@@ -12,6 +12,7 @@
     "generateTemplates": "rm -rf dist/templates && cp -a src/templates dist/"
   },
   "dependencies": {
+    "lit": "^2.0.2",
     "workbox-background-sync": "^6.3.0",
     "workbox-core": "^6.3.0",
     "workbox-expiration": "^6.3.0",
