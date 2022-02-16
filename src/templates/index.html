@@ -2,22 +2,48 @@
 Author: cwittlut <i@bitbili.net>
 License: GPLv2
 #}
+
 {% extends "base.html" %}
 
-{% block main %}
+{% block html %}
+<!DOCTYPE html>
+<html lang="{% block html_lang %}{{ DEFAULT_LANG }}{% endblock %}">
 
+{% include 'includes/head.html' %}
+
+<body>
+  <div style="display:none" id="title">{{ _title() }}</div>
+
+  <header>
+    <div id="widget">
+      <div id="search">
+        <form action="{{ _url('/search.html') }}" method="get">
+          <input type="search" name="search">
+          <button type="submit">Search</button>
+        </form>
+      </div>
+      <div id="color-mode">
+      </div>
+    </div>
+  </header>
+
+  <main>
     <div id="blackboard">
-      <div id="desc">{{ SITE.desc }}</div>
+      <div id="logo"><img src="{{_url(LOGO.square.svg.path)}}" /></div>
       <div id="author">
         <img id="avatar" src="{{ SITE.author.profile.avatar}}" />
-        <span id="real_name">{{ SITE.author.name }}</span>
+        <span id="real-name">{{ SITE.author.name }}</span>
         <span id="username">@{{ SITE.author.username|trim('@') }}</span>
         <span id="bio">{{ SITE.author.profile.bio }}</span>
       </div>
+      <div id="desc">{{ SITE.desc }}</div>
     </div>
 
-    <div id="articles_list">
+    <div id="index-list">
     {% include "includes/article_list.html" %}
     </div>
+  </main>
 
-{% endblock main %}
+</body>
+</html>
+{% endblock html %}

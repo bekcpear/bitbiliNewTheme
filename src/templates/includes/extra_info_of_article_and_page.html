@@ -6,7 +6,7 @@ License: GPLv2
           <a id="commentsCount" class="hidden-print" href="#comments" >
             <span class="disqus-comment-count" data-disqus-identifier="{{ article.slug }}"></span>
           </a>
-          <a id="showSourceCode" class="hidden-print" href="{{ _rst_url(_url(article.url)) }}"></a>
+          <a @click="showSourceCode(this)" class="hidden-print" href="{{ _rst_url(_url(article.url)) }}"></a>
           <a id="share" class="hidden-print" href="#">
             <ul>
               <li></li>
