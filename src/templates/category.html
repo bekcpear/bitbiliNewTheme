@@ -1,0 +1,34 @@
+{#
+Author: cwittlut <i@bitbili.net>
+License: GPLv2
+#}
+
+{% extends "base.html" %}
+
+  {% block title %}分类： {{ category }} - {{ SITENAME }}{% endblock %}
+
+  {% block canonical_rel %}
+  <link rel="canonical" href="{{ _url(category.url, False, False) }}">
+  {% endblock %}
+
+  {% block meta %}
+  <meta name="author" content="{{ AUTHOR }}" />
+  <meta name="keywords" content="{{ category }}" />
+  {% endblock %}
+
+  {% block header %}
+    {% include "includes/header.html"%}
+  {% endblock header %}
+
+  {% block main %}
+  <main>
+    <div id="category">
+      <h1>{{ category }} 类别</h1>
+      {% include "includes/list.html"%}
+    </div>
+  </main>
+  {% endblock main %}
+
+  {% block footer %}
+    {% include "includes/footer.html"%}
+  {% endblock footer %}

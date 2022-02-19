@@ -5,15 +5,7 @@ License: GPLv2
 
 {% extends "base.html" %}
 
-{% block html %}
-<!DOCTYPE html>
-<html lang="{% block html_lang %}{{ DEFAULT_LANG }}{% endblock %}">
-
-{% include 'includes/head.html' %}
-
-<body>
-  <div style="display:none" id="title">{{ _title() }}</div>
-
+  {% block header %}
   <header>
     <div id="widget">
       <div id="search">
@@ -26,10 +18,12 @@ License: GPLv2
       </div>
     </div>
   </header>
+  {% endblock header %}
 
+  {% block main %}
   <main>
     <div id="blackboard">
-      <div id="logo"><img src="{{_url(LOGO.square.svg.path)}}" /></div>
+      <div id="logo"><img src="{{_url(LOGO.square.svg.path, True)}}" /></div>
       <div id="author">
         <img id="avatar" src="{{ SITE.author.profile.avatar}}" />
         <span id="real-name">{{ SITE.author.name }}</span>
@@ -39,11 +33,12 @@ License: GPLv2
       <div id="desc">{{ SITE.desc }}</div>
     </div>
 
-    <div id="index-list">
-    {% include "includes/article_list.html" %}
-    </div>
-  </main>
+    {% include "includes/list.html"%}
 
-</body>
-</html>
-{% endblock html %}
+  </main>
+  {% endblock main %}
+
+  {% block footer %}
+  <footer>
+  </footer>
+  {% endblock footer %}

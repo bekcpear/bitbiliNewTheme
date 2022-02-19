@@ -1,19 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
+import os
 
 """
 this file should be imported from pelican config file
 e.g.:
 
-THEME = './bitbiliTheme1/dist'
+THEME = './bitbiliTheme/dist'
 import os
 import sys
-sys.path.append(os.path.join(os.curdir, 'bitbiliTheme1/config'))
+sys.path.append(os.path.join(os.curdir, 'bitbiliTheme/config'))
 from bitbiliTheme1Config import *
 """
 
-_theme_dir="/home/ryan/Git/bitbiliTheme1/dist"
+_theme_dir="/home/ryan/Git/bitbiliTheme/dist"
+_another_assets_parent_dir=os.path.join(os.curdir, "content")
 
 # Custom settings:
 # all paths are relative to SITE.url
@@ -23,7 +25,7 @@ SITE = {
         "desc": "一个格物致知的技术博客。",
         "url": "https://bitbili.net/",
         "color": "#eb1847",
-        "manifest": "/assets/manifest.json",
+        "manifest": "assets/manifest.json",
         "author": {
             "username": "cwittlut",
             "name": "Ryan Qian",
@@ -32,14 +34,14 @@ SITE = {
                 "cwittlut@vermilion.ink"
                 ],
             "profile": {
-                "avatar": "",
+                "avatar": "", # pay attention to append a hash
                 "bio": "",
                 "url": "https://github.com/bekcpear"
                 }
             },
         "og": {
             "image": {
-                "path": ""
+                "path": "" # pay attention to append a hash if it's not a findable local img
                 }
             }
         }
@@ -82,7 +84,7 @@ ICON = {
         }
 
 CSS = {
-        "common": "",
+        "common": "assets/css/common.css",
         "index": "",
         "article": "",
         "page": ""
@@ -97,6 +99,8 @@ JS = {
 ############
 ############
 # theme specific settings, should not be modified normally
+THEME_NAME                = 'bitbiliTheme'
+THEME_URL                 = 'https://gitlab.com/cwittlut/bitbiliTheme'
 THEME_STATIC_DIR          = 'assets'
 THEME_STATIC_PATHS        = ['assets']
 JINJA_ENVIRONMENT         = {
@@ -115,7 +119,7 @@ DRAFT_PAGE_LANG_SAVE_AS   = DRAFT_PAGE_LANG_URL
 
 FEED_ATOM                 = None
 FEED_ATOM_URL             = None
-FEED_RSS                  = 'feeds/main.rss.xml'
+FEED_RSS                  = 'feeds/rss.xml'
 FEED_RSS_URL              = FEED_RSS
 FEED_ALL_ATOM             = None
 FEED_ALL_ATOM_URL         = None
@@ -146,20 +150,31 @@ CATEGORY_SAVE_AS          = 'category/{slug}/index.html'
 TAG_URL                   = 'tag/{slug}/'
 TAG_SAVE_AS               = 'tag/{slug}/index.html'
 
+DIRECT_TEMPLATES          = ['index', 'categories', 'authors', 'tags']
+
 PAGINATION_PATTERNS       = (
         (1, '{url}', '{save_as}'),
         (2, '{base_name}/page/{number}/', '{base_name}/page/{number}/index.html'),
 )
 
-import os
+# depend on tag_cloud: https://github.com/pelican-plugins/tag-cloud
+TAG_CLOUD_SORTING   = "random"
+TAG_CLOUD_BADGE     = True
+TAG_CLOUD_STEPS     = 6
+TAG_CLOUD_MAX_ITEMS = 200
+
+
 import hashlib
 
 def hash(path):
     BUF_SIZE = 65536
     md5      = hashlib.md5()
+    path     = path.strip('/')
     _path    = os.path.join(_theme_dir, path)
     if not os.path.isfile(_path):
-        return ""
+        _path= os.path.join(_another_assets_parent_dir, path)
+        if not os.path.isfile(_path):
+            return ""
     with open(_path, 'rb') as f:
         while True:
             data = f.read(BUF_SIZE)

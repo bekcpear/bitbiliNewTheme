@@ -1,0 +1,34 @@
+{#
+Author: cwittlut <i@bitbili.net>
+License: GPLv2
+#}
+
+{% extends "base.html" %}
+  {% block title %}所有标签 - {{ SITENAME }}{% endblock %}
+
+  {% block canonical_rel %}
+  <link rel="canonical" href="{{ _url('/tags.html', False, False) }}">
+  {% endblock %}
+
+    {% block header %}
+      {% include "includes/header.html"%}
+    {% endblock header %}
+
+    {% block main %}
+    <main>
+      <div id="tags">
+        <h1>所有标签</h1>
+        <ul id="list">
+          {% for tc in tag_cloud %}
+          <li class="tc-{{tc.1}}">
+            <a href="{{ _url(tc.0.url, False, False) }}">{{ tc.0 }}<sup>{{ tc.2 }}</sup></a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </main>
+    {% endblock main %}
+
+    {% block footer %}
+      {% include "includes/footer.html"%}
+    {% endblock footer %}

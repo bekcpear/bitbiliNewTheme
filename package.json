@@ -7,10 +7,10 @@
   "private": true,
   "scripts": {
     "generateTemplates": "rm -rf dist/templates && cp -a src/templates dist/",
-    "minifyCSS": "",
-    "minifyJS": "uglifyjs src/js/common.js -o static/js/main.min.js",
-    "generateSW": "workbox injectManifest workbox-config.js && webpack",
-    "copyWBJS": "cp node_modules/workbox-window/build/workbox-window.prod.mjs* dist/"
+    "minifyCSS": "sass -s compressed src/css/common.scss:dist/assets/css/common.css",
+    "doWebpack": "webpack -c webpack.config.js",
+    "copyWBJS": "cp node_modules/workbox-window/build/workbox-window.prod.mjs* dist/assets/js/",
+    "generateSW": "workbox injectManifest workbox-config.js && webpack -c webpack.sw-config.js"
   },
   "dependencies": {
     "lit": "^2.0.2",

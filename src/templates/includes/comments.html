@@ -2,3 +2,41 @@
 Author: cwittlut <i@bitbili.net>
 License: GPLv2
 #}
+          <div id="comments" class="hidden-print">
+            {% if page %}
+            {% set article = page %}
+            {% endif %}
+            {% if DISQUS %}
+            <a id="show-disqus">显示 Disqus 评论（需自备梯子）</a>
+            <div id="disqus_thread" style="display: none;">
+              <script>
+                var disqus_config = function () {
+                  this.article.identifier = '{{ article.slug }}';
+                  this.article.url = '{{ _url(article.url, False, False) }}';
+                  this.language = "{{ langname[article.lang if article.lang else DEFAULT_LANG] }}";
+                };
+                document.getElementById('show-disqus').addEventListener('click', function(){
+                  document.getElementById("disqus_thread").style.display = "";
+                  document.getElementById("show-disqus").style.display = "none";
+                  var scr = document.getElementsByTagName('script');
+                  var scrembeded = false;
+                  for (var i = 0; i < scr.length; ++i) {
+                    if (scr[i].getAttribute('src') == "{{ DISQUS_URL }}") {
+                      scrembeded = true;
+                    }
+                  }
+                  if ( scrembeded == false ) {
+                    (function() { // DON'T EDIT BELOW THIS LINE
+                    var d = document, s = d.createElement('script');
+                    s.src = '{{ DISQUS_URL }}';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                    })();
+                  }
+                });
+              </script>
+              <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              <span>请稍等.. 评论由 Disqus 驱动..</span>
+            </div>
+            {% endif %}
+          </div>

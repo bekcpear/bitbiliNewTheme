@@ -4,20 +4,22 @@ License: GPLv2
 #}
 
 <header>
-  <img id="logo" src="{{ _url(LOGO.square.svg.path) }}" />
-  <ul>
-    <li id="color_pattern"></li>
-    <li id="search">
-      <form action="{{ _url('/search.html') }}" method="get">
-        <input type="search" name="search">
-        <button type="submit">Search</button>
-      </form>
-    </li>
-    <li id="blogroll">
-      <a href="{{ _url(BLOGROLL_PAGE) }}">Blogroll</a>
-    </li>
-    <li id="rss_link">
-      <a href="{{ _url('feeds/rss.xml') }}">RSS</a>
-    </li>
-  </ul>
+  <left-side-button class="f-l"></left-side-button>
+  <a href="/"><img id="logo" class="f-l" src="{{ _url(LOGO.square.svg.path, True) }}" /></a>
+  <back-top></back-top>
+  <color-mode></color-mode>
+  <shortcut-help></shortcut-help>
+  <search-box></search-box>
+  {#
+  <button id="back-top" class="f-r" title="scroll to top/bottom"></button>
+  <button id="color-mode" class="f-r" title="switch day/night mode"></button>
+  <button id="help" class="f-r" title="shortcut help and other info"></button>
+  #}
+  <noscript>
+  <div id="search" class="f-r">
+    <form action="{{ _url('/search') }}" method="get">
+      <input type="search" name="search"></input><button type="submit">Search</button>
+    </form>
+  </div>
+  </noscript>
 </header>

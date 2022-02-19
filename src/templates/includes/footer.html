@@ -2,3 +2,28 @@
 Author: cwittlut <i@bitbili.net>
 License: GPLv2
 #}
+  <footer>
+    <div>
+      <ul>
+        <li class="hidden-print"><a href="/">首页</a></li>
+        <li class="hidden-print"><a href="{{ _url('feeds/rss.xml', False, False) }}" id="rss">RSS</a></li>
+        <li class="hidden-print"><a href="/tags.html">所有标签</a></li>
+        <li class="hidden-print"><a href="/categories.html">文章分类</a></li>
+        <li>作者： <a href="/{{ ABOUT_PAGE | default('about.html') }}">{{ AUTHOR }}</a></li>
+        <li>
+          网站由 <a href="https://getpelican.com/" target="_blank">Pelican</a> 驱动，
+          主题为 <a href="{{ THEME_URL }}" target="_blank">{{ THEME_NAME }}</a>
+        </li>
+        <li class="hidden-print" title="文章或网站上次更新时间与总次数">更新于 <span id="vernum">{{ SITE_VERSION }}</span></li>
+      </ul>
+      <div id="license">
+        <img class="cc" src="{{ _url("assets/icons/fa/brands/creative-commons.svg", True) }}" />
+        <img class="cc" src="{{ _url("assets/icons/fa/brands/creative-commons-by.svg", True) }}" />
+        <img class="cc" src="{{ _url("assets/icons/fa/brands/creative-commons-sa.svg", True) }}" />
+        <span>除另有注明外，本站上的内容均采用
+          <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank">
+            知识共享 署名-相同方式共享 4.0 国际许可协议</a>&ensp;进行许可。
+        </span>
+      </div>
+    </div>
+  </footer>

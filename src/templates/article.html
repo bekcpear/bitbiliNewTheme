@@ -3,28 +3,29 @@ Author: cwittlut <i@bitbili.net>
 License: GPLv2
 #}
 {% extends "base.html" %}
+
 {% block html_lang %}{{ langname[article.lang] }}{% endblock %}
 {% block title %}{{ article.title|striptags }}&ensp;-&ensp;{{ SITE.long_name }}{% endblock %}
 
 {% block canonical_rel %}
-  <link rel="canonical" href="{{ _url(article.url) }}">
+  <link rel="canonical" href="{{ _url(article.url, False, False) }}">
 {% endblock canonical_rel %}
 
 {% block extra_meta_tags %}
   {% if article.author %}
-    <meta name="author" content="{{ article.author }}" />
+  <meta name="author" content="{{ article.author }}" />
   {% else %}
-    <meta name="author" content="{{ SITE.author.username }}" />
+  <meta name="author" content="{{ SITE.author.username }}" />
   {% endif %}
   {% if article.mykeywords %}
-    <meta name="keywords" content="{{ article.mykeywords }}" />
+  <meta name="keywords" content="{{ article.mykeywords }}" />
   {% elif article.tags %}
-    <meta name="keywords" content="{{ article.tags|join(',')|striptags }}" />
+  <meta name="keywords" content="{{ article.tags|join(',')|striptags }}" />
   {% endif %}
   {% if article.description and article.summary %}
-    <meta name="description" content="{{ article.description }} | {{ article.summary|striptags|escape }}" />
+  <meta name="description" content="{{ article.description }} | {{ article.summary|striptags|escape }}" />
   {% elif article.summary %}
-    <meta name="description" content="{{ article.summary|striptags|escape }}" />
+  <meta name="description" content="{{ article.summary|striptags|escape }}" />
   {% endif %}
 {% endblock extra_meta_tags %}
 
@@ -34,32 +35,32 @@ License: GPLv2
   <meta property="og:type" content="article" />
   <meta property="article:published_time" content="{{ article.date.isoformat() }}" />
   {% if article.modified %}
-    <meta property="article:modified_time" content="{{ article.modified.isoformat() }}" />
+  <meta property="article:modified_time" content="{{ article.modified.isoformat() }}" />
   {% endif %}
   {% if article.category %}
-    <meta property="article:section" content="{{ article.category }}" />
+  <meta property="article:section" content="{{ article.category }}" />
   {% endif %}
   {% for tag in article.tags %}
-    <meta property="article:tag" content="{{ tag }}" />
+  <meta property="article:tag" content="{{ tag }}" />
   {% endfor %}
   {% if SITE.author.profile.url %}
-    <meta property="article:author" content="{{ SITE.author.profile.url }}" />
+  <meta property="article:author" content="{{ SITE.author.profile.url }}" />
   {% endif %}
-  <meta property="og:url" content="{{ _url(article.url) }}" />
+  <meta property="og:url" content="{{ _url(article.url, False, False) }}" />
   {% if article.locale %}
   <meta property="og:locale" content="{{ article.locale }}" />
   {% elif article.lang %}
   <meta property="og:locale" content="{{ localename[article.lang] }}" />
   {% endif %}
   {% if article.description and article.summary %}
-    <meta property="og:description" content="{{ article.description }} | {{ article.summary|striptags|escape }}" />
+  <meta property="og:description" content="{{ article.description }} | {{ article.summary|striptags|escape }}" />
   {% elif article.summary %}
-    <meta property="og:description" content="{{ article.summary|striptags|escape }}" />
+  <meta property="og:description" content="{{ article.summary|striptags|escape }}" />
   {% endif %}
   {% if article.featured_image %}
-    <meta property="og:image" content="{{ _url(article.featured_image) }}" />
+  <meta property="og:image" content="{{ _url(article.featured_image, True, False) }}" />
   {% else %}
-    <meta property="og:image" content="{{ _url(SITE.og.image.path) }}" />
+  <meta property="og:image" content="{{ _url(SITE.og.image.path, True, False) }}" />
   {% endif %}
 {% endblock opengraph %}
 
@@ -80,7 +81,7 @@ p {
       "@type": "Article",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "{{ _url(article.url) }}"
+        "@id": "{{ _url(article.url, False, False) }}"
       },
       "headline": "{{ article.title|striptags }}",
       "datePublished": "{{ article.date.isoformat() }}",
@@ -96,16 +97,16 @@ p {
         "name": "{{ SITE.name }}",
         "logo": {
           "@type": "ImageObject",
-          "url": "{{ _url(LOGO.square.png.path) }}",
+          "url": "{{ _url(LOGO.square.png.path, True, False) }}",
           "width": {{ LOGO.square.png.width }},
           "height": {{ LOGO.square.png.height }}
         }
       },
       "image": [
       {% if article.featured_image %}
-        "{{ _url(article.featured_image) }}"
+        "{{ _url(article.featured_image, True, False) }}"
       {% else %}
-        "{{ _url(SITE.og.image.path) }}"
+        "{{ _url(SITE.og.image.path, True, False) }}"
       {% endif %}
       ],
       {% if article.description and article.summary %}
@@ -117,16 +118,22 @@ p {
   </script>
 {% endblock schema_meta %}
 
+{% block extra_css_src %}
+  <noscript>
+<style>
+#toc {
+  display: inline-block !important;
+}
+</style>
+  </noscript>
+{% endblock extra_css_src %}
+
+{% block header %}
+  {% include 'includes/header.html' %}
+{% endblock header %}
+
 {% block main %}
-
-    {% if article.toc %}
-      <aside>
-        <div id="toc">
-          {{ article.toc }}
-        </div>
-      </aside>
-    {% endif %}
-
+  <main>
     <article>
       {# article header start #}
       <div id="header">
@@ -138,7 +145,7 @@ p {
         {% if article.tags %}
           <div id='tags'>
             {% for tag in article.tags %}
-              <a href="/{{ tag.url }}">{{ tag }}</a>
+              <a href="/{{ tag.url }}"><span>{{ tag }}</span></a>
             {% endfor %}
           </div>
         {% endif %}
@@ -147,34 +154,44 @@ p {
 
         <div id='info'>
           {% if article.modified %}
-            <time class="modified" datetime="{{ article.modified.isoformat() }}" title="{{ article.modified.strftime('%A %H:%M %Z') }}">{{ article.locale_modified }}</time>
+            <time class="modified" datetime="{{ article.modified.isoformat() }}" title="{{ article.modified.strftime('%A %H:%M %Z') }}〔上次修改时间〕">{{ article.locale_modified }}</time>
           {% endif %}
           {% if article.date %}
-            <time class="published" datetime="{{ article.date.isoformat() }}" title="{{ article.date.strftime('%A %H:%M %Z') }}">{{ article.locale_date }}</time>
+            <time class="published" datetime="{{ article.date.isoformat() }}" title="{{ article.date.strftime('%A %H:%M %Z') }}〔发布时间〕">{{ article.locale_date }}</time>
           {% endif %}
           {% if article.license %}
-            <div id="extra_license_info">{{ article.license }}</div>
+            <div id="extra-license-info" title="Extra License information">{{ article.license }}</div>
           {% endif %}
         </div>
       </div>
       {# article header end #}
+
+      {% if article.toc %}
+      <div id="toc">
+        {{ article.toc }}
+      </div>
+      {% endif %}
 
       <div id="content">
         {{ article.content }}
       </div>
     </article>
 
-    <div id='prevnext' class="hidden-print">
-      {% if article.prev_article %}
-        <a id="prev" href="/{{article.prev_article.url}}">
-          {{article.prev_article.title}}
-        </a>
-      {% endif %}
+    <div id='oldnewerposts' class="hidden-print">
+      <span id="newerpost">
       {% if article.next_article %}
-        <a id="next" href="/{{article.next_article.url}}">
+        <a href="/{{article.next_article.url}}">
           {{article.next_article.title}}
         </a>
       {% endif %}
+      </span>
+      <span id="olderpost">
+      {% if article.prev_article %}
+        <a href="/{{article.prev_article.url}}">
+          {{article.prev_article.title}}
+        </a>
+      {% endif %}
+      </span>
     </div>
 
     {% if article.related_posts %}
@@ -189,5 +206,9 @@ p {
     {% endif %}
 
     {% include 'includes/comments.html' %}
-
+  </main>
 {% endblock main %}
+
+{% block footer %}
+  {% include 'includes/footer.html' %}
+{% endblock footer %}

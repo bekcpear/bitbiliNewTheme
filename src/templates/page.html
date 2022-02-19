@@ -1,0 +1,168 @@
+{#
+Author: cwittlut <i@bitbili.net>
+License: GPLv2
+#}
+{% extends "base.html" %}
+
+{% block html_lang %}{{ langname[page.lang] }}{% endblock %}
+{% block title %}{{ page.title|striptags }}&ensp;-&ensp;{{ SITE.long_name }}{% endblock %}
+
+{% block canonical_rel %}
+  <link rel="canonical" href="{{ _url(page.url, False, False) }}">
+{% endblock canonical_rel %}
+
+{% block extra_meta_tags %}
+  {% if page.author %}
+  <meta name="author" content="{{ page.author }}" />
+  {% else %}
+  <meta name="author" content="{{ SITE.author.username }}" />
+  {% endif %}
+  {% if page.description and page.summary %}
+  <meta name="description" content="{{ page.description }} | {{ page.summary|striptags|escape }}" />
+  {% elif page.summary %}
+  <meta name="description" content="{{ page.summary|striptags|escape }}" />
+  {% endif %}
+{% endblock extra_meta_tags %}
+
+{% block opengraph %}
+  <meta property="og:site_name" content="{{ SITE.name }}" />
+  <meta property="og:title" content="{{ page.title|striptags|escape }}" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="{{ page.date.isoformat() }}" />
+  {% if page.modified %}
+  <meta property="article:modified_time" content="{{ page.modified.isoformat() }}" />
+  {% endif %}
+  {% if SITE.author.profile.url %}
+  <meta property="article:author" content="{{ SITE.author.profile.url }}" />
+  {% endif %}
+  <meta property="og:url" content="{{ _url(page.url, False, False) }}" />
+  {% if page.locale %}
+  <meta property="og:locale" content="{{ page.locale }}" />
+  {% elif page.lang %}
+  <meta property="og:locale" content="{{ localename[page.lang] }}" />
+  {% endif %}
+  {% if page.description and page.summary %}
+  <meta property="og:description" content="{{ page.description }} | {{ page.summary|striptags|escape }}" />
+  {% elif page.summary %}
+  <meta property="og:description" content="{{ page.summary|striptags|escape }}" />
+  {% endif %}
+  {% if page.featured_image %}
+  <meta property="og:image" content="{{ _url(page.featured_image, True, False) }}" />
+  {% else %}
+  <meta property="og:image" content="{{ _url(SITE.og.image.path, True, False) }}" />
+  {% endif %}
+{% endblock opengraph %}
+
+{% block extra_css_inline %}
+  {% if page.lang[:2] == "zh" and not page.noindent %}
+    <style>
+p {
+  text-indent: 2em;
+}
+    </style>
+  {% endif %}
+{% endblock extra_css_inline %}
+
+{% block schema_meta %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ _url(page.url, False, False) }}"
+      },
+      "headline": "{{ page.title|striptags }}",
+      "datePublished": "{{ page.date.isoformat() }}",
+      {% if page.modified %}
+      "dateModified": "{{ page.modified.isoformat() }}",
+      {% endif %}
+      "author": {
+        "@type": "Person",
+        "name": "{{ page.author }}"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "{{ SITE.name }}",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "{{ _url(LOGO.square.png.path, True, False) }}",
+          "width": {{ LOGO.square.png.width }},
+          "height": {{ LOGO.square.png.height }}
+        }
+      },
+      "image": [
+      {% if page.featured_image %}
+        "{{ _url(page.featured_image, True, False) }}"
+      {% else %}
+        "{{ _url(SITE.og.image.path, True, False) }}"
+      {% endif %}
+      ],
+      {% if page.description and page.summary %}
+      "description": "{{ page.description }} | {{ page.summary|striptags|escape }}"
+      {% elif page.summary %}
+      "description": "{{ page.summary|striptags|escape }}"
+      {% endif %}
+    }
+  </script>
+{% endblock schema_meta %}
+
+{% block extra_css_src %}
+  <noscript>
+<style>
+#toc {
+  display: inline-block !important;
+}
+</style>
+  </noscript>
+{% endblock extra_css_src %}
+
+{% block header %}
+  {% include 'includes/header.html' %}
+{% endblock header %}
+
+{% block main %}
+  <main>
+    <article>
+      {# article header start #}
+      <div id="header">
+
+        <div id="headline">
+          <h1>{{ page.title }}</h1>
+        </div>
+
+        {% include "includes/extra_info_of_article_and_page.html" %}
+
+        <div id='info'>
+          {% if page.modified %}
+            <time class="modified" datetime="{{ page.modified.isoformat() }}" title="{{ page.modified.strftime('%A %H:%M %Z') }}">{{ page.locale_modified }}</time>
+          {% endif %}
+          {% if page.date %}
+            <time class="published" datetime="{{ page.date.isoformat() }}" title="{{ page.date.strftime('%A %H:%M %Z') }}">{{ page.locale_date }}</time>
+          {% endif %}
+          {% if page.license %}
+            <div id="extra_license_info">{{ page.license }}</div>
+          {% endif %}
+        </div>
+      </div>
+      {# article header end #}
+
+      {% if page.toc %}
+      <div id="toc">
+        {{ page.toc }}
+      </div>
+      {% endif %}
+
+      <div id="content">
+        {{ page.content }}
+      </div>
+    </article>
+
+    {% include 'includes/comments.html' %}
+
+  </main>
+{% endblock main %}
+
+{% block footer %}
+  {% include 'includes/footer.html' %}
+{% endblock footer %}

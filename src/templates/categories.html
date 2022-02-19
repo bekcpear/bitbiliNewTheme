@@ -1,0 +1,35 @@
+{#
+Author: cwittlut <i@bitbili.net>
+License: GPLv2
+#}
+
+{% extends "base.html" %}
+  {% block title %}文章分类 - {{ SITENAME }}{% endblock %}
+
+  {% block canonical_rel %}
+  <link rel="canonical" href="{{ _url('/categories.html', False, False) }}">
+  {% endblock %}
+
+    {% block header %}
+      {% include "includes/header.html"%}
+    {% endblock header %}
+
+    {% block main %}
+    <main>
+      <div id="categories">
+        <h1>文章分类</h1>
+        <ul id="list">
+          {% for category, articles in categories %}
+          <li>
+            <a href=" {{_url(category.url, False, False)}} ">{{ category }}</a>
+            <span>（共 {{ articles|count }} 篇）</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </main>
+    {% endblock main %}
+
+    {% block footer %}
+      {% include "includes/footer.html"%}
+    {% endblock footer %}

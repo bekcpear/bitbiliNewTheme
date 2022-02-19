@@ -1,0 +1,104 @@
+// Author: cwittlut <i@bitbili.net>
+// License: GPLv2
+//
+
+article #content {
+  h2 {
+    font-size: 2.2em;
+    border-bottom: 1px solid var(--bg-less);
+  }
+  h3 {
+    font-size: 1.6em;
+  }
+  h4 {
+    font-size: 1.2em;
+  }
+  h5 {
+    font-size: 1em;
+  }
+  h6 {
+    font-size: 0.8em;
+  }
+  p, a, li, h2, h3, h4, h5, h6 {
+    line-height: 1.5em;
+    color: var(--fg);
+  }
+
+  li {
+    p {
+    }
+  }
+
+  code {
+  }
+
+  kbd {
+  }
+
+  table {
+    th {
+    }
+    td {
+    }
+    tbody tr {
+    }
+    &.footnote {
+      tbody {
+        tr {
+          td.label {
+          }
+        }
+      }
+      + table.footnote {
+      }
+    }
+  }
+
+  a {
+    &.fn-backref {
+    }
+    &.internal:hover {
+    }
+  }
+
+  img {
+  }
+
+  dl {
+    dt {
+      margin-inline-start: 10px;
+    }
+    dd {
+    }
+  }
+
+  blockquote {
+    p {
+    }
+  }
+
+  .admonition {
+    .admonition-title {
+    }
+    &.admonition-t-s {
+      .admonition-title {
+      }
+      p {
+      }
+    }
+    &.hint {
+      .admonition-title {
+      }
+    }
+    &.warning {
+      .admonition-title {
+      }
+    }
+  }
+
+  .footnote-reference {
+  }
+
+  pre {
+  }
+}

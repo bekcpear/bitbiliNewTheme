@@ -2,17 +2,22 @@
 Author: cwittlut <i@bitbili.net>
 License: GPLv2
 #}
+        {% if page %}
+          {% set article = page %}
+        {% endif %}
         <div id="ctrl">
-          <a id="commentsCount" class="hidden-print" href="#comments" >
-            <span class="disqus-comment-count" data-disqus-identifier="{{ article.slug }}"></span>
+          {% if DISQUS %}
+          <a id="disqus-comments-count" class="hidden-print" href="#comments" >
+            <button>
+              <span class="disqus-comment-count" data-disqus-identifier="{{ article.slug }}">-</span>
+            </button>
           </a>
-          <a @click="showSourceCode(this)" class="hidden-print" href="{{ _rst_url(_url(article.url)) }}"></a>
-          <a id="share" class="hidden-print" href="#">
-            <ul>
-              <li></li>
-              <li></li>
-              <li></li>
-            </ul>
+          {% endif %}
+          <a @click="showSourceCode(this)" id="show-source-code" class="hidden-print" href="{{ _rst_url(_url(article.url)) }}">
+            <button><span>源码</span></button>
+          </a>
+          <a id="share" class="hidden-print">
+            <button><span>分享</span></button>
           </a>
         </div>
 
