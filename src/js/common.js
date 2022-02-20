@@ -19,28 +19,27 @@ function getCompSty(e, p) {
   return window.getComputedStyle(e, null).getPropertyValue(p);
 }
 
-var root = document.documentElement;
 
 /*
  *  Solve left-side table of contents
  */
-var leftSide = document.querySelector('left-side');
-var leftSideCover = document.querySelector('left-side-cover');
-var toc = document.querySelector('#toc .toc');
-var header = document.querySelector('header');
-var main = document.querySelector('main');
-var footer = document.querySelector('footer');
+var leftSide
+var leftSideCover
+var toc
+var header
+var main
+var footer
 var lsName = 'hideLeftSide'
 var lsLast = null
-
-export class LeftSide extends LitElement {
+/*export class LeftSide extends LitElement {
   createRenderRoot() {
     return this;
   }
   render() {
+    debugger;
     return toc.cloneNode(true);
   }
-}
+}*/
 export class LeftSideCover extends LitElement {
   static styles = css`
     :host {
@@ -69,12 +68,14 @@ export class LeftSideCover extends LitElement {
   }
 }
 var printing = false
+var hasLeftSide = false
 function handleLeftSide(manual) {
+  //debugger;
   var innerWidth = window.innerWidth;
   var sideWidth = getCompSty(leftSide, 'width');
   leftSideCover.style.display = 'none';
   leftSide.style.transition = 'transform 0.3s';
-  if ( !printing && lSGet(lsName) == null || ( !lsLast && manual ) ) {
+  if ( !printing && (lSGet(lsName) == null || ( !lsLast && manual )) ) {
     if (innerWidth > 1100 ) {
       header.style.marginLeft = 'calc(var(--sal) + ' + sideWidth + ')';
       main.style.marginLeft = 'calc(var(--sal) + ' + sideWidth + ')';
@@ -115,7 +116,6 @@ function handleLeftSide(manual) {
   leftSide.style.transform = 'translateX(-' + sideWidth + ')';
   lsLast = false;
 }
-
 export class LeftSideBtn extends LitElement {
   createRenderRoot() {
     return this;
@@ -134,8 +134,7 @@ export class LeftSideBtn extends LitElement {
     handleLeftSide(true);
   }
 }
-
-if (toc != null && leftSide != null) {
+function leftSideInit() {
   var maxWidth = 350;
 
   leftSide.style.position = 'fixed';
@@ -152,41 +151,10 @@ if (toc != null && leftSide != null) {
   main.style.transitionDuration = '0.3s';
   footer.style.transitionDuration = '0.3s';
 
-  customElements.define('left-side', LeftSide);
+  //customElements.define('left-side', LeftSide);
+  leftSide.appendChild(toc.cloneNode(true));
   customElements.define('left-side-cover', LeftSideCover);
   customElements.define('left-side-button', LeftSideBtn);
-
-  window.addEventListener('DOMContentLoaded', function(){
-    let backRefs = document.querySelectorAll('a.toc-backref');
-    for (let backRef of backRefs) {
-      backRef.removeAttribute('href');
-      backRef.style.textDecoration = 'none';
-      backRef.style.color = 'var(--fg)';
-      backRef.style.cursor = 'unset';
-    }
-    handleLeftSide()
-
-    // observe section visibility and sticky toc
-    let options = {
-      root: null,
-      rootMargin: '-60px 0px 0px 0px',
-      threshold: 0
-    }
-    let sectionObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        const id = entry.target.getAttribute('id');
-        if (entry.intersectionRatio > 0) {
-          document.querySelector(`left-side a[href="#${id}"]`).classList.add('active');
-        } else {
-          // If intersectionRatio is 0, the target is out of view
-          document.querySelector(`left-side a[href="#${id}"]`).classList.remove('active');
-        }
-      });
-    },options);
-    document.querySelectorAll('article #content div.section[id]').forEach(function(section) {
-      sectionObserver.observe(section);
-    });
-  });
 
   window.addEventListener('popstate', function (event) {
     handleLeftSide();
@@ -235,6 +203,7 @@ export class BackTop extends LitElement {
 customElements.define('back-top', BackTop);
 const upIcon = 'url(/assets/icons/fa/solid/angle-up-solid.svg)';
 const downIcon = 'url(/assets/icons/fa/solid/angle-down-solid.svg)';
+let root = document.documentElement;
 window.addEventListener("scroll", function(event) {
   if (window.scrollY > 1000) {
     root.style.setProperty('--bt-icon', upIcon);
@@ -293,3 +262,61 @@ export class Search extends LitElement {
 customElements.define('search-box', Search);
 
 
+/*
+ * loads
+ * */
+window.addEventListener('DOMContentLoaded', function(){
+  /*
+   * do left-side
+   * */
+  leftSide = document.querySelector('left-side');
+  leftSideCover = document.querySelector('left-side-cover');
+  toc = document.querySelector('#toc .toc');
+  header = document.querySelector('header');
+  main = document.querySelector('main');
+  footer = document.querySelector('footer');
+  if (toc != null && leftSide != null) {
+    leftSideInit();
+
+    let backRefs = document.querySelectorAll('a.toc-backref');
+    for (let backRef of backRefs) {
+      backRef.removeAttribute('href');
+      backRef.style.textDecoration = 'none';
+      backRef.style.color = 'var(--fg)';
+      backRef.style.cursor = 'unset';
+    }
+    handleLeftSide()
+
+    // observe section visibility and sticky toc
+    let options = {
+      root: null,
+      rootMargin: '-60px 0px 0px 0px',
+      threshold: 0
+    }
+    let sectionObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        const id = entry.target.getAttribute('id');
+        if (entry.intersectionRatio > 0) {
+          document.querySelector(`left-side a[href="#${id}"]`).classList.add('active');
+        } else {
+          // If intersectionRatio is 0, the target is out of view
+          document.querySelector(`left-side a[href="#${id}"]`).classList.remove('active');
+        }
+      });
+    },options);
+    document.querySelectorAll('article #content div.section[id]').forEach(function(section) {
+      sectionObserver.observe(section);
+    });
+  }
+
+  /*
+   remove external class for links pointing to this site
+   * */
+  document.querySelectorAll('a.external').forEach(function(link){
+    let href = link.getAttribute('href');
+    if (href != null && href.match(/^http[s]?:\/\/bitbili.net\/|^\//) != null) {
+      link.classList.remove('external');
+    }
+  });
+});
+//window.addEventListener('DOMContentLoaded', function(){

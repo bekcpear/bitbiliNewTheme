@@ -24,6 +24,187 @@ article #content {
     color: var(--fg);
   }
 
+  >ul {
+    list-style-type: square;
+    >ul {
+      list-style-type: disc;
+      >ul {
+        list-style-type: circle;
+      }
+    }
+  }
+
+  a.reference {
+    color: var(--link);
+    &.external {
+      &:after {
+        content: ' ';
+        @include icon(var(--external-icon), 0.6em);
+        line-height: 0.6em;
+        width: 1em;
+        filter: var(--link-f);
+        vertical-align: super;
+      }
+    }
+    &.internal {
+      color: var(--fg);
+      text-decoration: underline;
+    }
+  }
+  // link target decoration
+  //@media all and (min-width: 1101px) {
+  @media screen {
+    @mixin targetedDecoration() {
+      content: ' ';
+      @include icon(var(--target-title-icon), 12px);
+      margin: calc(0.75em - 6px) 0;
+      filter: var(--brand0-f);
+      position: absolute;
+      top: 0;
+      left: -16px; // according to padding-left of 'main'
+    }
+    .section[id] {
+      &:target {
+        >h2, >h3, >h4, >h5, >h6 {
+          a {
+            position: relative;
+            &:after {
+              @include targetedDecoration();
+            }
+          }
+        }
+      }
+      span[id]:target {
+        ~h2, ~h3, ~h4, ~h5, ~h6 {
+          a {
+            position: relative;
+            &:after {
+              @include targetedDecoration();
+            }
+          }
+        }
+      }
+    }
+    pre[id]:target {
+      &:after {
+        @include targetedDecoration();
+        top: 60px;
+      }
+    }
+    [id]:not(pre):not(.section):target {
+      position: relative;
+      >:first-child {
+        &:after {
+          @include targetedDecoration();
+          //// 60px(header height)
+          //// + 1em(the first elem padding/margin-top
+          ////       the default css value of margin-top of p,ol,ul,pre is 1em)
+          //top: calc(60px + 1em);
+          top: 60px;
+        }
+      }
+    }
+  }
+
+  div.admonition {
+    padding: 0 1em 5px 4em;
+    // do not set a padding-top, it conflicts with :target anchor fix
+    position: relative;
+    font-size: 90%;
+    line-height: 1.5em;
+    &:after {
+      content: ' ';
+      display: block;
+      position: absolute;
+      z-index: -2;
+      top: 0;
+      left: 2em;
+      height: 100%;
+      width: calc(100% - 2em);
+      box-sizing: border-box;
+      border-left: 0.5em solid var(--note);
+      background-color: var(--bg-less-t);
+      border-radius: $radius-smaller;
+      box-shadow: 1px 1px 5px var(--note);
+    }
+    >.first {
+      //color: var(--note);
+
+      // Do not set a position prop for this element,
+      // the :after pseudo elem for :target anchor
+      // need an absolute position of the parent.
+
+      font: {
+        size: 80%;
+        family: $monofont;
+        weight: bold;
+      }
+      //opacity: 0.7;
+      line-height: 1.5em;
+      margin-top: 0;
+      padding-left: 2em;
+      // set a padding-top to make up the lack of padding-top of it's parent
+      padding-top: 1em;
+
+      //padding-top: calc(1em / 0.9); // according to :target anchor fix
+                                    // here 1em == this '.admonition>.first' font size
+                                    // while we need '.admonition' font size
+                                    //   due to above content 'top: calc(60px + 1em)'
+                                    // so '/ 0.9'
+      &:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 3.125em; //calc(2.5em / 0.8);
+        width: calc(100% - 3.125em);
+        height: 3.5em;
+        background: {
+          color: #00000030;
+          image: var(--note-icon);
+          repeat: no-repeat;
+          size: 1em;
+          position: 1.875em; // 1.5 / 0.8
+        }
+        filter: var(--note-f);
+        border-top-right-radius: $radius-smaller;
+      }
+    }
+    >:not(.first) {
+      position: relative;
+    }
+    &:target {
+      /*
+        fix :before hight when a :target anchor fix exists
+      .first:before {
+        height: calc(100% - 60px);
+        top: 60px;
+      }
+      */
+      >:first-child:after {
+        /*
+          according to .first size line-height
+          0.675em: 1.5em * 90%
+          6px: half of decoration size
+        */
+        //margin-top: calc(0.675em - 6px) !important;
+        //margin-bottom: calc(0.675em - 6px) !important;
+
+        /*
+          fix top prop due to this p has a padding-top:1em
+         */
+        top: calc(60px + 1em) !important;
+      }
+    }
+  }
+  div.admonition.warning .first {
+    color: var(--warning);
+    &:before {
+      border-left-color: var(--warning);
+    }
+  }
+
   li {
     p {
     }
@@ -74,25 +255,6 @@ article #content {
 
   blockquote {
     p {
-    }
-  }
-
-  .admonition {
-    .admonition-title {
-    }
-    &.admonition-t-s {
-      .admonition-title {
-      }
-      p {
-      }
-    }
-    &.hint {
-      .admonition-title {
-      }
-    }
-    &.warning {
-      .admonition-title {
-      }
     }
   }
 

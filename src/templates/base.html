@@ -150,6 +150,7 @@ body {
       wb.register();
     }
   </script>
+  <script src="{{ _url(JS.common, True) }}"></script>
 
 </head>
 
@@ -174,8 +175,6 @@ body {
   {% block footer %}
   {% endblock footer %}
 
-
-  <script src="{{ _url(JS.common, True) }}"></script>
 {% block scripts_after %}
 {% endblock scripts_after %}
 </body>

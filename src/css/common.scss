@@ -7,12 +7,14 @@
 :root {
   --bg:       #232323; // TODO tune
   --bg-less:  #333333; // TODO tune
+  --bg-less-t:  #33333350; // TODO tune
   --bg-more:  #131313; // TODO tune
   --bg-more-t0: #13131350; // TODO tune
   --bg-more-t1: #131313a0; // TODO tune
   --bg-f:     invert(11%) sepia(33%) saturate(0%) hue-rotate(240deg) brightness(104%) contrast(95%);
 
   --fg:       #E1E1E1; // TODO tune
+  --fg-less:  #C1C1C1; // TODO tune
   --fg-more:  #FEFEFE; // TODO tune
   --fg-f:     invert(99%) sepia(4%) saturate(39%) hue-rotate(313deg) brightness(113%) contrast(76%);
 
@@ -21,8 +23,20 @@
   --brand1:   #D21941; // day: #EB1846
   //--brand-bg: #A6E0FF; // day: #E6F6FF
 
-  --hint:     #A6AFBD; // day: #E6EFFD
-  --warning:  #CFCB67; // day: #FFFB97
+  /*
+    admonitions
+  */
+  --attention:  #FF9100; //E9913D; // day: #FFFB97
+  //--caution:
+  //--danger:
+  //--error:
+  --hint:       var(--brand0); // day: #E6EFFD
+  --important:  #FF5252;
+  --note:       #448AFF;
+  --note-f:     invert(42%) sepia(92%) saturate(495%) hue-rotate(182deg) brightness(104%) contrast(101%);
+  --note-icon:  url(/assets/icons/fa/solid/pencil-solid.svg);
+  --tip:        var(--brand0);
+  --warning:    var(--attention);
 
   --ifg:      #2F2F2F; // day: #BFBFBF
   --link:     #AAC9FF; // day: #1877F2
@@ -68,7 +82,11 @@
   // left-side-button icon
   --bars-icon: url(/assets/icons/fa/solid/bars-solid.svg);
   // vertical-three-dots icon
-  --three-dots-v-icon: url(/assets/icons/fa/solid/ellipsis-vertical-solid.svg);
+  //--three-dots-v-icon: url(/assets/icons/fa/solid/ellipsis-vertical-solid.svg);
+  // external-link-icon
+  --external-icon: url(/assets/icons/fa/solid/up-right-from-square-solid.svg);
+  // target-title-icon
+  --target-title-icon: url(/assets/icons/fa/solid/caret-right-solid.svg);
 }
 
 ::-moz-selection {
@@ -307,7 +325,9 @@ header {
 // fix the anchor position due to a fixed header elem
 :target {
   &:before {
-    content: ' ';
+    content: '';
+    position: relative;
+    z-index: -1000;
     display: block;
     padding-top: 60px;
     margin-top: -60px;
@@ -317,9 +337,9 @@ header {
 
 main {
   position: relative;
-  padding: 0 max(var(--sar), $mainpadding) 0 max(var(--sal), $mainpadding);
+  padding: 0 max(var(--sar), #{$mainpadding}) 0 max(var(--sal), #{$mainpadding});
   @media all and (max-width: 1100px) {
-    padding: 0 max(var(--sar), $mainpadding-smaller) 0 max(var(--sal), $mainpadding-smaller);
+    padding: 0 max(var(--sar), #{$mainpadding-smaller}) 0 max(var(--sal), #{$mainpadding-smaller});
   }
   width: 100%;
   box-sizing: border-box;
@@ -737,7 +757,7 @@ left-side {
           family: $monofont;
         }
         padding: 0.5em 1em 0.5em 0;
-        height: 2em;
+        //height: 2em; // firefox calculate the rt elem height when rendering ruby element, while chrome not
         box-sizing: border-box;
         text-decoration: none;
         color: var(--fg);
@@ -824,3 +844,4 @@ left-side {
 }
 
 @import 'article.scss';
+@import 'dracula.scss';

@@ -3,8 +3,7 @@
 .yarnclean
 node_modules
 yarn-error.log
-dist/templates
-dist/assets
+/dist/*
 src/templates-old
 config/__pycache__
 .yarn/*
