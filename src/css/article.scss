@@ -33,6 +33,9 @@ article #content {
       }
     }
   }
+  li p {
+    text-indent: initial;
+  }
 
   a.reference {
     color: var(--link);
@@ -51,11 +54,15 @@ article #content {
       text-decoration: underline;
     }
   }
+
+  [id] {
+    scroll-margin-top: 60px;
+  }
   // link target decoration
   //@media all and (min-width: 1101px) {
   @media screen {
     @mixin targetedDecoration() {
-      content: ' ';
+      content: '';
       @include icon(var(--target-title-icon), 12px);
       margin: calc(0.75em - 6px) 0;
       filter: var(--brand0-f);
@@ -86,9 +93,10 @@ article #content {
       }
     }
     pre[id]:target {
+      position: relative;
       &:after {
         @include targetedDecoration();
-        top: 60px;
+        top: 1em; // according to the padding-top of pre
       }
     }
     [id]:not(pre):not(.section):target {
@@ -100,15 +108,23 @@ article #content {
           //// + 1em(the first elem padding/margin-top
           ////       the default css value of margin-top of p,ol,ul,pre is 1em)
           //top: calc(60px + 1em);
-          top: 60px;
         }
       }
     }
   }
 
   div.admonition {
-    padding: 0 1em 5px 4em;
-    // do not set a padding-top, it conflicts with :target anchor fix
+    padding: 5px 1em 5px 4em;
+
+        /*
+        // ~~do not set a padding-top, it conflicts with :target anchor fix~~
+        // use 'scroll-margin-top' fixes this limit
+        */
+
+    // Do not set a margin-left for this element,
+    // the :after pseudo elem of this first child for :target decoration
+    // set an absolute position to this to work.
+
     position: relative;
     font-size: 90%;
     line-height: 1.5em;
@@ -117,21 +133,18 @@ article #content {
       display: block;
       position: absolute;
       z-index: -2;
-      top: 0;
       left: 2em;
+      top: 0;
       height: 100%;
       width: calc(100% - 2em);
       box-sizing: border-box;
-      border-left: 0.5em solid var(--note);
-      background-color: var(--bg-less-t);
-      border-radius: $radius-smaller;
-      box-shadow: 1px 1px 5px var(--note);
+      //border-left: 0.3em solid var(--note);
+      background-color: var(--note-bg);
     }
     >.first {
-      //color: var(--note);
 
       // Do not set a position prop for this element,
-      // the :after pseudo elem for :target anchor
+      // the :after pseudo elem for :target decoration
       // need an absolute position of the parent.
 
       font: {
@@ -139,36 +152,30 @@ article #content {
         family: $monofont;
         weight: bold;
       }
-      //opacity: 0.7;
+      color: var(--fg-less);
       line-height: 1.5em;
-      margin-top: 0;
-      padding-left: 2em;
-      // set a padding-top to make up the lack of padding-top of it's parent
-      padding-top: 1em;
 
-      //padding-top: calc(1em / 0.9); // according to :target anchor fix
+        /*
+        margin-top: 0;
+        // set a padding-top to make up the lack of padding-top of it's parent
+        padding-top: 1em;
+        // use 'scroll-margin-top' fixes this limit
+        */
+
+      /*
+      padding-top: calc(1em / 0.9); // according to :target decoration fix
                                     // here 1em == this '.admonition>.first' font size
                                     // while we need '.admonition' font size
                                     //   due to above content 'top: calc(60px + 1em)'
                                     // so '/ 0.9'
+      */
+
       &:before {
         content: ' ';
-        display: block;
-        position: absolute;
         z-index: -1;
-        top: 0;
-        left: 3.125em; //calc(2.5em / 0.8);
-        width: calc(100% - 3.125em);
-        height: 3.5em;
-        background: {
-          color: #00000030;
-          image: var(--note-icon);
-          repeat: no-repeat;
-          size: 1em;
-          position: 1.875em; // 1.5 / 0.8
-        }
+        @include icon(var(--note-icon), 1em);
         filter: var(--note-f);
-        border-top-right-radius: $radius-smaller;
+        margin-right: 1em;
       }
     }
     >:not(.first) {
@@ -182,6 +189,13 @@ article #content {
         top: 60px;
       }
       */
+      /*
+      &:after {
+        top: 60px;
+        height: calc(100% - 60px);
+      }
+      scroll-margin-top fixes this workaround
+      */
       >:first-child:after {
         /*
           according to .first size line-height
@@ -191,23 +205,86 @@ article #content {
         //margin-top: calc(0.675em - 6px) !important;
         //margin-bottom: calc(0.675em - 6px) !important;
 
-        /*
-          fix top prop due to this p has a padding-top:1em
-         */
-        top: calc(60px + 1em) !important;
+        // fix top prop due to this p has a padding-top:1em
+        //top: calc(60px + 1em) !important;
+        // fixed by scroll-margin-top
+
+        // margin-top of .first + padding-top of admonition
+        top: calc(1em + 5px) !important;
       }
     }
   }
-  div.admonition.warning .first {
-    color: var(--warning);
-    &:before {
-      border-left-color: var(--warning);
+  div.admonition.hint, div.admonition.tip {
+    &:after {
+      //border-left: 0.3em solid var(--note);
+      border-left: 0.3em solid var(--hint);
+      background-color: var(--hint-bg);
+    }
+    .first {
+      &:before {
+        background-image: var(--hint-icon);
+        filter: var(--hint-f);
+      }
+    }
+  }
+  div.admonition.warning, div.admonition.attention {
+    &:after {
+      border-left: 0.3em solid var(--attention);
+      background-color: var(--attention-bg);
+    }
+    .first {
+      &:before {
+        background-image: var(--attention-icon);
+        filter: var(--attention-f);
+      }
+    }
+  }
+  div.admonition.warning .first:before {
+    background-image: var(--warning-icon);
+  }
+  div.admonition.important {
+    &:after {
+      border-left: 0.3em solid var(--important);
+      background-color: var(--important-bg);
+    }
+    .first {
+      &:before {
+        background-image: var(--important-icon);
+        filter: var(--important-f);
+      }
     }
   }
 
-  li {
-    p {
+  blockquote {
+    position: relative;
+    font-size: 80%;
+    line-height: 1.5em;
+    &:before {
+      content: ' ';
+      @include icon(var(--blockquote-icon), 2em, 0.2);
+      filter: var(--fg-less-f);
+      position: absolute;
+      z-index: -1;
+      top: 5px;
+      left: 1.5em;
     }
+    padding: 1em 1em 1em 4em;
+    background-color: var(--bg-less-t);
+    p {
+      text-indent: unset;
+    }
+  }
+
+  pre, code {
+    font: {
+      family: $monofont;
+      size: 90%;
+    }
+    line-height: 1.5em;
+  }
+  pre {
+    background-color: var(--bg-less-t);
+    padding: 1em 2em;
   }
 
   code {
@@ -253,14 +330,8 @@ article #content {
     }
   }
 
-  blockquote {
-    p {
-    }
-  }
 
   .footnote-reference {
   }
 
-  pre {
-  }
 }

@@ -2,7 +2,7 @@
  *
  * https://github.com/zenorocha/dracula-theme
  *
- * Copyright 2016, All rights reserved
+ * Copyright 2016, //  All rights reserved
  *
  * Code licensed under the MIT license
  * http://zenorocha.mit-license.org
@@ -11,157 +11,180 @@
  * @author Chris Bracco <chris@cbracco.me>
  * @author Zeno Rocha <hi@zenorocha.com>
  * @author Piruin Panichphol <piruin.p@gmail.com>
+ # @author Ryan Qian <i@bitbili.net>
  */
 
 /*
  * Variables
  */
 
-$dt-gray-dark: #282a36;  // Background
-$dt-gray: #44475a;       // Current Line & Selection
-$dt-gray-light: #f8f8f2; // Foreground
-$dt-blue: #6272a4;       // Comment
-$dt-cyan: #8be9fd;
-$dt-green: #50fa7b;
-$dt-orange: #ffb86c;
-$dt-pink: #ff79c6;
-$dt-purple: #bd93f9;
-$dt-red: #ff5555;
-$dt-yellow: #f1fa8c;
+//var(--dt-gray-dark: #282a36);  // Background
+//var(--dt-gray: #44475a);       // Current Line & Selection
+//var(--dt-gray-light: #f8f8f2); // Foreground
+//var(--dt-blue: #6272a4);       // Comment
+//var(--dt-cyan: #8be9fd);
+//var(--dt-green: #50fa7b);
+//var(--dt-orange: #ffb86c);
+//var(--dt-pink: #ff79c6);
+//var(--dt-purple: #bd93f9);
+//var(--dt-red: #ff5555);
+//var(--dt-yellow: #f1fa8c);
 
 /*
  * Styles
  */
 
 .highlight {
-  background: $dt-gray-dark;
-  color: $dt-gray-light;
+  color: var(--dt-gray-light);
 
-  .hll,
-  .s,
-  .sa,
-  .sb,
-  .sc,
-  .dl,
-  .sd,
-  .s2,
-  .se,
-  .sh,
-  .si,
-  .sx,
-  .sr,
-  .s1,
-  .ss {
-    color: $dt-yellow;
+  .hll, // specified line by manual??
+  .s,   // Literal.String
+  .sa,  // Literal.String.Affix
+  .sb,  // Literal.String.Backtick
+  .sc,  // Literal.String.Char
+  .dl,  // Literal.String.Delimiter
+  .sd,  // Literal.String.Doc
+  .s2,  // Literal.String.Double
+  .se,  // Literal.String.Escape
+  .sh,  // Literal.String.Heredoc
+  .si,  // Literal.String.Interpol
+  .sx,  // Literal.String.Other
+  .sr,  // Literal.String.Regex
+  .s1,  // Literal.String.Single
+  .ss   // Literal.String.Symbol
+  {
+    color: var(--dt-yellow);
   }
 
-  .go {
-    color: $dt-gray;
+  .go   // Generic.Output
+  {
+    color: var(--dt-gray);
   }
 
-  .err,
-  .g,
-  .l,
-  .n,
-  .x,
-  .p,
-  .ge,
-  .gr,
-  .gh,
-  .gi,
-  .gp,
-  .gs,
-  .gu,
-  .gt,
-  .ld,
-  .no,
-  .nd,
-  .ni,
-  .ne,
-  .nn,
-  .nx,
-  .py,
-  .w,
-  .bp {
-    color: $dt-gray-light;
+  .err, // Error
+  .g,   // Generic
+  .l,   // Literal
+  .n,   // Name
+  .x,   // Other
+  .p,   // Punctuation
+  .ge,  // Generic.Emph
+  .gr,  // Generic.Error
+  .gh,  // Generic.Heading
+  .gi,  // Generic.Inserted
+  .gp,  // Generic.Prompt
+  .gs,  // Generic.Strong
+  .gu,  // Generic.Subheading
+  .gt,  // Generic.Traceback
+  .ld,  // Literal.Date
+  .no,  // Name.Constant
+  .nd,  // Name.Decorator
+  .ni,  // Name.Entity
+  .ne,  // Name.Exception
+  .nn,  // Name.Namespace
+  .nx,  // Name.Other // cuttent pygment 2.11.2 cannot parse golang correctly
+  .py,  // Name.Property
+  .w,   // Text.Whitespace
+  .bp   // Name.Builtin.Pseudo
+  {
+    color: var(--dt-gray-light);
   }
 
-  .gh,
-  .gi,
-  .gu {
+  /*
+   * cuttent pygment 2.11.2 cannot parse golang correctly
+  .err {
+    border-bottom: 1px dotted var(--dt-red);
+  }
+  */
+
+  .gh,  // Generic.Heading
+  .gi,  // Generic.Inserted
+  .gu   // Generic.Subheading
+  {
     font-weight: bold;
   }
 
-  .ge {
+  .ge   // Generic.Emph
+  {
     text-decoration: underline;
   }
 
-  .bp {
+  .bp   // Name.Builtin.Pseudo
+  {
     font-style: italic;
   }
 
-  .c,
-  .ch,
-  .cm,
-  .cpf,
-  .c1,
-  .cs {
-    color: $dt-blue;
+  .c,   // Comment
+  .ch,  // Comment.Hashbang
+  .cm,  // Comment.Multiline
+  .cpf, // Comment.PreprocFile
+  .c1,  // Comment.Single
+  .cs   // Comment.Special
+  {
+    font-size: 95%;
+    color: var(--dt-blue);
   }
 
-  .kd,
-  .kt,
-  .nb,
-  .nl,
-  .nv,
-  .vc,
-  .vg,
-  .vi,
-  .vm {
-    color: $dt-cyan;
+  .kd,  // Keyword.Declaration
+  .kt,  // Keyword.Type
+  .nb,  // Name.Builtin
+  .nl,  // Name.Label
+  .nv,  // Name.Variable
+  .vc,  // Name.Variable.Class
+  .vg,  // Name.Variable.Global
+  .vi,  // Name.Variable.Instance
+  .vm   // Name.Variable.Magic
+  {
+    color: var(--dt-cyan);
   }
 
-  .kd,
-  .nb,
-  .nl,
-  .nv,
-  .vc,
-  .vg,
-  .vi,
-  .vm {
+  /*
+  .kd,  // Keyword.Declaration
+  .nb,  // Name.Builtin
+  .nl,  // Name.Label
+  .nv,  // Name.Variable
+  .vc,  // Name.Variable.Class
+  .vg,  // Name.Variable.Global
+  .vi,  // Name.Variable.Instance
+  .vm   // Name.Variable.Magic
+  {
     font-style: italic;
   }
+  */
 
-  .na,
-  .nc,
-  .nf,
-  .fm {
-    color: $dt-green;
+  .na,  // Name.Attribute
+  .nc,  // Name.Class
+  .nf,  // Name.Function
+  .fm   // Name.Function.Magic
+  {
+    color: var(--dt-green);
   }
 
-  .k,
-  .o,
-  .cp,
-  .kc,
-  .kn,
-  .kp,
-  .kr,
-  .nt,
-  .ow {
-    color: $dt-pink;
+  .k,   // Keyword
+  .o,   // Operator
+  .cp,  // Comment.Preproc
+  .kc,  // Keyword.Constant
+  .kn,  // Keyword.Namespace
+  .kp,  // Keyword.Pseudo
+  .kr,  // Keyword.Reserved
+  .nt,  // Name.Tag
+  .ow   // Operator.Word
+  {
+    color: var(--dt-pink);
   }
 
-  .m,
-  .mb,
-  .mf,
-  .mh,
-  .mi,
-  .mo,
-  .il {
-    color: $dt-purple;
+  .m,   // Literal.Number
+  .mb,  // Literal.Number.Bin
+  .mf,  // Literal.Number.Float
+  .mh,  // Literal.Number.Hex
+  .mi,  // Literal.Number.Integer
+  .mo,  // Literal.Number.Oct
+  .il   // Literal.Number.Integer.Long
+  {
+    color: var(--dt-purple);
   }
 
-  .gd {
-    color: $dt-red;
+  .gd   // Generic.Deleted
+  {
+    color: var(--dt-red);
   }
 }

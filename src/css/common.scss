@@ -7,7 +7,10 @@
 :root {
   --bg:       #232323; // TODO tune
   --bg-less:  #333333; // TODO tune
+  --bg-less-f:  invert(19%) sepia(2%) saturate(0%) hue-rotate(290deg) brightness(100%) contrast(96%);
   --bg-less-t:  #33333350; // TODO tune
+  --bg-less1: #313131; // TODO tune
+  --bg-less1-f: invert(18%) sepia(0%) saturate(27%) hue-rotate(187deg) brightness(98%) contrast(96%);
   --bg-more:  #131313; // TODO tune
   --bg-more-t0: #13131350; // TODO tune
   --bg-more-t1: #131313a0; // TODO tune
@@ -15,6 +18,7 @@
 
   --fg:       #E1E1E1; // TODO tune
   --fg-less:  #C1C1C1; // TODO tune
+  --fg-less-f: invert(93%) sepia(0%) saturate(0%) hue-rotate(166deg) brightness(85%) contrast(88%);
   --fg-more:  #FEFEFE; // TODO tune
   --fg-f:     invert(99%) sepia(4%) saturate(39%) hue-rotate(313deg) brightness(113%) contrast(76%);
 
@@ -26,21 +30,36 @@
   /*
     admonitions
   */
-  --attention:  #FF9100; //E9913D; // day: #FFFB97
   //--caution:
   //--danger:
   //--error:
+  //--tip:        var(--hint);
+  //--warning:    var(--attention);
+  --attention:      #FF9100; //E9913D; // day: #FFFB97
+  --attention-bg:   var(--bg-less-t);
+  --attention-f:    invert(60%) sepia(20%) saturate(4960%) hue-rotate(360deg) brightness(102%) contrast(106%);
+  --attention-icon: url(/assets/icons/fa/solid/exclamation-solid.svg);
+  --warning-icon:   url(/assets/icons/fa/solid/triangle-exclamation-solid.svg);
+
   --hint:       var(--brand0); // day: #E6EFFD
+  --hint-f:     var(--brand0-f); // day: #E6EFFD
+  --hint-bg:    var(--bg-less-t);
+  --hint-icon:  url(/assets/icons/fa/solid/fan-solid.svg);
+
   --important:  #FF5252;
-  --note:       #448AFF;
-  --note-f:     invert(42%) sepia(92%) saturate(495%) hue-rotate(182deg) brightness(104%) contrast(101%);
+  --important-f: invert(34%) sepia(27%) saturate(3023%) hue-rotate(327deg) brightness(135%) contrast(113%);
+  --important-bg: var(--bg-less-t);
+  --important-icon:  url(/assets/icons/fa/solid/star-solid.svg);
+
+  --note:       var(--bg-less1);
+  --note-bg:    var(--bg-less-t);
+  --note-f:     var(--fg-less-f);
   --note-icon:  url(/assets/icons/fa/solid/pencil-solid.svg);
-  --tip:        var(--brand0);
-  --warning:    var(--attention);
+
 
   --ifg:      #2F2F2F; // day: #BFBFBF
-  --link:     #AAC9FF; // day: #1877F2
-  --link-f:   invert(71%) sepia(39%) saturate(411%) hue-rotate(187deg) brightness(101%) contrast(102%);
+  --link:     #99D6FF;
+  --link-f:   invert(80%) sepia(7%) saturate(2225%) hue-rotate(175deg) brightness(96%) contrast(112%);
   --kbd-bg:   #BFC0C4; // day: #2F2F2F
   --gepkg-bg: #DDDAEC; // day: #4F4473
   //--github-bg:
@@ -87,6 +106,20 @@
   --external-icon: url(/assets/icons/fa/solid/up-right-from-square-solid.svg);
   // target-title-icon
   --target-title-icon: url(/assets/icons/fa/solid/caret-right-solid.svg);
+  // blockquote icon
+  --blockquote-icon: url(/assets/icons/fa/solid/quote-left.svg);
+
+  // dt-color
+  --dt-gray: #44475a;       // Current Line & Selection
+  --dt-gray-light: #f8f8f2; // Foreground
+  --dt-blue: #8a8a8a;       // Comment
+  --dt-cyan: #8be9fd;
+  --dt-green: #50fa7b;
+  --dt-orange: #ffb86c;
+  --dt-pink: #ff79c6;
+  --dt-purple: #bd93f9;
+  --dt-red: #ff5555;
+  --dt-yellow: #f1fa8c;
 }
 
 ::-moz-selection {
@@ -322,6 +355,7 @@ header {
   }
 }
 
+/*
 // fix the anchor position due to a fixed header elem
 :target {
   &:before {
@@ -334,6 +368,8 @@ header {
     visibility: hidden;
   }
 }
+use scroll-margin-top instead
+*/
 
 main {
   position: relative;
@@ -614,6 +650,7 @@ main {
     position: relative;
     width: 100%;
     margin: 20px 0 10px 0;
+    scroll-margin-top: 60px;
     &:target {
       >a#show-disqus {
         color: var(--ifg);
