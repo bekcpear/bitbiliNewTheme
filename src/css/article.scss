@@ -19,39 +19,55 @@ article #content {
   h6 {
     font-size: 0.8em;
   }
-  p, a, li, h2, h3, h4, h5, h6 {
+  p, a, li, h2, h3, h4, h5, h6, dd {
     line-height: 1.5em;
     color: var(--fg);
+    break-inside: avoid-page;
+  }
+  li {
+    break-inside: auto;
   }
 
-  >ul {
+  /*
+  div.section>ul, >ul {
     list-style-type: square;
-    >ul {
+    >li>ul {
       list-style-type: disc;
-      >ul {
+      >li>ul {
         list-style-type: circle;
       }
     }
   }
+  */
   li p {
     text-indent: initial;
   }
 
-  a.reference {
-    color: var(--link);
-    &.external {
-      &:after {
-        content: ' ';
-        @include icon(var(--external-icon), 0.6em);
-        line-height: 0.6em;
-        width: 1em;
-        filter: var(--link-f);
-        vertical-align: super;
+  :not(pre), :not(code), :not(var), :not(samp), :not(q) {
+    word-break: break-word;
+  }
+
+  a {
+    &.reference {
+      color: var(--link);
+      &.external {
+        &:after {
+          content: ' ';
+          @include icon(var(--external-icon), 0.6em);
+          line-height: 0.6em;
+          width: 1em;
+          filter: var(--link-f);
+          vertical-align: super;
+        }
+      }
+      &.internal {
+        color: var(--fg);
+        text-decoration: underline;
       }
     }
-    &.internal {
-      color: var(--fg);
-      text-decoration: underline;
+    &.footnote-reference {
+      font-size: 80%;
+      vertical-align: super;
     }
   }
 
@@ -92,14 +108,26 @@ article #content {
         }
       }
     }
+    a.footnote-reference:target {
+      color: var(--ifg);
+      background-color: var(--highlight);
+    }
     pre[id]:target {
-      position: relative;
+      // position: relative;
       &:after {
         @include targetedDecoration();
         top: 1em; // according to the padding-top of pre
       }
     }
-    [id]:not(pre):not(.section):target {
+    table[id]:target {
+      position: relative;
+      >:nth-child(2) {
+        &:after {
+          @include targetedDecoration();
+        }
+      }
+    }
+    [id]:not(pre):not(.section):not(table):target {
       position: relative;
       >:first-child {
         &:after {
@@ -115,6 +143,7 @@ article #content {
 
   div.admonition {
     padding: 5px 1em 5px 4em;
+    margin-bottom: 10px;
 
         /*
         // ~~do not set a padding-top, it conflicts with :target anchor fix~~
@@ -128,6 +157,7 @@ article #content {
     position: relative;
     font-size: 90%;
     line-height: 1.5em;
+    break-inside: avoid;
     &:after {
       content: ' ';
       display: block;
@@ -275,39 +305,90 @@ article #content {
     }
   }
 
-  pre, code {
+  pre, code, var, samp, q, kbd {
+    position: relative;
     font: {
       family: $monofont;
-      size: 90%;
+      size: 0.9em;
     }
-    line-height: 1.5em;
+    max-width: 100%;
+    overflow: auto;
   }
   pre {
+    line-height: 1.5em;
     background-color: var(--bg-less-t);
     padding: 1em 2em;
+    break-inside: avoid;
   }
 
-  code {
+  code, var, samp, q, kbd {
+    padding: 0.1em 0.6em;
+    border-radius: $radius-smaller;
+    background-color: var(--bg-less);
+    &.file {
+      background-color: transparent;
+    }
   }
 
   kbd {
+    color: var(--ifg);
+    font-weight: bold;
+    background-color: var(--kbd-bg);
+    box-shadow: 1px 1px 2px var(--bg-more);
   }
 
   table {
+    position: relative;
+    width: 100%;
+    overflow: auto;
+    border: none;
+    border-spacing: 0;
+    border-top: 1px solid var(--fg-less1);
+    border-right: 1px solid var(--fg-less1);
+    break-inside: avoid;
+    th, td {
+      border-spacing: 0;
+      border-top: none;
+      border-right: none;
+      border-left: 1px solid var(--fg-less1);
+      border-bottom: 1px solid var(--fg-less1);
+    }
     th {
+      border-bottom-width: 2px;
     }
-    td {
+    tr:nth-child(even) {
+      background-color: var(--bg-less-t);
     }
-    tbody tr {
+    tbody tr:hover {
+      //color: var(--ifg);
+      background-color: var(--brand0-t);
     }
     &.footnote {
-      tbody {
-        tr {
-          td.label {
+      border-right: none;
+      font-size: 80%;
+      line-height: 1.5em;
+      a.fn-backref {
+        text-decoration: underline;
+      }
+      td.label {
+        padding: 0 1em;
+        line-height: 1.5em;
+        border-left: none;
+        border-bottom: none;
+        word-break: keep-all;
+        a.fn-backref {
+          word-break: keep-all;
+        }
+        + td {
+          padding: 0 1em;
+          border-bottom: none;
+          em:first-child {
+            margin-right: 1em;
           }
         }
       }
-      + table.footnote {
+      tbody tr {
+        background: none;
       }
     }
   }
@@ -320,18 +401,17 @@ article #content {
   }
 
   img {
+    display: block;
+    position: relative;
+    max-width: 100%;
+    break-inside: avoid;
   }
 
   dl {
     dt {
-      margin-inline-start: 10px;
-    }
-    dd {
+      padding-left: 1em;
+      font-size: 90%;
+      font-style: italic;
     }
   }
-
-
-  .footnote-reference {
-  }
-
 }

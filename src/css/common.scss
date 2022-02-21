@@ -19,11 +19,13 @@
   --fg:       #E1E1E1; // TODO tune
   --fg-less:  #C1C1C1; // TODO tune
   --fg-less-f: invert(93%) sepia(0%) saturate(0%) hue-rotate(166deg) brightness(85%) contrast(88%);
+  --fg-less1: #A1A1A1; // TODO tune
   --fg-more:  #FEFEFE; // TODO tune
   --fg-f:     invert(99%) sepia(4%) saturate(39%) hue-rotate(313deg) brightness(113%) contrast(76%);
 
   --brand0:   #3DAEE9; // day: #4FB4EA
   --brand0-f: invert(56%) sepia(67%) saturate(552%) hue-rotate(163deg) brightness(97%) contrast(87%);
+  --brand0-t: #3DAEE9C0; // day: #4FB4EA
   --brand1:   #D21941; // day: #EB1846
   //--brand-bg: #A6E0FF; // day: #E6F6FF
 
@@ -110,7 +112,7 @@
   --blockquote-icon: url(/assets/icons/fa/solid/quote-left.svg);
 
   // dt-color
-  --dt-gray: #44475a;       // Current Line & Selection
+  --dt-gray: var(--fg-less);
   --dt-gray-light: #f8f8f2; // Foreground
   --dt-blue: #8a8a8a;       // Comment
   --dt-cyan: #8be9fd;
@@ -134,6 +136,7 @@
 ::-webkit-scrollbar {
   position: relative;
   width: 6px;
+  height: 6px;
   transition: background-color,opacity 0.3s;
 }
 ::-webkit-scrollbar-track {
@@ -249,6 +252,9 @@ body {
 
 header {
   position: sticky;
+  @media print {
+    position: relative;
+  }
   z-index: 900;
   top: 0;
   left: 0;
@@ -758,6 +764,7 @@ left-side-button {
 left-side {
   box-shadow: inset -1px 0 var(--bg-less);
   overflow: hidden;
+  word-break: break-word;
   .toc {
     position: relative;
     width: 100%;
