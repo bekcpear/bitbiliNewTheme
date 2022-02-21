@@ -24,7 +24,7 @@ function getCompSty(e, p) {
  *  Solve left-side table of contents
  */
 var leftSide
-var leftSideCover
+var bodyCover
 var toc
 var header
 var main
@@ -40,7 +40,7 @@ var lsLast = null
     return toc.cloneNode(true);
   }
 }*/
-export class LeftSideCover extends LitElement {
+export class BodyCover extends LitElement {
   static styles = css`
     :host {
       position: fixed;
@@ -73,7 +73,6 @@ function handleLeftSide(manual) {
   //debugger;
   var innerWidth = window.innerWidth;
   var sideWidth = getCompSty(leftSide, 'width');
-  leftSideCover.style.display = 'none';
   leftSide.style.transition = 'transform 0.3s';
   if ( !printing && (lSGet(lsName) == null || ( !lsLast && manual )) ) {
     if (innerWidth > 1100 ) {
@@ -81,9 +80,9 @@ function handleLeftSide(manual) {
       main.style.marginLeft = 'calc(var(--sal) + ' + sideWidth + ')';
       footer.style.marginLeft = 'calc(var(--sal) + ' + sideWidth + ')';
 
-      header.style.width = 'calc(100% - ' + sideWidth + '- var(--sal))';
-      main.style.width = 'calc(100% - ' + sideWidth + '- var(--sal))';
-      footer.style.width = 'calc(100% - ' + sideWidth + '- var(--sal))';
+      header.style.width = 'calc(100% - ' + sideWidth + ' - var(--sal))';
+      main.style.width = 'calc(100% - ' + sideWidth + ' - var(--sal))';
+      footer.style.width = 'calc(100% - ' + sideWidth + ' - var(--sal))';
 
       // these value are fixed
       header.style.paddingLeft = '0px';
@@ -94,7 +93,7 @@ function handleLeftSide(manual) {
       lsLast = true;
       return
     } else if ( manual ) {
-      leftSideCover.style.display = 'block';
+      bodyCover.style.display = 'block';
 
       leftSide.style.transform = 'translateX(var(--sal))';
       lsLast = true;
@@ -153,7 +152,7 @@ function leftSideInit() {
 
   //customElements.define('left-side', LeftSide);
   leftSide.appendChild(toc.cloneNode(true));
-  customElements.define('left-side-cover', LeftSideCover);
+  customElements.define('body-cover', BodyCover);
   customElements.define('left-side-button', LeftSideBtn);
 
   window.addEventListener('popstate', function (event) {
@@ -261,6 +260,44 @@ export class Search extends LitElement {
 }
 customElements.define('search-box', Search);
 
+/*
+ * prepare source code cover
+export class SourceCodeCover extends LitElement {
+  createRenderRoot() {
+    return this;
+  }
+  render() {
+    return html`
+      <div>
+      </div>
+    `;
+  }
+}
+customElements.define('source-code-cover', SourceCodeCover);
+ * */
+
+/*
+ * show source code button
+ * */
+export class SourceCode extends LitElement {
+  static properties = {
+    myHref: { type: String },
+  };
+  createRenderRoot() {
+    return this;
+  }
+  render() {
+    return html`
+      <a id="show-source-code" @click="${this._do}" class="hidden-print" href="${this.myHref}">
+        <button><span>源码</span></button>
+      </a>
+    `;
+  }
+  _do(e) {
+  }
+}
+customElements.define('source-code', SourceCode);
+
 
 /*
  * loads
@@ -270,11 +307,13 @@ window.addEventListener('DOMContentLoaded', function(){
    * do left-side
    * */
   leftSide = document.querySelector('left-side');
-  leftSideCover = document.querySelector('left-side-cover');
+  bodyCover = document.querySelector('body-cover');
   toc = document.querySelector('#toc .toc');
   header = document.querySelector('header');
   main = document.querySelector('main');
   footer = document.querySelector('footer');
+  bodyCover.style.display = 'none';
+
   if (toc != null && leftSide != null) {
     leftSideInit();
 

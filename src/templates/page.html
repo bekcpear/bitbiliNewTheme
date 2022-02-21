@@ -2,6 +2,13 @@
 Author: cwittlut <i@bitbili.net>
 License: GPLv2
 #}
+
+{% extends "article.html" %}
+
+{% block oldnewerposts %}
+{% endblock oldnewerposts %}
+
+{#
 {% extends "base.html" %}
 
 {% block html_lang %}{{ langname[page.lang] }}{% endblock %}
@@ -122,9 +129,10 @@ p {
 {% endblock header %}
 
 {% block main %}
+  <div id="source-code-cover">
+  </div>
   <main>
     <article>
-      {# article header start #}
       <div id="header">
 
         <div id="headline">
@@ -145,7 +153,6 @@ p {
           {% endif %}
         </div>
       </div>
-      {# article header end #}
 
       {% if page.toc %}
       <div id="toc">
@@ -166,3 +173,4 @@ p {
 {% block footer %}
   {% include 'includes/footer.html' %}
 {% endblock footer %}
+#}

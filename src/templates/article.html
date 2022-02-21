@@ -4,6 +4,11 @@ License: GPLv2
 #}
 {% extends "base.html" %}
 
+
+{% if not article and page %}
+  {% set article = page %}
+{% endif %}
+
 {% block html_lang %}{{ langname[article.lang] }}{% endblock %}
 {% block title %}{{ article.title|striptags }}&ensp;-&ensp;{{ SITE.long_name }}{% endblock %}
 
@@ -133,6 +138,8 @@ p {
 {% endblock header %}
 
 {% block main %}
+  <div id="source-code-cover">
+  </div>
   <main>
     <article>
       {# article header start #}
@@ -177,6 +184,7 @@ p {
       </div>
     </article>
 
+    {% block oldnewerposts %}
     <div id='oldnewerposts' class="hidden-print">
       <span id="newerpost">
       {% if article.next_article %}
@@ -204,6 +212,7 @@ p {
         </ul>
       </div>
     {% endif %}
+    {% endblock oldnewerposts %}
 
     {% include 'includes/comments.html' %}
   </main>

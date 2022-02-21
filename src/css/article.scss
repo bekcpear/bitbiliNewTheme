@@ -71,9 +71,12 @@ article #content {
     }
   }
 
+  /*
+   * replaced by scroll-padding-top of html elem
   [id] {
     scroll-margin-top: 60px;
   }
+  */
   // link target decoration
   //@media all and (min-width: 1101px) {
   @media screen {
@@ -112,11 +115,20 @@ article #content {
       color: var(--ifg);
       background-color: var(--highlight);
     }
-    pre[id]:target {
-      // position: relative;
+    // 'overflow: auto' makes pre elem cannot show out-boundary elements
+    // and it also invalid the scroll-margin-top prop on chrome, but valid on firefox
+    //pre[id]:target, >p[id]:target, .section[id]>p[id]:target {
+    >p[id]:target, .section[id]>p[id]:target {
+      position: relative;
       &:after {
         @include targetedDecoration();
         top: 1em; // according to the padding-top of pre
+      }
+    }
+    >p[id]:target, .section[id]>p[id]:target {
+      position: relative;
+      &:after {
+        top: 0;
       }
     }
     table[id]:target {

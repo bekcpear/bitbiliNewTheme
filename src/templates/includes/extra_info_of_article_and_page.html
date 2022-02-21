@@ -13,11 +13,17 @@ License: GPLv2
             </button>
           </a>
           {% endif %}
-          <a @click="showSourceCode(this)" id="show-source-code" class="hidden-print" href="{{ _rst_url(_url(article.url)) }}">
+          <source-code myhref="{{ _rst_url(_url(article.url)) }}">
+          </source-code>
+          <noscript>
+          <a id="show-source-code" class="hidden-print" href="{{ _rst_url(_url(article.url)) }}">
             <button><span>源码</span></button>
           </a>
+          </noscript>
+          {#
           <a id="share" class="hidden-print">
             <button><span>分享</span></button>
           </a>
+          #}
         </div>
 

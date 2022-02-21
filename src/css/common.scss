@@ -230,7 +230,23 @@ html {
 }
 */
 
+html {
+  height: 100%;
+  scroll-padding-top: calc(var(--sat) + 60px);
+}
+
 body {
+  &:before {
+    content: '';
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: var(--sat);
+    background-color: var(--bg);
+  }
   position: relative;
   -webkit-text-size-adjust: none;
   width: 100%;
@@ -243,20 +259,21 @@ body {
   line-height: $linehight;
   color: var(--fg);
   background: var(--bg);
-  margin: 0;
-  padding: var(--sat) 0 var(--sab) 0;
+  margin: var(--sat) 0 0 0;
+  //padding: var(--sat) 0 0 0;
   transition-property: background-color;
   transition-duration: 0.1s;
 }
 
 
 header {
-  position: sticky;
+  position: fixed;
+  display: block;
   @media print {
     position: relative;
   }
   z-index: 900;
-  top: 0;
+  top: var(--sat);
   left: 0;
   height: 60px;
   width: 100%;
@@ -376,6 +393,26 @@ header {
 }
 use scroll-margin-top instead
 */
+
+div#source-code-cover {
+  position: fixed;
+  z-index: 1002;
+  top: 0;
+  left: 0;
+  display: block;
+  height: 100%;
+  width: 100%;
+  padding: max(calc(var(--sat) + 1em), 3em) 0 3em 0;
+  box-sizing: border-box;
+  transform: translateY(100%);
+  background-color: var(--bg-less-t);
+  >div.highlight {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 0 2em;
+    overflow: auto;
+  }
+}
 
 main {
   position: relative;
@@ -656,7 +693,7 @@ main {
     position: relative;
     width: 100%;
     margin: 20px 0 10px 0;
-    scroll-margin-top: 60px;
+    //scroll-margin-top: 60px;
     &:target {
       >a#show-disqus {
         color: var(--ifg);
@@ -691,8 +728,8 @@ footer {
   font-size: 90%;
   font-family: $monofont;
   line-height: 1.5em;
-  margin: 30px 0 15px 0;
-  padding: 20px max(var(--sar), 10px) 0 max(var(--sal), 10px);
+  margin-top: 30px;
+  padding: 20px max(var(--sar), 10px) max(var(--sab), 15px) max(var(--sal), 10px);
   border-top: 1px solid var(--brand0);
   box-sizing: border-box;
   >div {
@@ -855,7 +892,7 @@ left-side {
     >ul {
       list-style: none;
       padding-left: 0;
-      margin-bottom: 20px;
+      margin-bottom: max(var(--sab), 20px);
       position: relative;
       >li {
         position: relative;
