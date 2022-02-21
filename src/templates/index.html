@@ -7,16 +7,15 @@ License: GPLv2
 
   {% block header %}
   <header>
-    <div id="widget">
-      <div id="search">
-        <form action="{{ _url('/search.html') }}" method="get">
-          <input type="search" name="search">
-          <button type="submit">Search</button>
-        </form>
-      </div>
-      <div id="color-mode">
-      </div>
+    <color-mode></color-mode>
+    <search-box></search-box>
+    <noscript>
+    <div id="search" class="f-r">
+      <form action="{{ _url('/search') }}" method="get">
+        <input type="search" name="search"></input><button type="submit">Search</button>
+      </form>
     </div>
+    </noscript>
   </header>
   {% endblock header %}
 

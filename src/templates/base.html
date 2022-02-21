@@ -156,6 +156,12 @@ body {
 
 <body>
   <div style="display:none" id="title">{{ _title() }}</div>
+  <script>
+    let colorMode = localStorage.getItem('colorMode');
+    if ( colorMode != null && colorMode == 'day') {
+      document.querySelector('body').classList.add('day');
+    }
+  </script>
 
   <body-cover>
   </body-cover>

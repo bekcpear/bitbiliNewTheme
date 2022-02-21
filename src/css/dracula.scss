@@ -36,6 +36,12 @@
 
 .highlight {
   color: var(--dt-gray-light);
+  transition-property: color,background-color;
+  transition-duration: 0.3s;
+  * {
+    transition-property: color,background-color;
+    transition-duration: 0.3s;
+  }
 
   .hll, // specified line by manual??
   .s,   // Literal.String

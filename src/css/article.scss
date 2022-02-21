@@ -23,6 +23,8 @@ article #content {
     line-height: 1.5em;
     color: var(--fg);
     break-inside: avoid-page;
+    transition-property: border-bottom-color,color;
+    transition-duration: 0.3s;
   }
   li {
     break-inside: auto;
@@ -50,6 +52,8 @@ article #content {
   a {
     &.reference {
       color: var(--link);
+      &:hover {
+      }
       &.external {
         &:after {
           content: ' ';
@@ -68,6 +72,88 @@ article #content {
     &.footnote-reference {
       font-size: 80%;
       vertical-align: super;
+    }
+    &.github, &.gitlab {
+      &:before {
+        content: '';
+        @include icon(var(--github-icon), 0.8em);
+        filter: var(--fg-less-f);
+        vertical-align: baseline;
+        margin: 0 3px;
+      }
+      .reponame {
+        font: {
+          size: 0.9em;
+          family: $monofont;
+        }
+        color: var(--fg);
+        transition: color 0.3s;
+      }
+      .cob {
+        &:before {
+          content: '@';
+        }
+        font: {
+          size: 0.8em;
+          weight: bold;
+        }
+        border-radius: $radius-smaller;
+        background-color: var(--bg-less1);
+        color: var(--fg);
+        transition-property: background-color,color;
+        transition-duration: 0.3s;
+        padding: 0.1em 0.6em;
+      }
+      .path {
+        &:before {
+          content: ':';
+        }
+        font: {
+          size: 0.9em;
+          family: $monofont;
+          style: italic;
+        }
+      }
+    }
+    &.gitlab {
+      &:before {
+        background-image: var(--gitlab-icon);
+      }
+    }
+    &.gentoo-package {
+      color: var(--ifg);
+      transition: color 0.3s;
+      font-family: $monofont;
+      font-size: 0.8em;
+      display: inline-block;
+      .category, .slash, .name {
+        background-color: var(--genpkg-bg);
+        transition: background-color 0.3s;
+        padding-top: 0.1em;
+        padding-bottom: 0.1em;
+      }
+      .category {
+        padding-left: 0.6em;
+        border-top-left-radius: $radius-smaller;
+        border-bottom-left-radius: $radius-smaller;
+      }
+      .name {
+        padding-right: 0.6em;
+        border-top-right-radius: $radius-smaller;
+        border-bottom-right-radius: $radius-smaller;
+      }
+      &.external:after {
+        background-image: var(--genpkg-icon);
+        filter: var(--genpkg-bg-f);
+        opacity: 0.6;
+        transition: opacity 0.3s;
+      }
+      &:hover {
+        text-decoration: none;
+      }
+      &.external:hover:after {
+        opacity: 1;
+      }
     }
   }
 
@@ -112,8 +198,10 @@ article #content {
       }
     }
     a.footnote-reference:target {
-      color: var(--ifg);
+      color: var(--highlight-fg);
       background-color: var(--highlight);
+      transition-property: background-color,color;
+      transition-duration: 0.3s;
     }
     // 'overflow: auto' makes pre elem cannot show out-boundary elements
     // and it also invalid the scroll-margin-top prop on chrome, but valid on firefox
@@ -182,6 +270,7 @@ article #content {
       box-sizing: border-box;
       //border-left: 0.3em solid var(--note);
       background-color: var(--note-bg);
+      transition: background-color 0.3s;
     }
     >.first {
 
@@ -195,6 +284,7 @@ article #content {
         weight: bold;
       }
       color: var(--fg-less);
+      transition: color 0.3s;
       line-height: 1.5em;
 
         /*
@@ -312,6 +402,7 @@ article #content {
     }
     padding: 1em 1em 1em 4em;
     background-color: var(--bg-less-t);
+    transition: background-color 0.3s;
     p {
       text-indent: unset;
     }
@@ -325,6 +416,8 @@ article #content {
     }
     max-width: 100%;
     overflow: auto;
+    transition-property: background-color;
+    transition-duration: 0.3s;
   }
   pre {
     line-height: 1.5em;
@@ -357,6 +450,8 @@ article #content {
     border-spacing: 0;
     border-top: 1px solid var(--fg-less1);
     border-right: 1px solid var(--fg-less1);
+    transition-property: border-top-color,border-right-color;
+    transition-duration: 0.3;
     break-inside: avoid;
     th, td {
       border-spacing: 0;
@@ -364,12 +459,15 @@ article #content {
       border-right: none;
       border-left: 1px solid var(--fg-less1);
       border-bottom: 1px solid var(--fg-less1);
+      transition-property: border-left-color,border-bottom-color;
+      transition-duration: 0.3;
     }
     th {
       border-bottom-width: 2px;
     }
     tr:nth-child(even) {
       background-color: var(--bg-less-t);
+      transition: background-color 0.3s;
     }
     tbody tr:hover {
       //color: var(--ifg);

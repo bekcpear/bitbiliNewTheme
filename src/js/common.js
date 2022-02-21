@@ -29,6 +29,7 @@ var toc
 var header
 var main
 var footer
+var sourceCodeCover
 var lsName = 'hideLeftSide'
 var lsLast = null
 /*export class LeftSide extends LitElement {
@@ -71,9 +72,11 @@ var printing = false
 var hasLeftSide = false
 function handleLeftSide(manual) {
   //debugger;
+  bodyCover.style.display = 'none'; // hidden the cover when toc entry been clicked
   var innerWidth = window.innerWidth;
   var sideWidth = getCompSty(leftSide, 'width');
-  leftSide.style.transition = 'transform 0.3s';
+  leftSide.style.transitionProperty = 'transform,background-color,box-shadow';
+  leftSide.style.transitionDuration = '0.3s';
   if ( !printing && (lSGet(lsName) == null || ( !lsLast && manual )) ) {
     if (innerWidth > 1100 ) {
       header.style.marginLeft = 'calc(var(--sal) + ' + sideWidth + ')';
@@ -138,14 +141,14 @@ function leftSideInit() {
 
   leftSide.style.position = 'fixed';
   leftSide.style.zIndex = '1001';
-  leftSide.style.height = '100%';
+  leftSide.style.height = 'calc(100% - var(--sab) - var(--sat))';
   leftSide.style.maxWidth = maxWidth + 'px';
   leftSide.style.backgroundColor = 'var(--bg)';
   leftSide.style.transform = 'translateX(-' + maxWidth + 'px)';
 
-  header.style.transitionProperty = 'margin-left,width';
-  main.style.transitionProperty = 'margin-left,width';
-  footer.style.transitionProperty = 'margin-left,width';
+  header.style.transitionProperty = 'margin-left,width,background-color';
+  main.style.transitionProperty = 'margin-left,width,background-color';
+  footer.style.transitionProperty = 'margin-left,width,background-color';
   header.style.transitionDuration = '0.3s';
   main.style.transitionDuration = '0.3s';
   footer.style.transitionDuration = '0.3s';
@@ -201,13 +204,12 @@ export class BackTop extends LitElement {
 }
 customElements.define('back-top', BackTop);
 const upIcon = 'url(/assets/icons/fa/solid/angle-up-solid.svg)';
-const downIcon = 'url(/assets/icons/fa/solid/angle-down-solid.svg)';
 let root = document.documentElement;
 window.addEventListener("scroll", function(event) {
   if (window.scrollY > 1000) {
     root.style.setProperty('--bt-icon', upIcon);
   } else {
-    root.style.setProperty('--bt-icon', downIcon);
+    root.style.removeProperty('--bt-icon');
   }
 });
 
@@ -223,6 +225,18 @@ export class DayNight extends LitElement {
     return html`<button id="color-mode" class="f-r" title="switch day/night mode" @click="${this._do}"></button>`;
   }
   _do(e) {
+    let mode = lSGet('colorMode');
+    if ( mode == null || mode == 'night') {
+      mode = "day";
+    } else {
+      mode = "night";
+    }
+    if ( mode == null || mode == 'night') {
+      document.querySelector('body').classList.remove('day');
+    } else {
+      document.querySelector('body').classList.add('day');
+    }
+    lSSet('colorMode', mode);
   }
 }
 customElements.define('color-mode', DayNight);
@@ -236,7 +250,9 @@ export class ShortcutInfo extends LitElement {
     return this;
   }
   render() {
-    return html`<button id="help" class="f-r" title="shortcut help and other info" @click="${this._do}"></button>`;
+    return html`<button id="help" class="f-r"
+      title="shortcut help and other info (Not implemented yet!)"
+      @click="${this._do}"></button>`;
   }
   _do(e) {
   }
@@ -275,6 +291,21 @@ export class SourceCodeCover extends LitElement {
 }
 customElements.define('source-code-cover', SourceCodeCover);
  * */
+export class SourceCodeClose extends LitElement {
+  createRenderRoot() {
+    return this;
+  }
+  render() {
+    return html`
+      <button @click="${this._do}"></button>
+    `;
+  }
+  _do() {
+    sourceCodeCover.style.removeProperty('transform');
+  }
+}
+customElements.define('source-code-close', SourceCodeClose);
+
 
 /*
  * show source code button
@@ -288,32 +319,61 @@ export class SourceCode extends LitElement {
   }
   render() {
     return html`
-      <a id="show-source-code" @click="${this._do}" class="hidden-print" href="${this.myHref}">
+      <a id="show-source-code" @click="${this._do}" class="hidden-print">
         <button><span>源码</span></button>
       </a>
     `;
   }
   _do(e) {
+    e.preventDefault();
+    sourceCodeCover.style.setProperty('transform', 'translateY(0)');
+    const sourceCodeCoverC = sourceCodeCover.querySelector('div#source-code-container');
+    if (!sourceCodeCoverC.querySelector('div.highlight')) {
+      const myRequest = new Request(this.myHref);
+      sourceCodeCoverC.innerHTML = '<pre>wait ...</pre>';
+      fetch(myRequest).then(function(response) {
+        if (!response.ok) {
+          console.error(response);
+          sourceCodeCoverC.innerHTML = `HTTP error! Status: ${ response.status }`;
+          return;
+        }
+        return response.text();
+      })
+      .then(function(response) {
+        sourceCodeCoverC.innerHTML = response;
+      })
+      .catch(function(response) {
+        console.error(response);
+        sourceCodeCoverC.innerHTML = response;
+      });
+    }
   }
 }
 customElements.define('source-code', SourceCode);
-
 
 /*
  * loads
  * */
 window.addEventListener('DOMContentLoaded', function(){
-  /*
-   * do left-side
-   * */
   leftSide = document.querySelector('left-side');
   bodyCover = document.querySelector('body-cover');
   toc = document.querySelector('#toc .toc');
   header = document.querySelector('header');
   main = document.querySelector('main');
   footer = document.querySelector('footer');
-  bodyCover.style.display = 'none';
+  sourceCodeCover = document.querySelector('#source-code-cover');
+  /*
+   * firefox does not support backdrop-filter,
+   * so, set an non-transparent background for source-code-cover
+   * */
+  if (navigator.userAgent.indexOf("Firefox") != -1) {
+    sourceCodeCover.style.backgroundColor = 'var(--bg)';
+  }
 
+
+  /*
+   * do left-side
+   * */
   if (toc != null && leftSide != null) {
     leftSideInit();
 
@@ -358,4 +418,7 @@ window.addEventListener('DOMContentLoaded', function(){
     }
   });
 });
-//window.addEventListener('DOMContentLoaded', function(){
+window.addEventListener('load', function(){
+  document.querySelector('#source-code-cover').
+    style.setProperty('transition', 'transform 0.2s');
+});

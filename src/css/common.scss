@@ -5,75 +5,18 @@
 @import 'var.scss';
 
 :root {
-  --bg:       #232323; // TODO tune
-  --bg-less:  #333333; // TODO tune
-  --bg-less-f:  invert(19%) sepia(2%) saturate(0%) hue-rotate(290deg) brightness(100%) contrast(96%);
-  --bg-less-t:  #33333350; // TODO tune
-  --bg-less1: #313131; // TODO tune
-  --bg-less1-f: invert(18%) sepia(0%) saturate(27%) hue-rotate(187deg) brightness(98%) contrast(96%);
-  --bg-more:  #131313; // TODO tune
-  --bg-more-t0: #13131350; // TODO tune
-  --bg-more-t1: #131313a0; // TODO tune
-  --bg-f:     invert(11%) sepia(33%) saturate(0%) hue-rotate(240deg) brightness(104%) contrast(95%);
-
-  --fg:       #E1E1E1; // TODO tune
-  --fg-less:  #C1C1C1; // TODO tune
-  --fg-less-f: invert(93%) sepia(0%) saturate(0%) hue-rotate(166deg) brightness(85%) contrast(88%);
-  --fg-less1: #A1A1A1; // TODO tune
-  --fg-more:  #FEFEFE; // TODO tune
-  --fg-f:     invert(99%) sepia(4%) saturate(39%) hue-rotate(313deg) brightness(113%) contrast(76%);
-
-  --brand0:   #3DAEE9; // day: #4FB4EA
-  --brand0-f: invert(56%) sepia(67%) saturate(552%) hue-rotate(163deg) brightness(97%) contrast(87%);
-  --brand0-t: #3DAEE9C0; // day: #4FB4EA
-  --brand1:   #D21941; // day: #EB1846
-  //--brand-bg: #A6E0FF; // day: #E6F6FF
-
-  /*
-    admonitions
-  */
-  //--caution:
-  //--danger:
-  //--error:
-  //--tip:        var(--hint);
-  //--warning:    var(--attention);
-  --attention:      #FF9100; //E9913D; // day: #FFFB97
-  --attention-bg:   var(--bg-less-t);
-  --attention-f:    invert(60%) sepia(20%) saturate(4960%) hue-rotate(360deg) brightness(102%) contrast(106%);
-  --attention-icon: url(/assets/icons/fa/solid/exclamation-solid.svg);
-  --warning-icon:   url(/assets/icons/fa/solid/triangle-exclamation-solid.svg);
-
-  --hint:       var(--brand0); // day: #E6EFFD
-  --hint-f:     var(--brand0-f); // day: #E6EFFD
-  --hint-bg:    var(--bg-less-t);
-  --hint-icon:  url(/assets/icons/fa/solid/fan-solid.svg);
-
-  --important:  #FF5252;
-  --important-f: invert(34%) sepia(27%) saturate(3023%) hue-rotate(327deg) brightness(135%) contrast(113%);
-  --important-bg: var(--bg-less-t);
-  --important-icon:  url(/assets/icons/fa/solid/star-solid.svg);
-
-  --note:       var(--bg-less1);
-  --note-bg:    var(--bg-less-t);
-  --note-f:     var(--fg-less-f);
-  --note-icon:  url(/assets/icons/fa/solid/pencil-solid.svg);
-
-
-  --ifg:      #2F2F2F; // day: #BFBFBF
-  --link:     #99D6FF;
-  --link-f:   invert(80%) sepia(7%) saturate(2225%) hue-rotate(175deg) brightness(96%) contrast(112%);
-  --kbd-bg:   #BFC0C4; // day: #2F2F2F
-  --gepkg-bg: #DDDAEC; // day: #4F4473
-  //--github-bg:
-  --highlight: #FAF3A3;
-
   --sat: env(safe-area-inset-top, 0px);
   --sar: env(safe-area-inset-right, 0px);
   --sab: env(safe-area-inset-bottom, 0px);
   --sal: env(safe-area-inset-left, 0px);
 
-  // day/night switch icon
-  --dn-icon: url(/assets/icons/fa/regular/moon-regular.svg);
+  --genpkg-icon:    url(/assets/icons/fa/solid/cube-solid.svg);
+  --attention-icon: url(/assets/icons/fa/solid/exclamation-solid.svg);
+  --warning-icon:   url(/assets/icons/fa/solid/triangle-exclamation-solid.svg);
+  --hint-icon:      url(/assets/icons/fa/solid/fan-solid.svg);
+  --important-icon: url(/assets/icons/fa/solid/star-solid.svg);
+  --note-icon:      url(/assets/icons/fa/solid/pencil-solid.svg);
+
   // back to top/move to bottom icon
   --bt-icon: url(/assets/icons/fa/solid/angle-down-solid.svg);
   // info icon
@@ -110,34 +53,182 @@
   --target-title-icon: url(/assets/icons/fa/solid/caret-right-solid.svg);
   // blockquote icon
   --blockquote-icon: url(/assets/icons/fa/solid/quote-left.svg);
+  // close icon
+  --close-icon: url(/assets/icons/fa/solid/xmark-solid.svg);
+  // github icon
+  --github-icon: url(/assets/icons/fa/brands/github-square-brands.svg);
+  // gitlab icon
+  --gitlab-icon: url(/assets/icons/fa/brands/gitlab-brands.svg);
+}
+
+body {
+  // dark mode colors
+  --bg:         #232323;
+  --bg-f:       invert(11%) sepia(33%) saturate(0%) hue-rotate(240deg) brightness(104%) contrast(95%);
+
+  // day/night switch icon
+  --dn-icon: url(/assets/icons/fa/solid/moon-solid.svg);
+
+  --bg-less:    #333333;
+  --bg-less-f:  invert(19%) sepia(2%) saturate(0%) hue-rotate(290deg) brightness(100%) contrast(96%);
+  --bg-less-t:  #33333350;
+
+  --bg-less1:   #313131;
+  --bg-less1-f: invert(18%) sepia(0%) saturate(27%) hue-rotate(187deg) brightness(98%) contrast(96%);
+
+  --bg-source-c: var(--bg-less-t);
+  --bg-source-b: 0.5;
+
+  --bg-more:    #131313;
+  --bg-more-t0: #13131350;
+  --bg-more-t1: #131313a0;
+
+  --ifg:        #2F2F2F; // day: #BFBFBF
+
+  --fg:         #E1E1E1;
+  --fg-f:       invert(99%) sepia(4%) saturate(39%) hue-rotate(313deg) brightness(113%) contrast(76%);
+
+  --fg-less:    #C1C1C1;
+  --fg-less-f:  invert(93%) sepia(0%) saturate(0%) hue-rotate(166deg) brightness(85%) contrast(88%);
+  --fg-less1:   #A1A1A1;
+
+  --brand0:     #3DAEE9; // day: #4FB4EA
+  --brand0-f:   invert(56%) sepia(67%) saturate(552%) hue-rotate(163deg) brightness(97%) contrast(87%);
+  --brand0-t:   #3DAEE9C0; // day: #4FB4EA
+  //--brand1:   #D21941; // day: #EB1846
+
+  --link:       #99D6FF;
+  //--link-decora: none;
+  --link-f:     invert(80%) sepia(7%) saturate(2225%) hue-rotate(175deg) brightness(96%) contrast(112%);
+
+  --kbd-bg:     #BFC0C4; // day: #2F2F2F
+
+  --genpkg-bg:  #D2CAF0; //#DDDAEC; // day: #4F4473
+  --genpkg-bg-f: invert(84%) sepia(5%) saturate(1445%) hue-rotate(210deg) brightness(101%) contrast(88%);
+
+  --highlight:  #FAF3A3;
+  --highlight-fg:  var(--ifg);
+
+  /*
+    admonitions
+  */
+  //--caution/--danger/--error/--tip/--warning
+  --attention:      #FF9100; // day: #FFFB97
+  --attention-bg:   var(--bg-less-t);
+  --attention-f:    invert(60%) sepia(20%) saturate(4960%) hue-rotate(360deg) brightness(102%) contrast(106%);
+
+  --hint:           var(--brand0); // day: #E6EFFD
+  --hint-f:         var(--brand0-f); // day: #E6EFFD
+  --hint-bg:        var(--bg-less-t);
+
+  --important:      #FF5252;
+  --important-f:    invert(34%) sepia(27%) saturate(3023%) hue-rotate(327deg) brightness(135%) contrast(113%);
+  --important-bg:   var(--bg-less-t);
+
+  --note:           var(--bg-less1);
+  --note-bg:        var(--bg-less-t);
+  --note-f:         var(--fg-less-f);
 
   // dt-color
-  --dt-gray: var(--fg-less);
-  --dt-gray-light: #f8f8f2; // Foreground
-  --dt-blue: #8a8a8a;       // Comment
-  --dt-cyan: #8be9fd;
-  --dt-green: #50fa7b;
-  --dt-orange: #ffb86c;
-  --dt-pink: #ff79c6;
-  --dt-purple: #bd93f9;
-  --dt-red: #ff5555;
-  --dt-yellow: #f1fa8c;
+  --dt-gray:        var(--fg-less);
+  --dt-gray-light:  #f8f8f2;  // Foreground
+  --dt-blue:        #8a8a8a;  // Comment
+  --dt-cyan:        #8be9fd;
+  --dt-green:       #50fa7b;
+  --dt-orange:      #ffb86c;
+  --dt-pink:        #ff79c6;
+  --dt-purple:      #bd93f9;
+  --dt-red:         #ff5555;
+  --dt-yellow:      #f1fa8c;
+}
+
+body.day {
+  --bg:           #FDFDFD;
+  --bg-f:         invert(100%) sepia(100%) saturate(0%) hue-rotate(274deg) brightness(103%) contrast(98%);
+
+  --dn-icon:      url(/assets/icons/fa/regular/moon-regular.svg);
+
+  --bg-less:      #EAEAEA;
+  --bg-less-f:    invert(100%) sepia(35%) saturate(450%) hue-rotate(271deg) brightness(111%) contrast(84%);
+  --bg-less-t:    #EAEAEA70;
+
+  --bg-less1:     #CACACA;
+  --bg-less1-f:   invert(84%) sepia(0%) saturate(0%) hue-rotate(259deg) brightness(100%) contrast(86%);
+
+  --bg-source-c:  #FDFDFD70;
+  --bg-source-b:  0.9;
+
+  --bg-more:      #333333;
+  --bg-more-t0:   #77777750;
+  --bg-more-t1:   #777777a0;
+
+  --fg:           #232323;
+  --fg-f:         invert(11%) sepia(33%) saturate(0%) hue-rotate(240deg) brightness(104%) contrast(95%);
+
+  --fg-less:      #525252;
+  --fg-less-f:    invert(33%) sepia(17%) saturate(0%) hue-rotate(219deg) brightness(72%) contrast(70%);
+  --fg-less1:     #717171;
+  --fg-less1-f:   invert(55%) sepia(0%) saturate(1293%) hue-rotate(158deg) brightness(79%) contrast(89%);
+
+  --ifg:          #FEFEFE;
+
+  --brand0:       #EB1846;
+  --brand0-f:     invert(22%) sepia(65%) saturate(6553%) hue-rotate(338deg) brightness(94%) contrast(96%);
+  --brand0-t:     #EB1846C0;
+
+  --link:         #EB204C;
+  //--link-hover:   var(--brand0);
+  //--link-decora:  underline;
+  --link-f:       var(--fg-less1-f);
+  //--link-f:       invert(23%) sepia(91%) saturate(4461%) hue-rotate(336deg) brightness(95%) contrast(93%);
+
+  --kbd-bg:       #2F2F2F;
+
+  --genpkg-bg:    #6b5c9a;
+  --genpkg-bg-f:  invert(41%) sepia(38%) saturate(561%) hue-rotate(214deg) brightness(86%) contrast(92%);
+
+  --highlight:    #FFDF88;
+  --highlight-fg: var(--fg);
+
+  --attention-bg: #FFE29739;
+
+  // use brand colot of night mode
+  --hint:         #24a7ec; // #3DAEE9;
+  --hint-f:       invert(56%) sepia(67%) saturate(552%) hue-rotate(163deg) brightness(97%) contrast(87%);
+  --hint-bg:      #3DAEE930;
+
+  --important: #FF1744;
+  --important-bg: #FF174419;
+
+  --dt-gray:      var(--fg-less);
+  --dt-gray-light:#131313;
+  --dt-blue:      #8A8A8A;
+  --dt-cyan:      #0550ae;
+  --dt-green:     #116329;
+  //--dt-orange:    #ffb86c; not used
+  --dt-pink:      #cf222e;
+  --dt-purple:    #8250df;
+  --dt-red:       #f01111;
+  --dt-yellow:    #0a3069; //#f57c00;
 }
 
 ::-moz-selection {
-  color: var(--ifg);
+  color: var(--highlight-fg);
   background-color: var(--highlight);
+  transition-property: background-color,color;
+  transition-duration: 0.3s;
 }
 ::selection {
-  color: var(--ifg);
+  color: var(--highlight-fg);
   background-color: var(--highlight);
+  transition-property: background-color,color;
+  transition-duration: 0.3s;
 }
 
 ::-webkit-scrollbar {
   position: relative;
   width: 6px;
   height: 6px;
-  transition: background-color,opacity 0.3s;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
@@ -145,6 +236,8 @@
 ::-webkit-scrollbar-thumb {
   border-radius: $radius;
   background-color: var(--bg-more-t0);
+  transition-property: background-color;
+  transition-duration: 0.3s;
 }
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--bg-more-t1);
@@ -197,8 +290,10 @@ button {
   border-radius: $radius;
   outline: solid 1px var(--fg);
   color: var(--fg);
-  transition: background-color,outline,box-shadow 0.1s;
-  background-color: var(--bg);
+  transition-property: background-color,color,outline-color,box-shadow;
+  transition-duration: 0.3s;
+  background-color: transparent;
+  box-shadow: 0 0 0 transparent;
   &:hover {
     outline-color: var(--brand0);
     box-shadow: 0 0 3px var(--brand0);
@@ -221,6 +316,7 @@ button {
     size: contain;
     position: center;
   }
+  transition: filter 0.3s;
 }
 
 /*
@@ -246,6 +342,8 @@ body {
     width: 100%;
     height: var(--sat);
     background-color: var(--bg);
+    transition-property: background-color;
+    transition-duration: 0.3s;
   }
   position: relative;
   -webkit-text-size-adjust: none;
@@ -261,8 +359,8 @@ body {
   background: var(--bg);
   margin: var(--sat) 0 0 0;
   //padding: var(--sat) 0 0 0;
-  transition-property: background-color;
-  transition-duration: 0.1s;
+  transition-property: background-color, color;
+  transition-duration: 0.3s;
 }
 
 
@@ -279,6 +377,9 @@ header {
   width: 100%;
   padding: 0 var(--sar) 0 var(--sal);
   background-color: var(--bg);
+  box-sizing: border-box;
+  transition-property: background-color;
+  transition-duration: 0.3s;
   //box-shadow: 0 1px 6px 0 var(--bg-more);
   >a {
     display: inline-block;
@@ -302,6 +403,8 @@ header {
         border: none;
         color: var(--fg);
         background: var(--bg);
+        transition-property: background-color,color;
+        transition-duration: 0.3s;
         border-top-left-radius: $radius;
         border-bottom-left-radius: $radius;
         @media all and (max-width: 510px) {
@@ -331,39 +434,13 @@ header {
       }
     }
   }
-  button#back-top, button#color-mode, button#help {
-    outline: none;
-    box-shadow: none;
-  }
-  #color-mode, #back-top, #help {
-    margin: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-    height: 40px;
-    width: 40px;
-    &:before {
-      content: '';
-      filter: var(--fg-f);
-    }
-    &:active {
-      outline: 1px var(--brand0) dashed;
-    }
-  }
-  #color-mode, #help {
-    margin-right: 1px;
-  }
-  #back-top, #color-mode {
-    margin-left: 1px;
-  }
+  // the slight more common button defination at below
   button#back-top {
     &:before {
       @include icon(var(--bt-icon), 20px);
     }
   }
   button#color-mode {
-    @media all and (max-width: 800px) {
-      margin-left: 10px;
-    }
     &:before {
       @include icon(var(--dn-icon), 20px);
     }
@@ -402,15 +479,49 @@ div#source-code-cover {
   display: block;
   height: 100%;
   width: 100%;
-  padding: max(calc(var(--sat) + 1em), 3em) 0 3em 0;
+  padding: calc(var(--sat) + 60px) 0 0 0;
   box-sizing: border-box;
   transform: translateY(100%);
-  background-color: var(--bg-less-t);
-  >div.highlight {
+  background-color: var(--bg-source-c);
+  transition-property: background-color,color;
+  transition-duration: 0.3s;
+  backdrop-filter: blur(6px) brightness(var(--bg-source-b)); // firefox does not support this by default.
+  source-code-close {
+    position: absolute;
+    top: var(--sat);
+    right: var(--sar);
+    width: 60px;
+    height: 60px;
+    button {
+      &:before {
+        @include icon(var(--close-icon), 20px);
+        filter: var(--fg-less-f);
+      }
+    }
+  }
+  >div#source-code-container {
     margin: 0 auto;
+    height: 100%;
     max-width: 1200px;
-    padding: 0 2em;
-    overflow: auto;
+    box-sizing: border-box;
+    padding: 0 max(var(--sar), 2em) 0 max(var(--sal), 2em);
+    >div.highlight {
+      height: 100%;
+      overflow: auto;
+      font-size: 0.9em;
+      &:after {
+        font: {
+          size: 80%;
+          family: $monofont;
+        }
+        line-height: 1.5em;
+        content: '.. END';
+        color: var(--fg);
+        transition: color 0.3s;
+        padding-bottom: calc(var(--sab) + 1em);
+        opacity: 0.5;
+      }
+    }
   }
 }
 
@@ -437,6 +548,7 @@ main {
       line-height: 1.5em;
       content: '.. END';
       color: var(--fg);
+      transition: color 0.3s;
       opacity: 0.5;
     }
     #header {
@@ -485,6 +597,13 @@ main {
           margin-right: 10px;
           font-size: 90%;
           line-height: 1em;
+          outline: none;
+          border-radius: 0;
+          box-shadow: inset 0 -1px 0 var(--brand0);
+          &:hover {
+            box-shadow: inset 0 -3px 0 var(--brand0);
+            outline: none;
+          }
           &:before {
             filter: var(--fg-f);
             margin-right: 5px;
@@ -696,7 +815,7 @@ main {
     //scroll-margin-top: 60px;
     &:target {
       >a#show-disqus {
-        color: var(--ifg);
+        color: var(--highlight-fg);
         background-color: var(--highlight);
       }
     }
@@ -709,7 +828,8 @@ main {
         font-family: $monofont;
         font-size: 80%;
         line-height: 1.5em;
-        transition: color,background-color 2s;
+        transition-property: color,background-color;
+        transition-duration: 2s;
       }
       font-weight: bold;
       font-size: 90%;
@@ -729,7 +849,7 @@ footer {
   font-family: $monofont;
   line-height: 1.5em;
   margin-top: 30px;
-  padding: 20px max(var(--sar), 10px) max(var(--sab), 15px) max(var(--sal), 10px);
+  padding: 20px max(var(--sar), 10px) calc(var(--sab) + 15px) max(var(--sal), 10px);
   border-top: 1px solid var(--brand0);
   box-sizing: border-box;
   >div {
@@ -762,6 +882,7 @@ footer {
         width: 30px;
         height: 30px;
         filter: var(--fg-f);
+        transition: filter 0.3s;
         margin-right: 5px;
       }
       span {
@@ -771,29 +892,38 @@ footer {
   }
 }
 
+source-code-close button,
+left-side-button button,
+header button#color-mode,
+header button#back-top,
+header button#help {
+  outline: none;
+  box-shadow: none;
+  margin: 1px;
+  padding: 19px;
+  width: 58px;
+  height: 58px;
+  box-sizing: border-box;
+  &:before {
+    content: ' ';
+    filter: var(--fg-f);
+  }
+  &:hover {
+    box-shadow: none;
+  }
+  &:active {
+    outline: 1px dashed var(--brand0);
+  }
+}
+
 // for rendered compontents
 left-side-button {
   @media print {
     display: none;
   }
   button {
-    outline: none;
-    box-shadow: none;
-    margin: 1px;
-    padding: 19px;
-    width: 58px;
-    height: 58px;
-    box-sizing: border-box;
     &:before {
-      content: ' ';
       @include icon(var(--bars-icon), 20px);
-      filter: var(--fg-f);
-    }
-    &:hover {
-      box-shadow: none;
-    }
-    &:active {
-      outline: 1px dashed var(--brand0);
     }
   }
 }
@@ -802,6 +932,8 @@ left-side {
   box-shadow: inset -1px 0 var(--bg-less);
   overflow: hidden;
   word-break: break-word;
+  transition-property: background-color, box-shadow;
+  transition-duration: 0.3s;
   .toc {
     position: relative;
     width: 100%;
@@ -812,13 +944,15 @@ left-side {
     .topic-title {
       height: 60px;
       padding: 20px 0 20px 20px;
-      margin: 0;
+      margin: 0 1px 0 0;
       box-sizing: border-box;
       font-weight: bold;
       position: sticky;
       top: 0;
       left: 0;
       background-color: var(--bg);
+      transition-property: background-color;
+      transition-duration: 0.3s;
       z-index: 1;
     }
     ul {
@@ -851,6 +985,7 @@ left-side {
           width: 10px;
           height: 100%;
           border-right: 1px solid var(--bg-less);
+          transition: border-right-color 0.3s;
         }
         &:hover {
           /*
@@ -872,6 +1007,7 @@ left-side {
             width: 100%;
             height: 100%;
             background-color: var(--bg-less);
+            transition: background-color 0.3s;
             opacity: 0.8;
             //border-top: 1px dashed var(--brand0);
             //border-bottom: 1px dashed var(--brand0);

@@ -4,7 +4,6 @@ License: GPLv2
 #}
 {% extends "base.html" %}
 
-
 {% if not article and page %}
   {% set article = page %}
 {% endif %}
@@ -139,6 +138,10 @@ p {
 
 {% block main %}
   <div id="source-code-cover">
+    <source-code-close>
+    </source-code-close>
+    <div id="source-code-container">
+    </div>
   </div>
   <main>
     <article>
