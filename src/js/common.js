@@ -183,6 +183,53 @@ customElements.define('index-rss', RssBtn);
 /*
  * pager
  * */
+const sTL = '#index #title-list';
+const sOP = '#index #pager older-page';
+const sNP = '#index #pager newer-page';
+var indexes = new Map();
+async function pagingSolve(indexes, olderHref, newerHref) {
+  document.querySelector(sTL).replaceWith(indexes);
+  if (olderHref) {
+    document.querySelector(sOP).setAttribute('myhref', olderHref);
+    document.querySelector(sOP).removeAttribute('myclass');
+  } else {
+    document.querySelector(sOP).removeAttribute('myhref');
+    document.querySelector(sOP).setAttribute('myclass', 'disabled-a');
+  }
+  if (newerHref) {
+    document.querySelector(sNP).setAttribute('myhref', newerHref);
+    document.querySelector(sNP).removeAttribute('myclass');
+  } else {
+    document.querySelector(sNP).removeAttribute('myhref');
+    document.querySelector(sNP).setAttribute('myclass', 'disabled-a');
+  }
+}
+async function paging(elem) {
+  if (elem.myHref) {
+    let v = indexes.get(elem.myHref);
+    if (v) {
+      pagingSolve(v.indexes, v.olderHref, v.newerHref);
+      return;
+    }
+    let req = new Request(elem.myHref);
+    fetch(req).then(function(res) {
+      if (!res.ok) {
+        console.error(res);
+        return;
+      }
+      return res.text();
+    }).then(function(txt){
+      const d = new DOMParser().parseFromString(txt, "text/html");
+      const l = d.querySelector(sTL);
+      const olderHref = d.querySelector(sOP).getAttribute('myhref');
+      const newerHref = d.querySelector(sNP).getAttribute('myhref');
+      indexes.set(elem.myHref, {indexes: l, olderHref: olderHref, newerHref: newerHref});
+      pagingSolve(l, olderHref, newerHref);
+    }).catch(function(err){
+      console.error(err);
+    });
+  }
+}
 class PagerNewer extends LitElement {
   static properties = {
     myHref: { type: String },
@@ -200,6 +247,7 @@ class PagerNewer extends LitElement {
   }
   _do(e) {
     e.preventDefault();
+    paging(this);
   }
 }
 class PagerOlder extends LitElement {
@@ -219,12 +267,11 @@ class PagerOlder extends LitElement {
   }
   _do(e) {
     e.preventDefault();
+    paging(this);
   }
 }
 customElements.define('newer-page', PagerNewer);
 customElements.define('older-page', PagerOlder);
-
-
 
 
 /*

@@ -100,7 +100,7 @@ JS = {
 ############
 # theme specific settings, should not be modified normally
 THEME_NAME                = 'bitbiliTheme'
-THEME_URL                 = 'https://gitlab.com/cwittlut/bitbiliTheme'
+THEME_URL                 = 'https://github.com/bekcpear/bitbiliTheme'
 THEME_STATIC_DIR          = 'assets'
 THEME_STATIC_PATHS        = ['assets']
 JINJA_ENVIRONMENT         = {

@@ -71,6 +71,8 @@
   --angle-left-icon: url(/assets/icons/fa/solid/angle-left-solid.svg);
   // angle right icon
   --angle-right-icon: url(/assets/icons/fa/solid/angle-right-solid.svg);
+  // pin icon
+  --pin-icon: url(/assets/icons/fa/solid/thumbtack-solid.svg);
 }
 
 body {
@@ -563,16 +565,40 @@ main {
     display: flex;
     align-items: center;
     flex-direction: column;
-    ul#title-list {
-      padding: 0;
-      list-style: none;
-      a {
-        font-size: 0.9em;
-        color: var(--fg-less);
+    #title-list {
+      width: 100%;
+      ul {
+        margin-top: 40px;
+        margin-bottom: 0;
+        padding: 0 1.5em;
+        list-style: none;
+        li {
+          position: relative;
+          line-height: 1.5em;
+          &.pined:before {
+            content: '';
+            position: absolute;
+            top: 0.45em;
+            left: -1em;
+            @include icon(var(--pin-icon), 0.6em);
+            filter: var(--fg-less-f);
+          }
+          a {
+            font-size: 0.9em;
+            color: var(--fg-less);
+          }
+        }
+      }
+      #page-number {
+        height: 20px;
+        font-size: 12px;
+        text-align: right;
+        color: var(--fg-less1);
+        transition: color 0.3s;
       }
     }
     #pager {
-      margin-bottom: 1em;
+      margin-bottom: 20px;
       a {
         text-decoration: none;
         color: transparent;
@@ -607,15 +633,16 @@ main {
       }
     }
   }
+
   /*
-   * For index page start
+   * For index page, start
    */
   &.on-index {
     position: fixed;
     top: 0;
     bottom: 0;
     height: 100%;
-    padding: calc(var(--sat) + 80px) calc(var(--sar) + 30px) var(--sab) calc(var(--sal) + 30px);
+    padding: var(--sat) calc(var(--sar) + 30px) var(--sab) calc(var(--sal) + 30px);
     >.contents {
       position: relative;
       max-width: 1200px;
@@ -642,6 +669,7 @@ main {
         display: flex;
         justify-content: center;
         align-items: flex-end;
+        padding-top: 80px;
         div {
           display: flex;
           flex-direction: column;
@@ -672,6 +700,12 @@ main {
       #author {
         display: flex;
         margin-top: 30px;
+        padding-bottom: 100px;
+        //@media all and (max-width: calc(var(--sal) + var(--sar) + 599px)) {
+        // not sure safe-area-offset will be calculated in this max-width or not.
+        @media all and (max-width: 599px) {
+          padding-bottom: 0;
+        }
         justify-content: center;
         align-items: center;
         >div {
@@ -702,10 +736,41 @@ main {
           }*/
         }
       }
+      #index {
+        align-items: flex-start;
+        #title-list {
+          >ul {
+            height: 190px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            li a {
+              font-size: 0.8em;
+            }
+          }
+        }
+      }
+    }
+    div#theme-info {
+      position: absolute;
+      left: calc(var(--sal) + 10px);
+      bottom: calc(var(--sat) + 10px);
+      color: var(--fg-less1);
+      opacity: 0.3;
+      transition: color 0.3s;
+      font: {
+        family: $monofont;
+        size: 0.7em;
+        line-height: 1.5em;
+      }
+      a {
+        color: var(--fg-less1);
+        text-decoration: underline;
+      }
     }
   }
   /*
-   * For index page end
+   * For index page, end
    */
 
   article {

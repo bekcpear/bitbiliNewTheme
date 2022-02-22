@@ -5,15 +5,23 @@ License: GPLv2
 
     <div id="index">
       {% if articles %}
-      <ul id="title-list">
-        {% for article in (articles_page.object_list if articles_page else articles) %}
-        <li>
-          <a class="article-title" href="{{ _url(article.url, relative=False) }}">
-            {{ article.title }}
-          </a>
-        </li>
-        {% endfor %}
-      </ul>
+      <div id="title-list">
+        <ul>
+          {% for article in (articles_page.object_list if articles_page else articles) %}
+            {% if article.pin and article.pin != False %}
+              {% set pined = "pined" %}
+            {% else %}
+              {% set pined = "" %}
+            {% endif %}
+          <li class="{{pined}}">
+            <a class="article-title" href="{{ _url(article.url, relative=False) }}">
+              {{ article.title }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+        <div id="page-number">{{ articles_page.number }} / {{ articles_paginator.num_pages }}</div>
+      </div>
       {% endif %}
 
       {% if articles_page and articles_paginator.num_pages > 1 %}
