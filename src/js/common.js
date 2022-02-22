@@ -41,16 +41,17 @@ var lsLast = null
     return toc.cloneNode(true);
   }
 }*/
-export class BodyCover extends LitElement {
+class BodyCover extends LitElement {
   static styles = css`
     :host {
       position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       display: none;
       z-index: 999;
-      background-color: var(--bg);
-      opacity: 0.8;
+      background-color: var(--bg-source-c);
     }
     a {
       display: block;
@@ -75,30 +76,29 @@ function handleLeftSide(manual) {
   bodyCover.style.display = 'none'; // hidden the cover when toc entry been clicked
   var innerWidth = window.innerWidth;
   var sideWidth = getCompSty(leftSide, 'width');
-  leftSide.style.transitionProperty = 'transform,background-color,box-shadow';
   leftSide.style.transitionDuration = '0.3s';
   if ( !printing && (lSGet(lsName) == null || ( !lsLast && manual )) ) {
     if (innerWidth > 1100 ) {
-      header.style.marginLeft = 'calc(var(--sal) + ' + sideWidth + ')';
-      main.style.marginLeft = 'calc(var(--sal) + ' + sideWidth + ')';
-      footer.style.marginLeft = 'calc(var(--sal) + ' + sideWidth + ')';
+      header.style.marginLeft = sideWidth;
+      main.style.marginLeft = sideWidth;
+      footer.style.marginLeft = sideWidth;
 
-      header.style.width = 'calc(100% - ' + sideWidth + ' - var(--sal))';
-      main.style.width = 'calc(100% - ' + sideWidth + ' - var(--sal))';
-      footer.style.width = 'calc(100% - ' + sideWidth + ' - var(--sal))';
+      header.style.width = 'calc(100% - ' + sideWidth + ')';
+      main.style.width = 'calc(100% - ' + sideWidth + ')';
+      footer.style.width = 'calc(100% - ' + sideWidth + ')';
 
       // these value are fixed
       header.style.paddingLeft = '0px';
       main.style.paddingLeft = '20px';
       footer.style.paddingLeft = '0px';
 
-      leftSide.style.transform = 'translateX(var(--sal))';
+      leftSide.style.transform = 'translateX(0)';
       lsLast = true;
       return
     } else if ( manual ) {
       bodyCover.style.display = 'block';
 
-      leftSide.style.transform = 'translateX(var(--sal))';
+      leftSide.style.transform = 'translateX(0)';
       lsLast = true;
       return
     }
@@ -118,7 +118,7 @@ function handleLeftSide(manual) {
   leftSide.style.transform = 'translateX(-' + sideWidth + ')';
   lsLast = false;
 }
-export class LeftSideBtn extends LitElement {
+class LeftSideBtn extends LitElement {
   createRenderRoot() {
     return this;
   }
@@ -137,22 +137,6 @@ export class LeftSideBtn extends LitElement {
   }
 }
 function leftSideInit() {
-  var maxWidth = 350;
-
-  leftSide.style.position = 'fixed';
-  leftSide.style.zIndex = '1001';
-  leftSide.style.height = 'calc(100% - var(--sab) - var(--sat))';
-  leftSide.style.maxWidth = maxWidth + 'px';
-  leftSide.style.backgroundColor = 'var(--bg)';
-  leftSide.style.transform = 'translateX(-' + maxWidth + 'px)';
-
-  header.style.transitionProperty = 'margin-left,width,background-color';
-  main.style.transitionProperty = 'margin-left,width,background-color';
-  footer.style.transitionProperty = 'margin-left,width,background-color';
-  header.style.transitionDuration = '0.3s';
-  main.style.transitionDuration = '0.3s';
-  footer.style.transitionDuration = '0.3s';
-
   //customElements.define('left-side', LeftSide);
   leftSide.appendChild(toc.cloneNode(true));
   customElements.define('body-cover', BodyCover);
@@ -176,9 +160,77 @@ function leftSideInit() {
 }
 
 /*
+ * rss button on index page
+ * */
+class RssBtn extends LitElement {
+  static properties = {
+    myHref: { type: String },
+  };
+  createRenderRoot() {
+    return this;
+  }
+  render() {
+    return html`
+      <a id="rss" href="${this.myHref}" @click="${this._do}"></a>
+    `;
+  }
+  _do(e) {
+    e.preventDefault();
+  }
+}
+customElements.define('index-rss', RssBtn);
+
+/*
+ * pager
+ * */
+class PagerNewer extends LitElement {
+  static properties = {
+    myHref: { type: String },
+    myClass: { type: String },
+  };
+  createRenderRoot() {
+    return this;
+  }
+  render() {
+    return html`
+      <a id="newer-page" class="${this.myClass}" href="${this.myHref}" @click="${this._do}">
+        <button></button>
+      </a>
+    `;
+  }
+  _do(e) {
+    e.preventDefault();
+  }
+}
+class PagerOlder extends LitElement {
+  static properties = {
+    myHref: { type: String },
+    myClass: { type: String },
+  };
+  createRenderRoot() {
+    return this;
+  }
+  render() {
+    return html`
+      <a id="older-page" class="${this.myClass}" href="${this.myHref}" @click="${this._do}">
+        <button></button>
+      </a>
+    `;
+  }
+  _do(e) {
+    e.preventDefault();
+  }
+}
+customElements.define('newer-page', PagerNewer);
+customElements.define('older-page', PagerOlder);
+
+
+
+
+/*
  * back to top/bottom button
  * */
-export class BackTop extends LitElement {
+class BackTop extends LitElement {
   createRenderRoot() {
     return this;
   }
@@ -215,9 +267,8 @@ window.addEventListener("scroll", function(event) {
 
 /*
  * day/night mode button
- * TODO
  * */
-export class DayNight extends LitElement {
+class DayNight extends LitElement {
   createRenderRoot() {
     return this;
   }
@@ -245,7 +296,7 @@ customElements.define('color-mode', DayNight);
  * shortcut info button
  * TODO
  * */
-export class ShortcutInfo extends LitElement {
+class ShortcutInfo extends LitElement {
   createRenderRoot() {
     return this;
   }
@@ -263,7 +314,7 @@ customElements.define('shortcut-help', ShortcutInfo);
  * search button
  * TODO, by a dynamic search engine for this static site
  * */
-export class Search extends LitElement {
+class Search extends LitElement {
   createRenderRoot() {
     return this;
   }
@@ -278,7 +329,7 @@ customElements.define('search-box', Search);
 
 /*
  * prepare source code cover
-export class SourceCodeCover extends LitElement {
+class SourceCodeCover extends LitElement {
   createRenderRoot() {
     return this;
   }
@@ -291,7 +342,7 @@ export class SourceCodeCover extends LitElement {
 }
 customElements.define('source-code-cover', SourceCodeCover);
  * */
-export class SourceCodeClose extends LitElement {
+class SourceCodeClose extends LitElement {
   createRenderRoot() {
     return this;
   }
@@ -310,7 +361,7 @@ customElements.define('source-code-close', SourceCodeClose);
 /*
  * show source code button
  * */
-export class SourceCode extends LitElement {
+class SourceCode extends LitElement {
   static properties = {
     myHref: { type: String },
   };
@@ -350,6 +401,7 @@ export class SourceCode extends LitElement {
   }
 }
 customElements.define('source-code', SourceCode);
+
 
 /*
  * loads

@@ -8,7 +8,7 @@ License: GPLv2
       <ul id="title-list">
         {% for article in (articles_page.object_list if articles_page else articles) %}
         <li>
-          <a class="article_title" href="{{ _url(article.url, relative=False) }}">
+          <a class="article-title" href="{{ _url(article.url, relative=False) }}">
             {{ article.title }}
           </a>
         </li>
@@ -19,19 +19,34 @@ License: GPLv2
       {% if articles_page and articles_paginator.num_pages > 1 %}
       <div id="pager">
         {% if articles_page.has_previous() %}
-        <a id="previous_page" href="{{ _url(articles_previous_page.url, relative=False) }}">
-        </a>
+          {% set previous_url = articles_previous_page.url %}
+          {% set previous_dis = "" %}
         {% else %}
-        <a id="previous_page" class="disabled-a">
-        </a>
+          {% set previous_url = "" %}
+          {% set previous_dis = "disabled-a" %}
         {% endif %}
+        <noscript>
+        <a id="newer-page" class="{{previous_dis}}" href="{{ _url(previous_url, relative=False) }}">
+          <button></button>
+        </a>
+        </noscript>
+        <newer-page myclass="{{previous_dis}}" myhref="{{ _url(previous_url, relative=False) }}">
+        </newer-page>
+
         {% if articles_page.has_next() %}
-        <a id="next_page" href="{{ _url(articles_next_page.url, relative=False) }}">
-        </a>
+          {% set next_url = articles_next_page.url %}
+          {% set next_dis = "" %}
         {% else %}
-        <a id="next_page" class="disabled-a">
-        </a>
+          {% set next_url = "" %}
+          {% set next_dis = "disabled-a" %}
         {% endif %}
+        <noscript>
+        <a id="older-page" class="{{next_dis}}" href="{{ _url(next_url, relative=False) }}">
+          <button></button>
+        </a>
+        </noscript>
+        <older-page myclass="{{next_dis}}" myhref="{{ _url(next_url, relative=False) }}">
+        </older-page>
       </div>
       {% endif %}
     </div>

@@ -6,7 +6,7 @@ License: GPLv2
 {% extends "base.html" %}
 
   {% block header %}
-  <header>
+  <header class="on-index">
     <color-mode></color-mode>
     <search-box></search-box>
     <noscript>
@@ -20,24 +20,36 @@ License: GPLv2
   {% endblock header %}
 
   {% block main %}
-  <main>
-    <div id="blackboard">
-      <div id="logo"><img src="{{_url(LOGO.square.svg.path, True)}}" /></div>
-      <div id="author">
-        <img id="avatar" src="{{ SITE.author.profile.avatar}}" />
-        <span id="real-name">{{ SITE.author.name }}</span>
-        <span id="username">@{{ SITE.author.username|trim('@') }}</span>
-        <span id="bio">{{ SITE.author.profile.bio }}</span>
+  <main class="on-index">
+    <div class="contents">
+      <div id="blackboard">
+        <div id="site">
+          <img src="{{ _url(LOGO.square.svg.path, False, True) }}" />
+          <div>
+            <span>{{ SITE.desc }}</span>
+            <span>
+            <noscript>
+            <a id="rss" href="{{ _url('feeds/rss.xml', False, False) }}">订阅</a>
+            </noscript>
+            <index-rss myhref="{{ _url('feeds/rss.xml', False, False) }}">
+            </index-rss>
+            </span>
+          </div>
+        </div>
+        <div id="author">
+          <div>
+            <span>{{ SITE.author.name }}</span>
+            <a target="_blank" href="{{ _url(SITE.author.profile.url, False) }}">
+              <span>@{{ SITE.author.username|trim('@') }}</span>
+            </a>
+          </div>
+          <img id="avatar" src="{{ _url(SITE.author.profile.avatar, False, True) }}" />
+        </div>
       </div>
-      <div id="desc">{{ SITE.desc }}</div>
-    </div>
-
-    {% include "includes/list.html"%}
-
+      {% include "includes/list.html"%}
+    <div>
   </main>
   {% endblock main %}
 
   {% block footer %}
-  <footer>
-  </footer>
   {% endblock footer %}

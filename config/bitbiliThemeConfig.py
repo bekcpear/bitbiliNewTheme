@@ -34,9 +34,9 @@ SITE = {
                 "cwittlut@vermilion.ink"
                 ],
             "profile": {
-                "avatar": "", # pay attention to append a hash
+                "avatar": "/1.jpg", # pay attention to append a hash
                 "bio": "",
-                "url": "https://github.com/bekcpear"
+                "url": "https://ume.ink/"
                 }
             },
         "og": {

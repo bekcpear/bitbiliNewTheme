@@ -451,7 +451,7 @@ article #content {
     border-top: 1px solid var(--fg-less1);
     border-right: 1px solid var(--fg-less1);
     transition-property: border-top-color,border-right-color;
-    transition-duration: 0.3;
+    transition-duration: 0.3s;
     break-inside: avoid;
     th, td {
       border-spacing: 0;
@@ -460,7 +460,7 @@ article #content {
       border-left: 1px solid var(--fg-less1);
       border-bottom: 1px solid var(--fg-less1);
       transition-property: border-left-color,border-bottom-color;
-      transition-duration: 0.3;
+      transition-duration: 0.3s;
     }
     th {
       border-bottom-width: 2px;
@@ -497,8 +497,11 @@ article #content {
           }
         }
       }
-      tbody tr {
-        background: none;
+      tbody {
+        display: flex;
+        tr {
+          background: none;
+        }
       }
     }
   }
