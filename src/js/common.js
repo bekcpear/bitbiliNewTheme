@@ -187,7 +187,7 @@ const sTL = '#index #title-list';
 const sOP = '#index #pager older-page';
 const sNP = '#index #pager newer-page';
 var indexes = new Map();
-async function pagingSolve(indexes, olderHref, newerHref) {
+async function pagingSolve(indexes, olderHref, newerHref, stateUrl) {
   document.querySelector(sTL).replaceWith(indexes);
   if (olderHref) {
     document.querySelector(sOP).setAttribute('myhref', olderHref);
@@ -203,12 +203,15 @@ async function pagingSolve(indexes, olderHref, newerHref) {
     document.querySelector(sNP).removeAttribute('myhref');
     document.querySelector(sNP).setAttribute('myclass', 'disabled-a');
   }
+  if (stateUrl != '') {
+    history.pushState({'type': 'index', 'url': stateUrl}, '', stateUrl.replace(/\/index.html$/, ''));
+  }
 }
 async function paging(elem) {
   if (elem.myHref) {
     let v = indexes.get(elem.myHref);
     if (v) {
-      pagingSolve(v.indexes, v.olderHref, v.newerHref);
+      pagingSolve(v.indexes, v.olderHref, v.newerHref, elem.myHref);
       return;
     }
     let req = new Request(elem.myHref);
@@ -224,7 +227,7 @@ async function paging(elem) {
       const olderHref = d.querySelector(sOP).getAttribute('myhref');
       const newerHref = d.querySelector(sNP).getAttribute('myhref');
       indexes.set(elem.myHref, {indexes: l, olderHref: olderHref, newerHref: newerHref});
-      pagingSolve(l, olderHref, newerHref);
+      pagingSolve(l, olderHref, newerHref, elem.myHref);
     }).catch(function(err){
       console.error(err);
     });
@@ -465,7 +468,7 @@ window.addEventListener('DOMContentLoaded', function(){
    * firefox does not support backdrop-filter,
    * so, set an non-transparent background for source-code-cover
    * */
-  if (navigator.userAgent.indexOf("Firefox") != -1) {
+  if (navigator.userAgent.indexOf("Firefox") != -1 && sourceCodeCover) {
     sourceCodeCover.style.backgroundColor = 'var(--bg)';
   }
 
@@ -516,8 +519,34 @@ window.addEventListener('DOMContentLoaded', function(){
       link.classList.remove('external');
     }
   });
+
+  /*
+   * record an initial history state
+   * */
+  if (document.querySelector(sTL)) {
+    const l = document.querySelector(sTL);
+    const olderHref = document.querySelector(sOP).getAttribute('myhref');
+    const newerHref = document.querySelector(sNP).getAttribute('myhref');
+    indexes.set(document.URL, {indexes: l, olderHref: olderHref, newerHref: newerHref});
+    history.pushState({'type': 'index', 'url': document.URL}, '');
+  }
+
 });
 window.addEventListener('load', function(){
-  document.querySelector('#source-code-cover').
-    style.setProperty('transition', 'transform 0.2s');
+  if (sourceCodeCover) {
+    sourceCodeCover.style.setProperty('transition', 'transform 0.2s');
+  }
+});
+
+window.addEventListener('popstate', function(e){
+  if (e.state && e.state.type == 'index') {
+    let v = indexes.get(e.state.url);
+    /*
+    if (!v && e.state.url.indexOf('index.html') == -1) {
+      v = indexes.get(e.state.url.replace(/[\/]?$/, '/index.html'))
+    }*/
+    if (v) {
+      pagingSolve(v.indexes, v.olderHref, v.newerHref, '');
+    }
+  }
 });

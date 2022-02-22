@@ -7,36 +7,35 @@ import os
 this file should be imported from pelican config file
 e.g.:
 
-THEME = './bitbiliTheme/dist'
+THEME = './bitbiliNewTheme/dist'
 import os
 import sys
-sys.path.append(os.path.join(os.curdir, 'bitbiliTheme/config'))
-from bitbiliTheme1Config import *
+sys.path.append(os.path.join(os.curdir, 'bitbiliNewTheme/config'))
+from bitbiliNewThemeConfig import *
 """
 
-_theme_dir="/home/ryan/Git/bitbiliTheme/dist"
+_theme_dir="/root/path/to/bitbiliNewTheme/dist"
 _another_assets_parent_dir=os.path.join(os.curdir, "content")
 
 # Custom settings:
 # all paths are relative to SITE.url
 SITE = {
-        "name": "bitbili",
-        "long_name": "bitbili.net",
-        "desc": "一个格物致知的技术博客。",
-        "url": "https://bitbili.net/",
-        "color": "#eb1847",
+        "name": "",
+        "long_name": "",
+        "desc": "",
+        "url": "https://yourdomain.com/",
+        "color": "#2B8ACF",
         "manifest": "assets/manifest.json",
         "author": {
-            "username": "cwittlut",
-            "name": "Ryan Qian",
+            "username": "",
+            "name": "",
             "email": [
-                "i@bitbili.net",
-                "cwittlut@vermilion.ink"
+                "name@mail.com"
                 ],
             "profile": {
-                "avatar": "/1.jpg", # pay attention to append a hash
+                "avatar": "/assets/avatar.png", # pay attention to append a hash if it's not a findable local image
                 "bio": "",
-                "url": "https://ume.ink/"
+                "url": ""
                 }
             },
         "og": {
@@ -84,10 +83,10 @@ ICON = {
         }
 
 CSS = {
-        "common": "assets/css/common.css",
-        "index": "",
-        "article": "",
-        "page": ""
+        "common": "assets/css/common.css" #,
+        #"index": "",
+        #"article": "",
+        #"page": ""
         }
 
 JS = {
