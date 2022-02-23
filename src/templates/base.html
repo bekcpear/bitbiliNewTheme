@@ -112,16 +112,27 @@ body {
   </script>
 {% endblock schema_meta %}
 
-{% if GOOGLE_ANALYTICS_UNIVERSAL %}
-  <script async src="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_ANALYTICS_UNIVERSAL }}"></script>
+{% if GTAG_ID %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ GTAG_ID }}"></script>
   <script>
+    let params = new URLSearchParams(new URL(document.URL).search)
+    let internalTrafficVal = params.get('ga4val');
+    if (!internalTrafficVal) {
+      internalTrafficVal = localStorage.getItem('GA4ITVal');
+    } else {
+      localStorage.setItem('GA4ITVal', internalTrafficVal);
+    }
+    if (internalTrafficVal) {
+      console.log('config gtag with "traffic_type=' + internalTrafficVal + '"');
+    } else {
+      internalTrafficVal = 'public';
+    }
     window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '{{ GOOGLE_ANALYTICS_UNIVERSAL }}');
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '{{ GTAG_ID }}', {'traffic_type': internalTrafficVal});
   </script>
 {% endif %}
-
 {% block scripts_before %}
 {% endblock scripts_before %}
 
@@ -136,7 +147,7 @@ body {
 
 </head>
 
-<body ontouchstart> {# make button:active work on safari ios #}
+<body>
   <div style="display:none" id="title">{{ _title() }}</div>
   <script>
     let colorMode = localStorage.getItem('colorMode');

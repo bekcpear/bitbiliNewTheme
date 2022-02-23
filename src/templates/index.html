@@ -43,7 +43,9 @@ License: GPLv2
               <span>@{{ SITE.author.username|trim('@') }}</span>
             </a>
           </div>
+          {% if SITE.author.profile.avatar != "" %}
           <img id="avatar" src="{{ _url(SITE.author.profile.avatar, False, True) }}" />
+          {% endif %}
         </div>
       </div>
       {% include "includes/list.html"%}

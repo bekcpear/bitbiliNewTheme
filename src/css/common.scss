@@ -290,6 +290,9 @@ a {
 }
 
 .hidden-screen {
+  font-size: 0.9em;
+  font-style: italic;
+  color: var(--fg-less) !important;
   @media screen {
     display: none !important;
   }
@@ -514,7 +517,10 @@ div#source-code-cover {
   z-index: 1002;
   top: 0;
   left: 0;
-  display: block;
+  display: none;
+  @media screen {
+    display: block;
+  }
   height: 100%;
   width: 100%;
   padding: calc(var(--sat) + 60px) 0 0 0;
@@ -568,7 +574,7 @@ div#source-code-cover {
     left: 0;
   }
   to {
-    left: 100%;
+    left: 90%;
   }
 }
 
@@ -803,8 +809,8 @@ main {
       font: {
         family: $monofont;
         size: 0.7em;
-        line-height: 1.5em;
       }
+      line-height: 1.5em;
       a {
         color: var(--fg-less1);
         text-decoration: underline;

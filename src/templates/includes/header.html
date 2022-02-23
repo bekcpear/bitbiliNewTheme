@@ -4,19 +4,19 @@ License: GPLv2
 #}
 
 <header>
-  <left-side-button class="f-l"></left-side-button>
+  <left-side-button class="f-l hidden-print"></left-side-button>
   <a href="/"><img id="logo" class="f-l" src="{{ _url(LOGO.square.svg.path, True) }}" /></a>
-  <back-top></back-top>
-  <color-mode></color-mode>
-  <shortcut-help></shortcut-help>
-  <search-box></search-box>
+  <back-top class="hidden-print"></back-top>
+  <color-mode class="hidden-print"></color-mode>
+  <shortcut-help class="hidden-print"></shortcut-help>
+  <search-box class="hidden-print"></search-box>
   {#
   <button id="back-top" class="f-r" title="scroll to top/bottom"></button>
   <button id="color-mode" class="f-r" title="switch day/night mode"></button>
   <button id="help" class="f-r" title="shortcut help and other info"></button>
   #}
   <noscript>
-  <div id="search" class="f-r">
+  <div id="search" class="f-r hidden-print">
     <form action="{{ _url('/search') }}" method="get">
       <input type="search" name="search"></input><button type="submit">Search</button>
     </form>

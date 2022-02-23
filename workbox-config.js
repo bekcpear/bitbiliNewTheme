@@ -1,5 +1,5 @@
 module.exports = {
-  globDirectory: '/home/ryan/bitbili-dev/output/',
+  globDirectory: '/home/ryan/bitbili/output/',
   globPatterns: [
     'offline.*'
   ],

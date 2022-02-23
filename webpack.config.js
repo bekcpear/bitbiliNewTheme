@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  // mode: 'development', //'production',
+  // mode: 'development',
   mode: 'production',
   entry: {
     common: './src/js/common.js',

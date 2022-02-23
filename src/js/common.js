@@ -571,7 +571,6 @@ class DomainNotify extends LitElement {
 
 
 var searchParams = new URLSearchParams(new URL(document.URL).search);
-console.log(searchParams);
 /*
  * loads
  * */
@@ -637,12 +636,25 @@ window.addEventListener('DOMContentLoaded', function(){
   }
 
   /*
-   remove external class for links pointing to this site
+   * handle link elem
+   * 1. remove external class for links pointing to this site
+   * 2. add target='_blank' for real external link
+   * 3. append an extra span elem to store link-href for printing
    * */
   document.querySelectorAll('a.external').forEach(function(link){
     let href = link.getAttribute('href');
-    if (href != null && href.match(/^http[s]?:\/\/bitbili.net\/|^\//) != null) {
-      link.classList.remove('external');
+    if (href != null) {
+      if (link.text.search(/ftp|http|\//) != 0) {
+        let extraHref = document.createElement('span');
+        extraHref.appendChild(document.createTextNode('[' + href + ']'));
+        extraHref.className = 'hidden-screen';
+        link.appendChild(extraHref);
+      }
+      if (href.match(/^http[s]?:\/\/bitbili.net\/|^\//) != null) {
+        link.classList.remove('external');
+      } else {
+        link.setAttribute('target', '_blank');
+      }
     }
   });
 
@@ -705,4 +717,7 @@ window.addEventListener('popstate', function(e){
   }
 });
 
-
+/*
+ * workaround for enabling the :active pseudo-elem of <button> on iOS safari
+ */
+root.addEventListener('touchstart', function(){}, {passive: true});
