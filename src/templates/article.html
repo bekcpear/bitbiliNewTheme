@@ -221,6 +221,10 @@ p {
   </main>
 {% endblock main %}
 
+{% block scripts_after %}
+  <script id="dsq-count-scr" src="{{ _url(DISQUS_COUNT_JS, True) }}" async></script>
+{% endblock scripts_after %}
+
 {% block footer %}
   {% include 'includes/footer.html' %}
 {% endblock footer %}

@@ -214,6 +214,10 @@ async function paging(elem) {
       pagingSolve(v.indexes, v.olderHref, v.newerHref, elem.myHref);
       return;
     }
+    let progressLine = document.querySelector('#pager-loading');
+    if (progressLine != undefined) {
+      progressLine.style.setProperty('display', 'initial');
+    }
     let req = new Request(elem.myHref);
     fetch(req).then(function(res) {
       if (!res.ok) {
@@ -228,6 +232,7 @@ async function paging(elem) {
       const newerHref = d.querySelector(sNP).getAttribute('myhref');
       indexes.set(elem.myHref, {indexes: l, olderHref: olderHref, newerHref: newerHref});
       pagingSolve(l, olderHref, newerHref, elem.myHref);
+      progressLine.style.removeProperty('display');
     }).catch(function(err){
       console.error(err);
     });
@@ -305,7 +310,7 @@ class BackTop extends LitElement {
   }
 }
 customElements.define('back-top', BackTop);
-const upIcon = 'url(/assets/icons/fa/solid/angle-up-solid.svg)';
+const upIcon = 'var(--bt-up-icon)';
 let root = document.documentElement;
 window.addEventListener("scroll", function(event) {
   if (window.scrollY > 1000) {
@@ -452,7 +457,121 @@ class SourceCode extends LitElement {
 }
 customElements.define('source-code', SourceCode);
 
+/*
+ * some common styles
+ */
+var commonStyles = css`
+:host {
+  position: fixed;
+  z-index: 2000;
+  color: var(--fg-less);
+  background-color: var(--bg-less-t);
+  transition-property: background-color, color;
+  transition-duration: 0.3s;
+  font-family: monospace;
+  box-sizing: border-box;
+}`
 
+/*
+ * service worker message
+ */
+var swFetchDidFail = false;
+var swHandlerDidCompleteStatus = 0;
+var swNotificationDisplayed = false;
+navigator.serviceWorker.addEventListener('message', async (event) => {
+  if (event.data.type === 'FETCH_DID_FAIL') {
+    swFetchDidFail = true;
+  }
+  if (event.data.type === 'HANDLER_DID_COMPLETE') {
+    swHandlerDidCompleteStatus = event.data.status;
+  }
+  if ( swFetchDidFail && swHandlerDidCompleteStatus === 200 && ! swNotificationDisplayed ) {
+    // carry on cache mode
+    swNotificationDisplayed = true;
+    // display notification
+    class OfflineModeNotify extends LitElement {
+      static styles = [
+        commonStyles,
+        css`
+        :host {
+          top: var(--sat);
+          left: calc(50% - 90px);;
+          font-size: 0.8em;
+          line-height: 1em;
+          font-family: monospace;
+          width: 180px;
+          padding: 0.5em 1em;
+        }
+        a {
+          display: inline-block;
+          margin-left: 1em;
+          width: 1em;
+          height: 1em;
+          cursor: pointer;
+        }
+      `];
+      render() {
+        return html`
+          <div><span>当前处于离线浏览状态<span><a @click="${this._do}">X</a></div>
+        `;
+      }
+      _do() {
+        this.style.display = 'none';
+      }
+    }
+    customElements.define('sw-notify', OfflineModeNotify);
+  }
+});
+
+/*
+ * my custom notify if come from moego.me
+ */
+
+class DomainNotify extends LitElement {
+  static styles = [
+    commonStyles,
+    css`
+    :host {
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      min-height: 300px;
+      font-size: 1.5em;
+      line-height: 1.5em;
+      transform: translateY(300px);
+      background-color: var(--bg-less);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    div {
+      margin: 1em 2em;
+      max-width: 1200px;
+    }
+    a {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  `];
+  render() {
+    return html`
+      <div><span>您好，本站已于 2020 年第三季度切换域名至此，
+          原 <s>moego.me</s> 早已停用且可能不定期失效，请尽快替换使用新域名 <b>bitbili.net</b> 访问 ;)<span>
+      </div><div><a @click="${this._do}">已知悉</a></div>
+    `;
+  }
+  _do() {
+    this.style.removeProperty('transform');
+    const url = new URL(window.location);
+    url.searchParams.delete('from');
+    history.replaceState({}, '', url);
+  }
+}
+
+
+var searchParams = new URLSearchParams(new URL(document.URL).search);
+console.log(searchParams);
 /*
  * loads
  * */
@@ -472,6 +591,13 @@ window.addEventListener('DOMContentLoaded', function(){
     sourceCodeCover.style.backgroundColor = 'var(--bg)';
   }
 
+  /*
+   * load domain change notification if url params contains a 'from=moego'
+   * here is the defination, actuall show will be triggered on 'load' event
+   */
+  if (searchParams.has('from') && searchParams.get('from') == "moego") {
+    customElements.define('notify-box', DomainNotify);
+  }
 
   /*
    * do left-side
@@ -531,10 +657,38 @@ window.addEventListener('DOMContentLoaded', function(){
     history.pushState({'type': 'index', 'url': document.URL}, '');
   }
 
+  /*
+   * update the version
+   */
+  let versionDiv = document.querySelector('#vernum');
+  if (versionDiv) {
+    fetch(new Request('/version')).then(function(res) {
+      if (!res.ok) {
+        versionDiv.innerHTML = 'error: ' + res.status;
+        return;
+      }
+      return res.text();
+    }).then(function(txt){
+      versionDiv.innerHTML = txt;
+    }).catch(function(err){
+      console.error(err);
+    });
+  }
+
 });
 window.addEventListener('load', function(){
   if (sourceCodeCover) {
     sourceCodeCover.style.setProperty('transition', 'transform 0.2s');
+  }
+
+  /*
+   * load domain change notification if url params contains a 'from=moego'
+   * here is the trigger
+   */
+  if (searchParams.has('from') && searchParams.get('from') == "moego") {
+    const notifyBox = document.querySelector('notify-box');
+    notifyBox.style.setProperty('transition-property', 'background-color,color,transform');
+    notifyBox.style.setProperty('transform', 'translateY(0)');
   }
 });
 
@@ -550,3 +704,5 @@ window.addEventListener('popstate', function(e){
     }
   }
 });
+
+

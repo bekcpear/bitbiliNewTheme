@@ -45,7 +45,7 @@ article #content {
     text-indent: initial;
   }
 
-  :not(pre), :not(code), :not(var), :not(samp), :not(q) {
+  :not(pre):not(code):not(var):not(samp):not(q) {
     word-break: break-word;
   }
 
@@ -424,6 +424,14 @@ article #content {
     background-color: var(--bg-less-t);
     padding: 1em 2em;
     break-inside: avoid;
+    white-space: pre; // I don't know why it's not work on iOS safari
+    span {
+      display: inline !important;
+    }
+    @media print {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
   }
 
   code, var, samp, q, kbd {

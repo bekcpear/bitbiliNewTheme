@@ -1899,9 +1899,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bitbiliTheme1@workspace:.":
+"bitbiliNewTheme@workspace:.":
   version: 0.0.0-use.local
-  resolution: "bitbiliTheme1@workspace:."
+  resolution: "bitbiliNewTheme@workspace:."
   dependencies:
     lit: ^2.0.2
     sass: ^1.43.3

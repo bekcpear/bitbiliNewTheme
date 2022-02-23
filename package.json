@@ -1,15 +1,14 @@
 {
-  "name": "bitbiliTheme1",
+  "name": "bitbiliNewTheme",
   "version": "1.0.0",
-  "description": "A theme made by @cwittlut for pelican",
+  "description": "A simple Pelican day/night mode theme made by @cwittlut",
   "author": "cwittlut",
   "license": "GPLv2",
   "private": true,
   "scripts": {
-    "generateTemplates": "rm -rf dist/templates && cp -a src/templates dist/",
-    "minifyCSS": "sass -s compressed src/css/common.scss:dist/assets/css/common.css",
+    "prepareDist": "./script/prepare-dist.sh",
+    "minifyCSS": "./script/hash-url-in-scss.sh && sass -s compressed src/css/generated_common.scss:dist/assets/css/common.css",
     "doWebpack": "webpack -c webpack.config.js",
-    "copyWBJS": "cp node_modules/workbox-window/build/workbox-window.prod.mjs* dist/assets/js/",
     "generateSW": "workbox injectManifest workbox-config.js && webpack -c webpack.sw-config.js"
   },
   "dependencies": {

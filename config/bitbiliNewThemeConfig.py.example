@@ -93,6 +93,10 @@ JS = {
         "common": "assets/js/common.js"
         }
 
+DISQUS              = True
+DISQUS_URL          = "https://YOUR-ID.disqus.com/embed.js"
+DISQUS_COUNT_JS     = "https://YOUR-ID.disqus.com/count.js"
+
 
 ############
 ############

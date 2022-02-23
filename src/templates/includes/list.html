@@ -25,6 +25,7 @@ License: GPLv2
       {% endif %}
 
       {% if articles_page and articles_paginator.num_pages > 1 %}
+      <div id="pager-loading"></div>
       <div id="pager">
         {% if articles_page.has_previous() %}
           {% set previous_url = articles_previous_page.url %}
