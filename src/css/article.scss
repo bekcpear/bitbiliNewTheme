@@ -433,7 +433,23 @@ article #content {
       white-space: pre-wrap;
       word-break: break-word;
     }
+  }
+
+  div.highlight {
+    position: relative;
+    width: 100%;
+    margin: 1em 0;
+    pre {
+      /*
+       * do not try to set 'width: fit-content' to satisfy iOS Safari
+       * if did, the button will move with this pre-elem when scrolling
+       */
+      margin: 0;
+    }
     button {
+      @media print {
+        display: none;
+      }
       position: absolute;
       right: 0.5em;
       top: 0.5em;
@@ -442,6 +458,7 @@ article #content {
         family: $monofont;
         size: 0.9em;
       }
+      background-color: var(--bg-less-t);
       line-height: 1.5em;
       &:before {
         content: '';
@@ -450,11 +467,17 @@ article #content {
       }
       span {
         color: var(--fg-less);
+        background-color: var(--bg-less1);
+        padding: 0.1em 0 0.1em 0.3em;
+        box-sizing: border-box;
+        border-radius: $radius-smaller;
         position: absolute;
         right: 0;
         top: 0.5em;
         opacity: 0;
         width: 2.5em;
+        white-space: pre;
+        word-break: keep-all;
         overflow: hidden;
         transform: translateX(0);
         transition-property: width,opacity,transform;
@@ -464,12 +487,12 @@ article #content {
         }
       }
       &[copied] span, &[failed] span {
-        width: 4em;
+        width: 4.8em;
         opacity: 1;
-        transform: translateX(-2.5em);
+        transform: translateX(-2.8em);
       }
       &[failed] span {
-        width: 6em;
+        width: 6.8em;
         transition-duration: 0;
         &:before {
           content: '无权限复制！';

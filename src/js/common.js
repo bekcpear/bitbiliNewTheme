@@ -582,14 +582,17 @@ async function cleanCopyPreAttr(ele, attr) {
 async function copyPre(e) {
   e.preventDefault();
   let ele = this;
-  let t = ele.parentNode.textContent;
-  navigator.clipboard.writeText(t).then(function() {
-    ele.setAttribute('copied', true);
-    cleanCopyPreAttr(ele, 'copied');
-  }, function() {
-    ele.setAttribute('failed', true);
-    cleanCopyPreAttr(ele, 'failed');
-  });
+  let pre = ele.previousSibling;
+  if (pre.nodeName == 'PRE') {
+    let t = pre.textContent;
+    navigator.clipboard.writeText(t).then(function() {
+      ele.setAttribute('copied', true);
+      cleanCopyPreAttr(ele, 'copied');
+    }, function() {
+      ele.setAttribute('failed', true);
+      cleanCopyPreAttr(ele, 'failed');
+    });
+  }
 }
 
 
@@ -706,9 +709,17 @@ window.addEventListener('DOMContentLoaded', function(){
   copyBtn.appendChild(copyBtnS);
   copyBtn.className = 'copy-button';
   document.querySelectorAll('pre').forEach(function(pre) {
+    // I can't find a way to prevent button scrolling with pre-elem,
+    // unless I make a wrap around the pre-elem
+    if (pre.parentNode.nodeName != 'DIV' || pre.parentNode.className.indexOf('highlight') == -1) {
+      let copyBtnP = document.createElement('div');
+      copyBtnP.className = 'highlight';
+      pre.parentNode.insertBefore(copyBtnP, pre);
+      copyBtnP.appendChild(pre);
+    }
     let c = copyBtn.cloneNode(true);
     c.addEventListener('click', copyPre);
-    pre.appendChild(c);
+    pre.parentNode.appendChild(c);
   });
 
   /*
