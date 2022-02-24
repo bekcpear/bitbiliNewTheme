@@ -582,11 +582,28 @@ window.addEventListener('DOMContentLoaded', function(){
   main = document.querySelector('main');
   footer = document.querySelector('footer');
   sourceCodeCover = document.querySelector('#source-code-cover');
+
   /*
-   * firefox does not support backdrop-filter,
+   * firefox does not support backdrop-filter, (safari do?)
    * so, set an non-transparent background for source-code-cover
    * */
-  if (navigator.userAgent.indexOf("Firefox") != -1 && sourceCodeCover) {
+  let isFirefoxOrSafari = false;
+  if (navigator.userAgentData) {
+    let uab = navigator.userAgentData.brands;
+    // currently not supported by firefox/safari,
+    // but write a foreseeable code to try to prevent
+    // the something error due to a latency of an update
+    uab.every(function(b){
+      if (b.brand.search(/safari|firefox/i) != -1) {
+        isFirefoxOrSafari = true;
+        return false;
+      }
+      return true;
+    });
+  } else {
+    isFirefoxOrSafari = /^((?!chrome|android).)*(safari|firefox)/i.test(navigator.userAgent);
+  }
+  if (isFirefoxOrSafari && sourceCodeCover) {
     sourceCodeCover.style.backgroundColor = 'var(--bg)';
   }
 

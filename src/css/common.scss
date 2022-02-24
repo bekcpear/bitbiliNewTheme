@@ -72,6 +72,8 @@
   --angle-right-icon: url(/assets/icons/fa/solid/angle-right-solid.svg);
   // pin icon
   --pin-icon: url(/assets/icons/fa/solid/thumbtack-solid.svg);
+  // theme icon
+  --theme-icon: url(/assets/icons/fa/solid/feather-pointed-solid.svg);
 }
 
 body {
@@ -529,7 +531,7 @@ div#source-code-cover {
   background-color: var(--bg-source-c);
   transition-property: background-color,color;
   transition-duration: 0.3s;
-  backdrop-filter: blur(6px) brightness(var(--bg-source-b)); // firefox does not support this by default.
+  backdrop-filter: blur(30px) brightness(var(--bg-source-b)); // firefox does not support this by default.
   source-code-close {
     position: absolute;
     top: var(--sat);
@@ -799,7 +801,7 @@ main {
         }
       }
     }
-    div#theme-info {
+    div#site-info {
       position: absolute;
       left: calc(var(--sal) + 10px);
       bottom: calc(var(--sat) + 10px);
@@ -814,6 +816,21 @@ main {
       a {
         color: var(--fg-less1);
         text-decoration: underline;
+        margin-right: 0.5em;
+      }
+      a#theme-name {
+        &:before {
+          content: ' ';
+          @include icon(var(--theme-icon), 0.8em);
+          filter: var(--fg-less1-f);
+          margin-right: 0.3em;
+        }
+      }
+      @media all and (max-width: 599px) and (max-height: 530px) {
+        display: none;
+      }
+      @media all and (max-height: 250px) {
+        display: none;
       }
     }
   }

@@ -257,7 +257,7 @@ article #content {
     position: relative;
     font-size: 90%;
     line-height: 1.5em;
-    break-inside: avoid;
+    break-inside: avoid-page;
     &:after {
       content: ' ';
       display: block;
@@ -423,7 +423,7 @@ article #content {
     line-height: 1.5em;
     background-color: var(--bg-less-t);
     padding: 1em 2em;
-    break-inside: avoid;
+    break-inside: avoid-page;
     white-space: pre; // I don't know why it's not work on iOS safari
     span {
       display: inline !important;
@@ -460,7 +460,7 @@ article #content {
     border-right: 1px solid var(--fg-less1);
     transition-property: border-top-color,border-right-color;
     transition-duration: 0.3s;
-    break-inside: avoid;
+    break-inside: avoid-page;
     th, td {
       border-spacing: 0;
       border-top: none;
@@ -525,7 +525,7 @@ article #content {
     display: block;
     position: relative;
     max-width: 100%;
-    break-inside: avoid;
+    break-inside: avoid-page;
   }
 
   dl {

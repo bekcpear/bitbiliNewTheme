@@ -44,14 +44,18 @@ License: GPLv2
             </a>
           </div>
           {% if SITE.author.profile.avatar != "" %}
-          <img id="avatar" src="{{ _url(SITE.author.profile.avatar, False, True) }}" />
+          <img id="avatar" src="{{ _url(SITE.author.profile.avatar, True, True) }}" />
           {% endif %}
         </div>
       </div>
       {% include "includes/list.html"%}
     </div>
-    <div id="theme-info">
-      <span>主题为 </span><a href="{{ THEME_URL }}" target="_blank"><span>{{ THEME_NAME }}</span></a>
+    <div id="site-info">
+      {% if ABOUT_PAGE %}
+      <a href="{{ _url(ABOUT_PAGE, relative=False) }}"><span>关于</span></a>
+      {% endif %}
+      <a href="{{ _url("/tags.html", relative=False) }}"><span>标签云</span></a>
+      <a href="{{ THEME_URL }}" target="_blank" id="theme-name"><span>{{ THEME_NAME }}</span></a>
     </div>
   </main>
   {% endblock main %}
