@@ -327,9 +327,9 @@ button {
   border: none;
   border-radius: $radius;
   //outline: solid 1px var(--fg);
-  outline: dashed 1px transparent;
+  outline: dashed 0 var(--brand0);
   color: var(--fg);
-  transition-property: background-color,color; //,outline-color,box-shadow;
+  transition-property: background-color,color,outline-color; //,box-shadow;
   transition-duration: 0.3s;
   background-color: transparent;
   box-shadow: 0 0 0 transparent;
@@ -340,8 +340,8 @@ button {
     */
   }
   &:active {
-    outline-color: var(--brand0);
-    //outline-width: 2px;
+    //outline-color: var(--brand0);
+    outline-width: 1px;
   }
 }
 
