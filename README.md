@@ -1,6 +1,6 @@
 ## bitbiliNewTheme
 
-一个适用于 Pelican 所生成静态网站的双色主题。
+一个适用于 [Pelican 静态网站生成器](https://github.com/getpelican/pelican) 的双色主题。
 
 其是我博客的主题，访问 [我的博客](https://bitbili.net) 以查看 Demo
 
