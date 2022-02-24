@@ -74,6 +74,8 @@
   --pin-icon: url(/assets/icons/fa/solid/thumbtack-solid.svg);
   // theme icon
   --theme-icon: url(/assets/icons/fa/solid/feather-pointed-solid.svg);
+  // copy icon
+  --copy-icon: url(/assets/icons/fa/solid/copy-solid.svg);
 }
 
 body {
@@ -324,19 +326,22 @@ a {
 button {
   border: none;
   border-radius: $radius;
-  outline: solid 1px var(--fg);
+  //outline: solid 1px var(--fg);
+  outline: dashed 1px transparent;
   color: var(--fg);
-  transition-property: background-color,color,outline-color,box-shadow;
+  transition-property: background-color,color; //,outline-color,box-shadow;
   transition-duration: 0.3s;
   background-color: transparent;
   box-shadow: 0 0 0 transparent;
   &:hover {
+    /*
     outline-color: var(--brand0);
     box-shadow: 0 0 3px var(--brand0);
+    */
   }
   &:active {
     outline-color: var(--brand0);
-    outline-width: 2px;
+    //outline-width: 2px;
   }
 }
 
@@ -517,7 +522,7 @@ use scroll-margin-top instead
 div#source-code-cover {
   position: fixed;
   z-index: 1002;
-  top: 0;
+  bottom: 0;
   left: 0;
   display: none;
   @media screen {
@@ -1310,7 +1315,7 @@ header button#color-mode,
 header button#back-top,
 header button#help,
 #pager button {
-  outline: none;
+  //outline-color: transparent;
   box-shadow: none;
   margin: 1px;
   padding: 19px;
@@ -1322,10 +1327,11 @@ header button#help,
     filter: var(--fg-f);
   }
   &:hover {
-    box-shadow: none;
+    //box-shadow: none;
+    //outline-color: transparent;
   }
   &:active {
-    outline: 1px dashed var(--brand0);
+    //outline: 1px dashed var(--brand0);
   }
 }
 

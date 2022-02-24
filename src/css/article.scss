@@ -425,12 +425,56 @@ article #content {
     padding: 1em 2em;
     break-inside: avoid-page;
     white-space: pre; // I don't know why it's not work on iOS safari
+    /* it's unnecessary for standardized browser
     span {
       display: inline !important;
-    }
+    }*/
     @media print {
       white-space: pre-wrap;
       word-break: break-word;
+    }
+    button {
+      position: absolute;
+      right: 0.5em;
+      top: 0.5em;
+      padding: 0.5em;
+      font: {
+        family: $monofont;
+        size: 0.9em;
+      }
+      line-height: 1.5em;
+      &:before {
+        content: '';
+        @include icon(var(--copy-icon), 1.5em, 0.3);
+        filter: var(--fg-less-f);
+      }
+      span {
+        color: var(--fg-less);
+        position: absolute;
+        right: 0;
+        top: 0.5em;
+        opacity: 0;
+        width: 2.5em;
+        overflow: hidden;
+        transform: translateX(0);
+        transition-property: width,opacity,transform;
+        transition-duration: 0.3s;
+        &:before {
+          content: '已复制！';
+        }
+      }
+      &[copied] span, &[failed] span {
+        width: 4em;
+        opacity: 1;
+        transform: translateX(-2.5em);
+      }
+      &[failed] span {
+        width: 6em;
+        transition-duration: 0;
+        &:before {
+          content: '无权限复制！';
+        }
+      }
     }
   }
 

@@ -71,7 +71,7 @@ LOGO = {
 ICON = {
         "normal": {
             "path": "assets/logo/fav.png",
-            "size": "480x480"
+            "size": "300x300"
             },
         "touch": {
             "path": "assets/logo/touch.png",

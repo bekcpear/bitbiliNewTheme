@@ -569,6 +569,29 @@ class DomainNotify extends LitElement {
   }
 }
 
+/*
+ * pre copy function
+ * */
+var copyPreTID = new Map();
+async function cleanCopyPreAttr(ele, attr) {
+  clearTimeout(copyPreTID.get(ele));
+  copyPreTID.set(ele, setTimeout(function() {
+    ele.removeAttribute(attr);
+  }, 2000));
+}
+async function copyPre(e) {
+  e.preventDefault();
+  let ele = this;
+  let t = ele.parentNode.textContent;
+  navigator.clipboard.writeText(t).then(function() {
+    ele.setAttribute('copied', true);
+    cleanCopyPreAttr(ele, 'copied');
+  }, function() {
+    ele.setAttribute('failed', true);
+    cleanCopyPreAttr(ele, 'failed');
+  });
+}
+
 
 var searchParams = new URLSearchParams(new URL(document.URL).search);
 /*
@@ -676,9 +699,22 @@ window.addEventListener('DOMContentLoaded', function(){
   });
 
   /*
-   * record an initial history state
+   * add copy button to pre-elem
    * */
-  if (document.querySelector(sTL)) {
+  let copyBtn = document.createElement('button');
+  let copyBtnS = document.createElement('span');
+  copyBtn.appendChild(copyBtnS);
+  copyBtn.className = 'copy-button';
+  document.querySelectorAll('pre').forEach(function(pre) {
+    let c = copyBtn.cloneNode(true);
+    c.addEventListener('click', copyPre);
+    pre.appendChild(c);
+  });
+
+  /*
+   * record an initial history state for pager's js
+   * */
+  if (document.querySelector('#index #pager')) {
     const l = document.querySelector(sTL);
     const olderHref = document.querySelector(sOP).getAttribute('myhref');
     const newerHref = document.querySelector(sNP).getAttribute('myhref');
