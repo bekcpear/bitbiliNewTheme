@@ -76,6 +76,8 @@
   --theme-icon: url(/assets/icons/fa/solid/feather-pointed-solid.svg);
   // copy icon
   --copy-icon: url(/assets/icons/fa/solid/copy-solid.svg);
+  // heart icon for rss button on index page
+  --heart-icon: url(/assets/icons/fa/solid/heart-solid.svg);
 }
 
 body {
@@ -576,6 +578,58 @@ div#source-code-cover {
   }
 }
 
+@keyframes floating {
+  0%   { opacity: 0;   transform: translate(-0px,       0) rotate(-5deg); }
+  3%   { opacity: 0.1; transform: translate(-0.3px,  -1px) rotate(-4deg); }
+  6%   { opacity: 0.2; transform: translate(-0.6px,  -2px) rotate(-3deg); }
+  9%   { opacity: 0.2; transform: translate(-0.9px,  -3px) rotate(-2deg); }
+  12%  { opacity: 0.3; transform: translate(-1.2px,  -4px) rotate(-1deg); }
+  15%  { opacity: 0.3; transform: translate(-1.5px,  -5px) rotate(0deg);  }
+  18%  { opacity: 0.3; transform: translate(-1.8px,  -6px) rotate(1deg);  }
+  21%  { opacity: 0.4; transform: translate(-1.8px,  -7px) rotate(2deg);  }
+  24%  { opacity: 0.4; transform: translate(-1.8px,  -8px) rotate(3deg);  }
+  27%  { opacity: 0.4; transform: translate(-1.8px,  -9px) rotate(4deg);  }
+  30%  { opacity: 0.5; transform: translate(-1.8px, -10px) rotate(5deg);  }
+  33%  { opacity: 0.5; transform: translate(-1.5px, -11px) rotate(6deg);  }
+  36%  { opacity: 0.5; transform: translate(-1.2px, -12px) rotate(7deg);  }
+  39%  { opacity: 0.5; transform: translate(-0.9px, -13px) rotate(8deg);  }
+  42%  { opacity: 0.5; transform: translate(-0.6px, -14px) rotate(9deg);  }
+  45%  { opacity: 0.5; transform: translate(-0.3px, -15px) rotate(10deg); }
+  48%  { opacity: 0.5; transform: translate(0px,    -16px) rotate(11deg); }
+  51%  { opacity: 0.5; transform: translate(0.5px,  -17px) rotate(12deg); }
+  54%  { opacity: 0.5; transform: translate(1px,    -18px) rotate(13deg); }
+  57%  { opacity: 0.5; transform: translate(1.5px,  -19px) rotate(14deg); }
+  60%  { opacity: 0.5; transform: translate(2px,    -20px) rotate(15deg); }
+  63%  { opacity: 0.4; transform: translate(2.5px,  -21px) rotate(16deg); }
+  66%  { opacity: 0.4; transform: translate(3px,    -22px) rotate(17deg); }
+  69%  { opacity: 0.4; transform: translate(3.5px,  -23px) rotate(18deg); }
+  72%  { opacity: 0.4; transform: translate(4px,    -24px) rotate(18deg); }
+  75%  { opacity: 0.4; transform: translate(4.5px,  -25px) rotate(17deg); }
+  78%  { opacity: 0.3; transform: translate(5px,    -26px) rotate(17deg); }
+  81%  { opacity: 0.3; transform: translate(5.5px,  -27px) rotate(17deg); }
+  84%  { opacity: 0.3; transform: translate(6px,    -28px) rotate(17deg); }
+  87%  { opacity: 0.3; transform: translate(6.5px,  -29px) rotate(17deg); }
+  90%  { opacity: 0.2; transform: translate(7px,    -30px) rotate(17deg); }
+  93%  { opacity: 0.2; transform: translate(7.5px,  -31px) rotate(17deg); }
+  96%  { opacity: 0.2; transform: translate(8px,    -32px) rotate(17deg); }
+  99%  { opacity: 0.1; transform: translate(8.5px,  -33px) rotate(17deg); }
+  100% { opacity: 0;   transform: translate(9px,    -34px) rotate(17deg); }
+}
+
+@keyframes shake {
+  0%   { transform: translate(0.2px,  0px) rotate(0deg);  }
+  10%  { transform: translate(-0.2px, 0px) rotate(-5deg); }
+  20%  { transform: translate(-0.6px, 0px) rotate(5deg);  }
+  30%  { transform: translate(0.6px,  0px) rotate(0deg);  }
+  40%  { transform: translate(0.2px,  0px) rotate(5deg);  }
+  50%  { transform: translate(-0.2px, 0px) rotate(-5deg); }
+  60%  { transform: translate(-0.6px, 0px) rotate(0deg);  }
+  70%  { transform: translate(0.6px,  0px) rotate(-5deg); }
+  80%  { transform: translate(-0.2px, 0px) rotate(5deg);  }
+  90%  { transform: translate(0.2px,  0px) rotate(0deg);  }
+  100% { transform: translate(0.2px,  0px) rotate(-5deg); }
+}
+
 @keyframes progressline {
   from {
     left: 0;
@@ -731,13 +785,50 @@ main {
             line-height: 1em;
           }
           a#rss {
+            position: relative;
             color: var(--fg-less);
             line-height: 1em;
+            display: inline-block;
+            height: 1em;
+            width: 1em;
             &:before {
               content: '';
               @include icon(var(--rss-icon), 1em);
               filter: var(--fg-less-f);
             }
+            span {
+              position: absolute;
+              bottom: 0.1em;
+              left: 1.5em;
+              font-size: 0.7em;
+              font-family: $monofont;
+              line-height: 1em;
+              letter-spacing: 0.1em;
+              color: var(--fg);
+              opacity: 1;
+              transition-property: color, opacity;
+              transition-duration: 0.3s;
+              cursor: default;
+              text-decoration: none;
+              white-space: pre;
+              &.success:after {
+                content: '';
+                @include icon(var(--heart-icon), 0.9em, 0);
+                filter: var(--brand0-f);
+                position: relative;
+                bottom: -0.5em;
+                left: -0.5em;
+                animation: floating 2s;
+                animation-timing-function: linear;
+              }
+              &.hide {
+                opacity: 0;
+              }
+            }
+          }
+          a#rss[clicked]:before {
+            animation: shake 0.5s;
+            animation-iteration-count: infinite;
           }
         }
       }

@@ -162,6 +162,50 @@ function leftSideInit() {
 /*
  * rss button on index page
  * */
+var rssBthShowTID
+function rssBthShowHeartIcon(ele) {
+  rssBthShowTID = setTimeout(function() {
+    ele.className = 'success';
+    rssBthShowTID = setTimeout(function() {
+      ele.className = 'hide';
+      rssBthShowTID = setTimeout(function() {
+        ele.innerText = '';
+      }, 300);
+    }, 2000);
+  }, 80);
+}
+function rssBthShowDo(ele, t, s, r, i, l) {
+  rssBthShowTID = setTimeout(function() {
+    ele.innerText = r + t.charAt(i);
+    if (i + 1 < l) {
+      rssBthShowDo(ele, t, s, r + t.charAt(i), i + 1, l);
+    } else if (s == true) {
+      rssBthShowHeartIcon(ele);
+    }
+  }, 80);
+}
+function rssBthShow(ele, text, success) {
+  let l = text.length;
+  rssBthShowDo(ele, text, success, '', 0, l);
+}
+var rssBthTID
+function rssBthFunc(link) {
+  clearTimeout(rssBthShowTID);
+  clearTimeout(rssBthTID);
+  let rssBth = document.querySelector('.on-index a#rss');
+  let rssBthSpan = rssBth.querySelector('span');
+  rssBthSpan.className = ''
+  rssBthSpan.innerText = '';
+  rssBth.setAttribute('clicked', true);
+  rssBthTID = setTimeout(function() {
+    rssBth.removeAttribute('clicked');
+    navigator.clipboard.writeText(link).then(function() {
+      rssBthShow(rssBthSpan, '订阅链接已成功复制', true);
+    }, function() {
+      rssBthShow(rssBthSpan, '无权限复制订阅链接', false);
+    });
+  }, 500);
+}
 class RssBtn extends LitElement {
   static properties = {
     myHref: { type: String },
@@ -171,11 +215,12 @@ class RssBtn extends LitElement {
   }
   render() {
     return html`
-      <a id="rss" href="${this.myHref}" @click="${this._do}"></a>
+      <a id="rss" href="${this.myHref}" @click="${this._do}"><span></span></a>
     `;
   }
   _do(e) {
     e.preventDefault();
+    rssBthFunc(this.myHref);
   }
 }
 customElements.define('index-rss', RssBtn);
@@ -538,7 +583,7 @@ class DomainNotify extends LitElement {
       min-height: 300px;
       font-size: 1.5em;
       line-height: 1.5em;
-      transform: translateY(300px);
+      transform: translateY(100%);
       background-color: var(--bg-less);
       display: flex;
       flex-direction: column;
