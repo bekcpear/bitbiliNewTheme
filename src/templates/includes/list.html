@@ -20,7 +20,16 @@ License: GPLv2
           </li>
           {% endfor %}
         </ul>
+        {% if (not tag) and (not category) and (not author) %}
+          <div>
+        <div id="modified-date" title="文章最近更新于 {{last_modified_date_of_all.strftime('%Y-%m-%d %H:%M %Z')}}">
+          {{ last_modified_date_of_all.strftime('%B %d 日') }}
+        </div>
+        {% endif %}
         <div id="page-number">{{ articles_page.number }} / {{ articles_paginator.num_pages }}</div>
+        {% if (not tag) and (not category) and (not author) %}
+          </div>
+        {% endif %}
       </div>
       {% endif %}
 

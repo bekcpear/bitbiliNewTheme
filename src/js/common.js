@@ -200,9 +200,9 @@ function rssBthFunc(link) {
   rssBthTID = setTimeout(function() {
     rssBth.removeAttribute('clicked');
     navigator.clipboard.writeText(link).then(function() {
-      rssBthShow(rssBthSpan, '订阅链接已成功复制', true);
+      rssBthShow(rssBthSpan, '订阅链接已成功复制^ .^', true);
     }, function() {
-      rssBthShow(rssBthSpan, '无权限复制订阅链接', false);
+      rssBthShow(rssBthSpan, '无权限复制订阅链接=. =', false);
     });
   }, 500);
 }

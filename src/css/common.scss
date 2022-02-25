@@ -673,12 +673,21 @@ main {
           }
         }
       }
-      #page-number {
+      #page-number, #modified-date {
         height: 20px;
         font-size: 12px;
         text-align: right;
         color: var(--fg-less1);
         transition: color 0.3s;
+      }
+      #modified-date {
+        float: right;
+        margin-left: 12px;
+        &:before {
+          content: '';
+          @include icon(var(--note-icon), 10px);
+          filter: var(--fg-less1-f);
+        }
       }
     }
     #pager-loading {
