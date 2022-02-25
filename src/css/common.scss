@@ -809,15 +809,16 @@ main {
               transition-property: color, opacity;
               transition-duration: 0.3s;
               cursor: default;
+              pointer-events: none;
               text-decoration: none;
               white-space: pre;
               &.success:after {
                 content: '';
                 @include icon(var(--heart-icon), 0.9em, 0);
                 filter: var(--brand0-f);
-                position: relative;
+                position: absolute;
                 bottom: -0.5em;
-                left: -0.5em;
+                right: -0.5em;
                 animation: floating 2s;
                 animation-timing-function: linear;
               }
