@@ -1211,6 +1211,10 @@ main {
           margin-top: 0;
           margin-bottom: 0.5em;
         }
+        li p {
+          margin: 0;
+          padding: 0;
+        }
         >ul {
           margin-top: 0.5em;
           margin-bottom: 0;
@@ -1496,6 +1500,10 @@ left-side {
       padding: 0;
       display: flex;
       flex-direction: column;
+      p {
+        margin: 0;
+        padding: 0;
+      }
       a {
         display: block;
         position: relative;

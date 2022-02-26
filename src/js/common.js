@@ -718,7 +718,7 @@ window.addEventListener('DOMContentLoaded', function(){
         }
       });
     },options);
-    document.querySelectorAll('article #content div.section[id]').forEach(function(section) {
+    document.querySelectorAll('article #content section[id]').forEach(function(section) {
       sectionObserver.observe(section);
     });
   }

@@ -31,7 +31,7 @@ article #content {
   }
 
   /*
-  div.section>ul, >ul {
+  section>ul, >ul {
     list-style-type: square;
     >li>ul {
       list-style-type: disc;
@@ -175,7 +175,7 @@ article #content {
       top: 0;
       left: -16px; // according to padding-left of 'main'
     }
-    .section[id] {
+    section[id] {
       &:target {
         >h2, >h3, >h4, >h5, >h6 {
           a {
@@ -205,15 +205,15 @@ article #content {
     }
     // 'overflow: auto' makes pre elem cannot show out-boundary elements
     // and it also invalid the scroll-margin-top prop on chrome, but valid on firefox
-    //pre[id]:target, >p[id]:target, .section[id]>p[id]:target {
-    >p[id]:target, .section[id]>p[id]:target {
+    //pre[id]:target, >p[id]:target, section[id]>p[id]:target {
+    >p[id]:target, section[id]>p[id]:target {
       position: relative;
       &:after {
         @include targetedDecoration();
         top: 1em; // according to the padding-top of pre
       }
     }
-    >p[id]:target, .section[id]>p[id]:target {
+    >p[id]:target, section[id]>p[id]:target {
       position: relative;
       &:after {
         top: 0;
@@ -227,7 +227,7 @@ article #content {
         }
       }
     }
-    [id]:not(pre):not(.section):not(table):target {
+    [id]:not(pre):not(section):not(table):target {
       position: relative;
       >:first-child {
         &:after {
@@ -272,7 +272,7 @@ article #content {
       background-color: var(--note-bg);
       transition: background-color 0.3s;
     }
-    >.first {
+    >.admonition-title {
 
       // Do not set a position prop for this element,
       // the :after pseudo elem for :target decoration
@@ -296,7 +296,7 @@ article #content {
 
       /*
       padding-top: calc(1em / 0.9); // according to :target decoration fix
-                                    // here 1em == this '.admonition>.first' font size
+                                    // here 1em == this '.admonition>.admonition-title' font size
                                     // while we need '.admonition' font size
                                     //   due to above content 'top: calc(60px + 1em)'
                                     // so '/ 0.9'
@@ -310,13 +310,13 @@ article #content {
         margin-right: 1em;
       }
     }
-    >:not(.first) {
+    >:not(.admonition-title) {
       position: relative;
     }
     &:target {
       /*
         fix :before hight when a :target anchor fix exists
-      .first:before {
+      .admonition-title:before {
         height: calc(100% - 60px);
         top: 60px;
       }
@@ -330,7 +330,7 @@ article #content {
       */
       >:first-child:after {
         /*
-          according to .first size line-height
+          according to .admonition-title size line-height
           0.675em: 1.5em * 90%
           6px: half of decoration size
         */
@@ -341,7 +341,7 @@ article #content {
         //top: calc(60px + 1em) !important;
         // fixed by scroll-margin-top
 
-        // margin-top of .first + padding-top of admonition
+        // margin-top of .admonition-title + padding-top of admonition
         top: calc(1em + 5px) !important;
       }
     }
@@ -352,7 +352,7 @@ article #content {
       border-left: 0.3em solid var(--hint);
       background-color: var(--hint-bg);
     }
-    .first {
+    .admonition-title {
       &:before {
         background-image: var(--hint-icon);
         filter: var(--hint-f);
@@ -364,14 +364,14 @@ article #content {
       border-left: 0.3em solid var(--attention);
       background-color: var(--attention-bg);
     }
-    .first {
+    .admonition-title {
       &:before {
         background-image: var(--attention-icon);
         filter: var(--attention-f);
       }
     }
   }
-  div.admonition.warning .first:before {
+  div.admonition.warning .admonition-title:before {
     background-image: var(--warning-icon);
   }
   div.admonition.important {
@@ -379,7 +379,7 @@ article #content {
       border-left: 0.3em solid var(--important);
       background-color: var(--important-bg);
     }
-    .first {
+    .admonition-title {
       &:before {
         background-image: var(--important-icon);
         filter: var(--important-f);
@@ -422,13 +422,36 @@ article #content {
   pre {
     line-height: 1.5em;
     background-color: var(--bg-less-t);
-    padding: 1em 2em;
+    padding: 0;
+    width: 100%;
     break-inside: avoid-page;
-    white-space: pre; // I don't know why it's not work on iOS safari
+    white-space: pre; /*// I don't know why it's not work on iOS safari*/
     /* it's unnecessary for standardized browser
     span {
       display: inline !important;
     }*/
+    code {
+      overflow: visible;
+      display: block;
+      width: max-content;
+      min-width: max-content;
+      max-width: unset;
+      box-sizing: content-box;
+      margin: 0;
+      padding: 1em 2em;
+      font-size: 1em;
+      background-color: transparent;
+      color: unset;
+      white-space: pre;
+      //word-break: keep-all;
+      @media print {
+        white-space: pre-wrap;
+        word-break: break-word;
+        width: 100%;
+        min-width: 100%;
+        box-sizing: border-box;
+      }
+    }
     @media print {
       white-space: pre-wrap;
       word-break: break-word;
@@ -550,37 +573,6 @@ article #content {
     tbody tr:hover {
       //color: var(--ifg);
       background-color: var(--brand0-t);
-    }
-    &.footnote {
-      border-right: none;
-      font-size: 80%;
-      line-height: 1.5em;
-      a.fn-backref {
-        text-decoration: underline;
-      }
-      td.label {
-        padding: 0 1em;
-        line-height: 1.5em;
-        border-left: none;
-        border-bottom: none;
-        word-break: keep-all;
-        a.fn-backref {
-          word-break: keep-all;
-        }
-        + td {
-          padding: 0 1em;
-          border-bottom: none;
-          em:first-child {
-            margin-right: 1em;
-          }
-        }
-      }
-      tbody {
-        display: flex;
-        tr {
-          background: none;
-        }
-      }
     }
   }
 
