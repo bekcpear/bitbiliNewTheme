@@ -331,7 +331,10 @@ button {
   //outline: solid 1px var(--fg);
   outline: dashed 0 var(--brand0);
   color: var(--fg);
-  transition-property: background-color,color,outline-color; //,box-shadow;
+  transition-property: background-color,color,outline-color,box-shadow;
+                                                          // the box-shadow is used to
+                                                          // transition comment/source-code button
+                                                          // do not remove it.
   transition-duration: 0.3s;
   background-color: transparent;
   box-shadow: 0 0 0 transparent;

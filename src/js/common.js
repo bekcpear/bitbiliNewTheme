@@ -775,7 +775,7 @@ window.addEventListener('DOMContentLoaded', function(){
     const olderHref = document.querySelector(sOP).getAttribute('myhref');
     const newerHref = document.querySelector(sNP).getAttribute('myhref');
     indexes.set(document.URL, {indexes: l, olderHref: olderHref, newerHref: newerHref});
-    history.pushState({'type': 'index', 'url': document.URL}, '');
+    history.replaceState({'type': 'index', 'url': document.URL}, '');
   }
 
   /*
