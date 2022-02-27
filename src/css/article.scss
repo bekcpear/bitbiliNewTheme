@@ -484,7 +484,9 @@ article #content {
         family: $monofont;
         size: 0.9em;
       }
+      opacity: 0;
       background-color: var(--bg-less-t);
+      transition-property: opacity,background-color,outline-color;
       line-height: 1.5em;
       &:before {
         content: '';
@@ -524,6 +526,9 @@ article #content {
           content: '无权限复制！';
         }
       }
+    }
+    &:hover button, &.copying button {
+      opacity: 1;
     }
   }
 

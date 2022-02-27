@@ -50,6 +50,7 @@ class BodyCover extends LitElement {
       width: 100%;
       height: 100%;
       display: none;
+      animation: fade-out 100ms both;
       z-index: 999;
       background-color: var(--bg-source-c);
     }
@@ -65,15 +66,22 @@ class BodyCover extends LitElement {
     return html`<a @click="${this._do}"></a>`;
   }
   _do() {
-    this.style.display = 'none';
     handleLeftSide();
   }
 }
 var printing = false
 var hasLeftSide = false
+var bodyCoverFadeOutTID
 function handleLeftSide(manual) {
-  //debugger;
-  bodyCover.style.display = 'none'; // hidden the cover when toc entry been clicked
+  // hidden the cover when toc entry been clicked
+  if (!manual && bodyCover.style.display == 'block') {
+    bodyCover.style.removeProperty('animation');
+    clearTimeout(bodyCoverFadeOutTID);
+    bodyCoverFadeOutTID = setTimeout(function() {
+      bodyCover.style.removeProperty('display');
+    }, 100);
+  }
+
   var innerWidth = window.innerWidth;
   var sideWidth = getCompSty(leftSide, 'width');
   leftSide.style.transitionDuration = '0.3s';
@@ -97,6 +105,7 @@ function handleLeftSide(manual) {
       return
     } else if ( manual ) {
       bodyCover.style.display = 'block';
+      bodyCover.style.animation = 'fade-in 100ms both';
 
       leftSide.style.transform = 'translateX(0)';
       lsLast = true;
@@ -622,6 +631,7 @@ async function cleanCopyPreAttr(ele, attr) {
   clearTimeout(copyPreTID.get(ele));
   copyPreTID.set(ele, setTimeout(function() {
     ele.removeAttribute(attr);
+    ele.parentNode.classList.remove('copying');
   }, 2000));
 }
 async function copyPre(e) {
@@ -629,6 +639,7 @@ async function copyPre(e) {
   let ele = this;
   let pre = ele.previousSibling;
   if (pre.nodeName == 'PRE') {
+    ele.parentNode.classList.add('copying');
     let t = pre.textContent;
     navigator.clipboard.writeText(t).then(function() {
       ele.setAttribute('copied', true);

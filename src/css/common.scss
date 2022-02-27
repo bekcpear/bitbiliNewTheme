@@ -581,6 +581,24 @@ div#source-code-cover {
   }
 }
 
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 @keyframes floating {
   0%   { opacity: 0;   transform: translate(-0px,       0) rotate(-5deg); }
   3%   { opacity: 0.1; transform: translate(-0.3px,  -1px) rotate(-4deg); }
