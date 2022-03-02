@@ -92,7 +92,7 @@ $mainpadding-smaller: 10px;
 
 body {
   // dark mode colors
-  --bg:         #292929; //#31333a; //#25262a; //#2a2e32;
+  --bg:         #121212; //#292929; //#31333a; //#25262a; //#2a2e32;
   //--bg-f:       invert(13%) sepia(4%) saturate(1363%) hue-rotate(191deg) brightness(90%) contrast(91%);
                 //invert(12%) sepia(10%) saturate(810%) hue-rotate(169deg) brightness(90%) contrast(83%);
 
@@ -107,7 +107,8 @@ body {
   //--bg-less1-f: invert(37%) sepia(3%) saturate(1454%) hue-rotate(189deg) brightness(94%) contrast(88%);
                 //invert(29%) sepia(5%) saturate(550%) hue-rotate(169deg) brightness(95%) contrast(90%);
 
-  --bg-pre:     #3E4145; //#586878; //#3f4a53; //#49545E;
+  --bg-pre:     #1e2125; //#3E4145; //#586878; //#3f4a53; //#49545E;
+  --bg-code:    #2a2f36;
 
   --bg-source-c: var(--bg-less-t);
   --bg-source-b: 0.5;
@@ -119,13 +120,15 @@ body {
 
   --ifg:        #2F2F2F; // day: #BFBFBF
 
-  --fg:         #E1E1E1;
-  --fg-f:       invert(99%) sepia(4%) saturate(39%) hue-rotate(313deg) brightness(113%) contrast(76%);
+  --fg:         #cbd1d5; //#DDDDDD;
+  --fg-f:       invert(86%) sepia(9%) saturate(138%) hue-rotate(161deg) brightness(97%) contrast(89%);
 
   --fg-less:    #C1C1C1;
   --fg-less-f:  invert(93%) sepia(0%) saturate(0%) hue-rotate(166deg) brightness(85%) contrast(88%);
   --fg-less1:   #A1A1A1;
   --fg-less1-f: invert(64%) sepia(0%) saturate(12%) hue-rotate(143deg) brightness(101%) contrast(89%);
+
+  //--fg-h:       var(--fg-less);
 
   --brand0:     #3DAEE9; // day: #4FB4EA
   --brand0-f:   invert(56%) sepia(67%) saturate(552%) hue-rotate(163deg) brightness(97%) contrast(87%);
@@ -193,6 +196,7 @@ body.day {
   //--bg-less1-f:   invert(84%) sepia(0%) saturate(0%) hue-rotate(259deg) brightness(100%) contrast(86%);
 
   --bg-pre:       #F1F3F4; //var(--bg-less-t);
+  --bg-code:      var(--bg-pre);
 
   --bg-source-c:  #FDFDFD70;
   --bg-source-b:  0.9;
@@ -209,6 +213,8 @@ body.day {
   --fg-less-f:    invert(33%) sepia(17%) saturate(0%) hue-rotate(219deg) brightness(72%) contrast(70%);
   --fg-less1:     #717171;
   --fg-less1-f:   invert(55%) sepia(0%) saturate(1293%) hue-rotate(158deg) brightness(79%) contrast(89%);
+
+  //--fg-h:         var(--fg);
 
   --ifg:          #FEFEFE;
 

@@ -26,6 +26,13 @@ article #content {
     transition-property: border-bottom-color,color;
     transition-duration: 0.3s;
   }
+  /*
+  h2, h3, h4, h5, h6 {
+    color: var(--fg-h);
+    a {
+      color: var(--fg-h);
+    }
+  }*/
   li {
     break-inside: auto;
   }
@@ -540,7 +547,8 @@ article #content {
   code, var, samp, q, kbd {
     padding: 0.1em 0.6em;
     border-radius: $radius-smaller;
-    background-color: var(--bg-pre);
+    background-color: var(--bg-code);
+    white-space: pre;
     &.file {
       background-color: transparent;
     }
