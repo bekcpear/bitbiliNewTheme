@@ -4,7 +4,7 @@
 set -e
 
 _icons_path="src/fa-icons/"
-_scss="src/css/common.scss"
+_scss="src/css/var.scss"
 _g_scss="$(dirname ${_scss})/generated_$(basename ${_scss})"
 
 cp ${_scss} ${_g_scss}

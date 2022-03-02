@@ -98,7 +98,7 @@ article #content {
           weight: bold;
         }
         border-radius: $radius-smaller;
-        background-color: var(--bg-less1);
+        background-color: var(--bg-less);
         color: var(--fg);
         transition-property: background-color,color;
         transition-duration: 0.3s;
@@ -219,7 +219,7 @@ article #content {
         top: 0;
       }
     }
-    table[id]:target {
+    >table[id]:target {
       position: relative;
       >:nth-child(2) {
         &:after {
@@ -227,7 +227,10 @@ article #content {
         }
       }
     }
-    [id]:not(pre):not(section):not(table):target {
+    >.admonition:target .admonition-title:after {
+      @include targetedDecoration();
+    }
+    >[id]:not(pre):not(section):not(table):not(.admonition):target {
       position: relative;
       >:first-child {
         &:after {
@@ -328,7 +331,7 @@ article #content {
       }
       scroll-margin-top fixes this workaround
       */
-      >:first-child:after {
+      >.admonition-title:after {
         /*
           according to .admonition-title size line-height
           0.675em: 1.5em * 90%
@@ -342,7 +345,8 @@ article #content {
         // fixed by scroll-margin-top
 
         // margin-top of .admonition-title + padding-top of admonition
-        top: calc(1em + 5px) !important;
+
+        top: calc(1em + 5px);
       }
     }
   }
@@ -421,7 +425,7 @@ article #content {
   }
   pre {
     line-height: 1.5em;
-    background-color: var(--bg-less-t);
+    background-color: var(--bg-pre);
     padding: 0;
     width: 100%;
     break-inside: avoid-page;
@@ -495,7 +499,8 @@ article #content {
       }
       span {
         color: var(--fg-less);
-        background-color: var(--bg-less1);
+        background-color: var(--bg-less);
+        backdrop-filter: blur(6px);
         padding: 0.1em 0 0.1em 0.3em;
         box-sizing: border-box;
         border-radius: $radius-smaller;
@@ -535,7 +540,7 @@ article #content {
   code, var, samp, q, kbd {
     padding: 0.1em 0.6em;
     border-radius: $radius-smaller;
-    background-color: var(--bg-less);
+    background-color: var(--bg-pre);
     &.file {
       background-color: transparent;
     }
@@ -551,6 +556,7 @@ article #content {
   table {
     position: relative;
     width: 100%;
+    max-width: 100%;
     overflow: auto;
     border: none;
     border-spacing: 0;
@@ -578,6 +584,10 @@ article #content {
     tbody tr:hover {
       //color: var(--ifg);
       background-color: var(--brand0-t);
+    }
+    p {
+      display: inline;
+      margin: 0;
     }
   }
 

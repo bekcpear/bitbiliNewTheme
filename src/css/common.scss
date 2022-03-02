@@ -4,238 +4,6 @@
 
 @import 'var.scss';
 
-:root {
-  --sat: env(safe-area-inset-top, 0px);
-  --sar: env(safe-area-inset-right, 0px);
-  --sab: env(safe-area-inset-bottom, 0px);
-  --sal: env(safe-area-inset-left, 0px);
-  /*
-  --sat: 40px;
-  --sar: 50px;
-  --sab: 30px;
-  --sal: 40px;
-  */
-
-  --genpkg-icon:    url(/assets/icons/fa/solid/cube-solid.svg);
-  --attention-icon: url(/assets/icons/fa/solid/exclamation-solid.svg);
-  --warning-icon:   url(/assets/icons/fa/solid/triangle-exclamation-solid.svg);
-  --hint-icon:      url(/assets/icons/fa/solid/fan-solid.svg);
-  --important-icon: url(/assets/icons/fa/solid/star-solid.svg);
-  --note-icon:      url(/assets/icons/fa/solid/pencil-solid.svg);
-
-  // back to top/move to bottom icon
-  --bt-icon: url(/assets/icons/fa/solid/angle-down-solid.svg);
-  --bt-up-icon: url(/assets/icons/fa/solid/angle-up-solid.svg);
-  // info icon
-  --in-icon: url(/assets/icons/fa/solid/info-solid.svg);
-  // rss icon
-  --rss-icon: url(/assets/icons/fa/solid/square-rss-solid.svg);
-  // newerpost icon
-  --cl-icon: url(/assets/icons/fa/solid/chevron-left-solid.svg);
-  // olderpost icon
-  --cr-icon: url(/assets/icons/fa/solid/chevron-right-solid.svg);
-  // tag icon
-  --tag-icon: url(/assets/icons/fa/solid/tag-solid.svg);
-  // show source code icon
-  --ssc-icon: url(/assets/icons/fa/solid/file-code-solid.svg);
-  // share icon
-  --share-icon: url(/assets/icons/fa/solid/share-solid.svg);
-  // comments icon
-  --comm-icon: url(/assets/icons/fa/solid/comment-dots-solid.svg);
-  // creation date icon
-  --cal-c-icon: url(/assets/icons/fa/solid/calendar-solid.svg);
-  // modification date icon
-  --cal-m-icon: url(/assets/icons/fa/solid/calendar-check-solid.svg);
-  // extra license icon
-  --license-icon: url(/assets/icons/fa/solid/circle-info-solid.svg);
-  // search icon
-  --search-icon: url(/assets/icons/fa/solid/magnifying-glass-solid.svg);
-  // left-side-button icon
-  --bars-icon: url(/assets/icons/fa/solid/bars-solid.svg);
-  // external-link-icon
-  --external-icon: url(/assets/icons/fa/solid/up-right-from-square-solid.svg);
-  // target-title-icon
-  --target-title-icon: url(/assets/icons/fa/solid/caret-right-solid.svg);
-  // blockquote icon
-  --blockquote-icon: url(/assets/icons/fa/solid/quote-left.svg);
-  // close icon
-  --close-icon: url(/assets/icons/fa/solid/xmark-solid.svg);
-  // github icon
-  --github-icon: url(/assets/icons/fa/brands/github-square-brands.svg);
-  // gitlab icon
-  --gitlab-icon: url(/assets/icons/fa/brands/gitlab-brands.svg);
-  // profile icon
-  --profile-icon: url(/assets/icons/fa/solid/circle-user-solid.svg);
-  // angle left icon
-  --angle-left-icon: url(/assets/icons/fa/solid/angle-left-solid.svg);
-  // angle right icon
-  --angle-right-icon: url(/assets/icons/fa/solid/angle-right-solid.svg);
-  // pin icon
-  --pin-icon: url(/assets/icons/fa/solid/thumbtack-solid.svg);
-  // theme icon
-  --theme-icon: url(/assets/icons/fa/solid/feather-pointed-solid.svg);
-  // copy icon
-  --copy-icon: url(/assets/icons/fa/solid/copy-solid.svg);
-  // heart icon for rss button on index page
-  --heart-icon: url(/assets/icons/fa/solid/heart-solid.svg);
-}
-
-body {
-  // dark mode colors
-  --bg:         #232323;
-  --bg-f:       invert(11%) sepia(33%) saturate(0%) hue-rotate(240deg) brightness(104%) contrast(95%);
-
-  // day/night switch icon
-  --dn-icon: url(/assets/icons/fa/solid/moon-solid.svg);
-
-  --bg-less:    #333333;
-  --bg-less-f:  invert(19%) sepia(2%) saturate(0%) hue-rotate(290deg) brightness(100%) contrast(96%);
-  --bg-less-t:  #33333350;
-
-  --bg-less1:   #313131;
-  --bg-less1-f: invert(18%) sepia(0%) saturate(27%) hue-rotate(187deg) brightness(98%) contrast(96%);
-
-  --bg-source-c: var(--bg-less-t);
-  --bg-source-b: 0.5;
-
-  --bg-more:    #131313;
-  --bg-more-t0: #13131350;
-  --bg-more-t1: #131313a0;
-
-  --ifg:        #2F2F2F; // day: #BFBFBF
-
-  --fg:         #E1E1E1;
-  --fg-f:       invert(99%) sepia(4%) saturate(39%) hue-rotate(313deg) brightness(113%) contrast(76%);
-
-  --fg-less:    #C1C1C1;
-  --fg-less-f:  invert(93%) sepia(0%) saturate(0%) hue-rotate(166deg) brightness(85%) contrast(88%);
-  --fg-less1:   #A1A1A1;
-  --fg-less1-f: invert(64%) sepia(0%) saturate(12%) hue-rotate(143deg) brightness(101%) contrast(89%);
-
-  --brand0:     #3DAEE9; // day: #4FB4EA
-  --brand0-f:   invert(56%) sepia(67%) saturate(552%) hue-rotate(163deg) brightness(97%) contrast(87%);
-  --brand0-t:   #3DAEE9C0; // day: #4FB4EA
-  //--brand1:   #D21941; // day: #EB1846
-
-  --logo-f:     invert(22%) sepia(87%) saturate(6752%) hue-rotate(344deg) brightness(108%) contrast(92%);
-
-  --link:       #99D6FF;
-  //--link-decora: none;
-  --link-f:     invert(80%) sepia(7%) saturate(2225%) hue-rotate(175deg) brightness(96%) contrast(112%);
-
-  --kbd-bg:     #BFC0C4; // day: #2F2F2F
-
-  --genpkg-bg:  #D2CAF0; //#DDDAEC; // day: #4F4473
-  --genpkg-bg-f: invert(84%) sepia(5%) saturate(1445%) hue-rotate(210deg) brightness(101%) contrast(88%);
-
-  --highlight:  #FAF3A3;
-  --highlight-fg:  var(--ifg);
-
-  /*
-    admonitions
-  */
-  //--caution/--danger/--error/--tip/--warning
-  --attention:      #FF9100; // day: #FFFB97
-  --attention-bg:   var(--bg-less-t);
-  --attention-f:    invert(60%) sepia(20%) saturate(4960%) hue-rotate(360deg) brightness(102%) contrast(106%);
-
-  --hint:           var(--brand0); // day: #E6EFFD
-  --hint-f:         var(--brand0-f); // day: #E6EFFD
-  --hint-bg:        var(--bg-less-t);
-
-  --important:      #FF5252;
-  --important-f:    invert(34%) sepia(27%) saturate(3023%) hue-rotate(327deg) brightness(135%) contrast(113%);
-  --important-bg:   var(--bg-less-t);
-
-  --note:           var(--bg-less1);
-  --note-bg:        var(--bg-less-t);
-  --note-f:         var(--fg-less-f);
-
-  // dt-color
-  --dt-gray:        var(--fg-less);
-  --dt-gray-light:  #f8f8f2;  // Foreground
-  --dt-blue:        #8a8a8a;  // Comment
-  --dt-cyan:        #8be9fd;
-  --dt-green:       #50fa7b;
-  //--dt-orange:      #ffb86c;
-  --dt-pink:        #ff79c6;
-  --dt-purple:      #bd93f9;
-  --dt-red:         #ff5555;
-  --dt-yellow:      #f1fa8c;
-}
-
-body.day {
-  --bg:           #FDFDFD;
-  --bg-f:         invert(100%) sepia(100%) saturate(0%) hue-rotate(274deg) brightness(103%) contrast(98%);
-
-  --dn-icon:      url(/assets/icons/fa/solid/sun-solid.svg);
-
-  --bg-less:      #EAEAEA;
-  --bg-less-f:    invert(100%) sepia(35%) saturate(450%) hue-rotate(271deg) brightness(111%) contrast(84%);
-  --bg-less-t:    #EAEAEA70;
-
-  --bg-less1:     #CACACA;
-  --bg-less1-f:   invert(84%) sepia(0%) saturate(0%) hue-rotate(259deg) brightness(100%) contrast(86%);
-
-  --bg-source-c:  #FDFDFD70;
-  --bg-source-b:  0.9;
-
-  --bg-more:      #333333;
-  --bg-more-t0:   #77777750;
-  --bg-more-t1:   #777777a0;
-
-  --fg:           #232323;
-  --fg-f:         invert(11%) sepia(33%) saturate(0%) hue-rotate(240deg) brightness(104%) contrast(95%);
-
-  --fg-less:      #525252;
-  --fg-less-f:    invert(33%) sepia(17%) saturate(0%) hue-rotate(219deg) brightness(72%) contrast(70%);
-  --fg-less1:     #717171;
-  --fg-less1-f:   invert(55%) sepia(0%) saturate(1293%) hue-rotate(158deg) brightness(79%) contrast(89%);
-
-  --ifg:          #FEFEFE;
-
-  --brand0:       #EB1846;
-  --brand0-f:     invert(22%) sepia(65%) saturate(6553%) hue-rotate(338deg) brightness(94%) contrast(96%);
-  --brand0-t:     #EB1846C0;
-
-  --logo-f:       var(--brand0-f);
-
-  --link:         #EB204C;
-  //--link-hover:   var(--brand0);
-  //--link-decora:  underline;
-  --link-f:       var(--fg-less1-f);
-  //--link-f:       invert(23%) sepia(91%) saturate(4461%) hue-rotate(336deg) brightness(95%) contrast(93%);
-
-  --kbd-bg:       #2F2F2F;
-
-  --genpkg-bg:    #6b5c9a;
-  --genpkg-bg-f:  invert(41%) sepia(38%) saturate(561%) hue-rotate(214deg) brightness(86%) contrast(92%);
-
-  --highlight:    #FFDF88;
-  --highlight-fg: var(--fg);
-
-  --attention-bg: #FFE29739;
-
-  // use brand colot of night mode
-  --hint:         #24a7ec; // #3DAEE9;
-  --hint-f:       invert(56%) sepia(67%) saturate(552%) hue-rotate(163deg) brightness(97%) contrast(87%);
-  --hint-bg:      #3DAEE930;
-
-  --important: #FF1744;
-  --important-bg: #FF174419;
-
-  --dt-gray:      var(--fg-less);
-  --dt-gray-light:#131313;
-  --dt-blue:      #8A8A8A;
-  --dt-cyan:      #0550ae;
-  --dt-green:     #116329;
-  //--dt-orange:    #ffb86c; not used
-  --dt-pink:      #cf222e;
-  --dt-purple:    #8250df;
-  --dt-red:       #f01111;
-  --dt-yellow:    #0a3069; //#f57c00;
-}
-
 ::-moz-selection {
   color: var(--highlight-fg);
   background-color: var(--highlight);
@@ -259,12 +27,12 @@ body.day {
 }
 ::-webkit-scrollbar-thumb {
   border-radius: $radius;
-  background-color: var(--bg-more-t0);
+  background-color: var(--bg-thumb-t0);
   transition-property: background-color;
   transition-duration: 0.3s;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--bg-more-t1);
+  background-color: var(--bg-thumb-t1);
 }
 ::-webkit-scrollbar-thumb:active {
   background-color: var(--brand0);
@@ -433,7 +201,6 @@ header {
     //position: relative;
     background-color: transparent;
   }
-  //box-shadow: 0 1px 6px 0 var(--bg-more);
   >a {
     display: inline-block;
   }
