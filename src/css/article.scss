@@ -26,6 +26,9 @@ article #content {
     transition-property: border-bottom-color,color;
     transition-duration: 0.3s;
   }
+  p {
+    line-height: 2em;
+  }
   /*
   h2, h3, h4, h5, h6 {
     color: var(--fg-h);
@@ -48,8 +51,9 @@ article #content {
     }
   }
   */
-  li p {
+  li >p {
     text-indent: initial;
+    margin: 0;
   }
 
   :not(pre):not(code):not(var):not(samp):not(q) {
@@ -213,20 +217,21 @@ article #content {
     // 'overflow: auto' makes pre elem cannot show out-boundary elements
     // and it also invalid the scroll-margin-top prop on chrome, but valid on firefox
     //pre[id]:target, >p[id]:target, section[id]>p[id]:target {
-    >p[id]:target, section[id]>p[id]:target {
+    >p[id]:target, section >p[id]:target, section[id]>p[id]:target {
       position: relative;
       &:after {
         @include targetedDecoration();
-        top: 1em; // according to the padding-top of pre
+        //top: 1em; // according to the padding-top of pre
       }
     }
-    >p[id]:target, section[id]>p[id]:target {
+    /*
+    section >p[id]:target, section[id]>p[id]:target {
       position: relative;
       &:after {
         top: 0;
       }
-    }
-    >table[id]:target {
+    }*/
+    >table[id]:target, section >table[id]:target {
       position: relative;
       >:nth-child(2) {
         &:after {
@@ -234,10 +239,10 @@ article #content {
         }
       }
     }
-    >.admonition:target .admonition-title:after {
+    section >.admonition:target .admonition-title:after {
       @include targetedDecoration();
     }
-    >[id]:not(pre):not(section):not(table):not(.admonition):target {
+    section >[id]:not(pre):not(section):not(table):not(.admonition):target {
       position: relative;
       >:first-child {
         &:after {
@@ -419,7 +424,7 @@ article #content {
     }
   }
 
-  pre, code, var, samp, q, kbd {
+  pre, code, var, samp, kbd {
     position: relative;
     font: {
       family: $monofont;
@@ -433,6 +438,7 @@ article #content {
   pre {
     line-height: 1.5em;
     background-color: var(--bg-pre);
+    margin-top: 0;
     padding: 0;
     width: 100%;
     break-inside: avoid-page;
@@ -472,7 +478,7 @@ article #content {
   div.highlight {
     position: relative;
     width: 100%;
-    margin: 1em 0;
+    margin-bottom: 1em;
     pre {
       /*
        * do not try to set 'width: fit-content' to satisfy iOS Safari
@@ -544,13 +550,14 @@ article #content {
     }
   }
 
-  code, var, samp, q, kbd {
+  code, kbd {
     padding: 0.1em 0.6em;
     border-radius: $radius-smaller;
     background-color: var(--bg-code);
     white-space: pre;
     &.file {
       background-color: transparent;
+      white-space: pre-wrap;
     }
   }
 
