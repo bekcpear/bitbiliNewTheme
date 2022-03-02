@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "prepareDist": "./script/prepare-dist.sh",
-    "minifyCSS": "./script/hash-url-in-scss.sh && sass -s compressed src/css/generated_common.scss:dist/assets/css/common.css",
+    "minifyCSS": "./script/hash-url-in-scss.sh && sass -s compressed src/css/common.scss:dist/assets/css/common.css",
     "doWebpack": "webpack -c webpack.config.js",
     "generateSW": "workbox injectManifest workbox-config.js && webpack -c webpack.sw-config.js"
   },
