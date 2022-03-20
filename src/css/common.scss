@@ -143,6 +143,9 @@ html {
 html {
   height: 100%;
   scroll-padding-top: calc(var(--sat) + 60px);
+  @media print {
+    scroll-padding-top: 0;
+  }
 }
 
 body {
@@ -984,44 +987,42 @@ main {
         }
       }
     }
-    #toc {
+    nav[role="doc-toc"] {
       @media screen {
         display: none;
       }
-      .toc {
-        display: inline-block;
-        padding: 20px 10px;
-        border: 1px solid var(--fg);
-        .topic-title {
-          font-weight: bold;
-          margin-top: 0;
-          margin-bottom: 0.5em;
-        }
-        li p {
-          margin: 0;
-          padding: 0;
-        }
-        >ul {
-          margin-top: 0.5em;
-          margin-bottom: 0;
-          padding-left: 0;
-          list-style: none;
-          >li {
-            >ul {
-              list-style-type: disc;
-              font-size: 95%;
-              line-height: 1.5em;
-              >li {
-                >ul {
-                  font-size: 95%;
-                  line-height: 1.5em;
-                  list-style-type: square;
-                  >li {
-                    >ul {
-                      font-size: 95%;
-                      line-height: 1.5em;
-                      list-style-type: circle;
-                    }
+      display: inline-block;
+      padding: 20px 10px;
+      border: 1px solid var(--fg);
+      .topic-title {
+        font-weight: bold;
+        margin-top: 0;
+        margin-bottom: 0.5em;
+      }
+      li p {
+        margin: 0;
+        padding: 0;
+      }
+      >ul {
+        margin-top: 0.5em;
+        margin-bottom: 0;
+        padding-left: 0;
+        list-style: none;
+        >li {
+          >ul {
+            list-style-type: disc;
+            font-size: 95%;
+            line-height: 1.5em;
+            >li {
+              >ul {
+                font-size: 95%;
+                line-height: 1.5em;
+                list-style-type: square;
+                >li {
+                  >ul {
+                    font-size: 95%;
+                    line-height: 1.5em;
+                    list-style-type: circle;
                   }
                 }
               }
@@ -1157,11 +1158,12 @@ footer {
   font-family: $monofont;
   line-height: 1.5em;
   margin-top: 30px 0 0 0;
+  width: 100%;
   height: 100%;
   padding: 20px max(var(--sar), 10px) calc(var(--sab) + 15px) max(var(--sal), 10px);
   border-top: 1px solid var(--brand0);
   box-sizing: border-box;
-  transition-property: margin-left,width,border-top-color;
+  transition-property: width,margin-left,width,border-top-color;
   transition-duration: 0.3s;
   >div {
     position: relative;
@@ -1258,7 +1260,7 @@ left-side {
   word-break: break-word;
   transition-property: transform, background-color, box-shadow;
   transition-duration: 0;
-  .toc {
+  nav[role="doc-toc"] {
     position: relative;
     width: 100%;
     height: 100%;

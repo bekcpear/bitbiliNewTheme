@@ -659,7 +659,7 @@ var searchParams = new URLSearchParams(new URL(document.URL).search);
 window.addEventListener('DOMContentLoaded', function(){
   leftSide = document.querySelector('left-side');
   bodyCover = document.querySelector('body-cover');
-  toc = document.querySelector('#toc .toc');
+  toc = document.querySelector('nav[role="doc-toc"]');
   header = document.querySelector('header');
   main = document.querySelector('main');
   footer = document.querySelector('footer');

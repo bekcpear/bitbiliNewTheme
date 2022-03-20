@@ -26,6 +26,7 @@
 9. 文章太长时，自动隐藏部份未在阅读区域的内容，以提升渲染性能
 10. docutils 升到 0.18 后，需要修改 `fn-backref` 这个 class 名为 `backrefs` ，
     同时替换 `.footnote-reference` 为用 `[role="doc-noteref"]` 进行 css 选择。
+    （貌似没变，但是 release note 说变了？）
 
 ### 当前发现的问题
 
