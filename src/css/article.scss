@@ -256,7 +256,7 @@ article #content {
     }
   }
 
-  div.admonition {
+  aside.admonition {
     padding: 5px 1em 5px 4em;
     margin-bottom: 10px;
 
@@ -362,7 +362,7 @@ article #content {
       }
     }
   }
-  div.admonition.hint, div.admonition.tip {
+  aside.admonition.hint, aside.admonition.tip {
     &:after {
       //border-left: 0.3em solid var(--note);
       border-left: 0.3em solid var(--hint);
@@ -375,7 +375,7 @@ article #content {
       }
     }
   }
-  div.admonition.warning, div.admonition.attention {
+  aside.admonition.warning, aside.admonition.attention {
     &:after {
       border-left: 0.3em solid var(--attention);
       background-color: var(--attention-bg);
@@ -387,10 +387,10 @@ article #content {
       }
     }
   }
-  div.admonition.warning .admonition-title:before {
+  aside.admonition.warning .admonition-title:before {
     background-image: var(--warning-icon);
   }
-  div.admonition.important {
+  aside.admonition.important {
     &:after {
       border-left: 0.3em solid var(--important);
       background-color: var(--important-bg);
