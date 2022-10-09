@@ -115,8 +115,9 @@ body {
 
   --bg-more:    #1a1a1a;
 
-  --bg-thumb-t0: #F1F1F116;
-  --bg-thumb-t1: #F1F1F121;
+  --bg-scrollbar: transparent;
+  --bg-thumb-t0:  #F1F1F116;
+  --bg-thumb-t1:  #F1F1F121;
 
   --ifg:        #2F2F2F; // day: #BFBFBF
 
@@ -146,7 +147,7 @@ body {
   --genpkg-bg:  #D2CAF0; //#DDDAEC; // day: #4F4473
   --genpkg-bg-f: invert(84%) sepia(5%) saturate(1445%) hue-rotate(210deg) brightness(101%) contrast(88%);
 
-  --highlight:  #FAF3A3;
+  --highlight:  #E0C58BFE;
   --highlight-fg:  var(--ifg);
 
   /*
@@ -203,6 +204,7 @@ body.day {
 
   --bg-more:      #333333;
 
+  --bg-scrollbar:  #FDFDFD;
   --bg-thumb-t0:   #06060621;
   --bg-thumb-t1:   #06060629;
 
@@ -235,7 +237,7 @@ body.day {
   --genpkg-bg:    #6b5c9a;
   --genpkg-bg-f:  invert(41%) sepia(38%) saturate(561%) hue-rotate(214deg) brightness(86%) contrast(92%);
 
-  --highlight:    #FFDF88;
+  --highlight:    #FFDF88FE;
   --highlight-fg: var(--fg);
 
   --attention-bg: #FFE29739;

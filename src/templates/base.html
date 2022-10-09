@@ -47,12 +47,14 @@ License: GPLv2
 
   <link rel="manifest" href="{{ _url(SITE.manifest, True) }}" />
 
-  {# normal icon, in multiples of 48x48 #}
-  <link rel="icon" type="image/png" href="{{ _url(ICON.normal.path, True) }}" sizes="{{ ICON.normal.size }}" />
+  {# legacy ico #}
+  <link rel="shortcut icon" href="{{ _url(ICON.ico.path, True, False) }}">
+  {# normal icon #}
+  <link rel="icon" sizes="any" href="{{ _url(ICON.normal.path, True, False) }}" />
   {# icon for touch screen #}
-  <link rel="apple-touch-icon" type="image/png" href="{{ _url(ICON.touch.path, True) }}" sizes="{{ ICON.touch.size }}" />
+  <link rel="apple-touch-icon" href="{{ _url(ICON.touch.path, True, False) }}" />
   {# for Safari Pinned Tab Icon #}
-  <link rel="mask-icon" href="{{ _url(ICON.mask.path, True) }}" color="{{ SITE.color }}" />
+  <link rel="mask-icon" sizes="any" href="{{ _url(ICON.mask.path, True, False) }}" color="{{ ICON.color }}" />
 
 {% block canonical_rel %}
   <link rel="canonical" href="{{ SITE.url }}">

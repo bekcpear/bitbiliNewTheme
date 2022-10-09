@@ -69,13 +69,15 @@ LOGO = {
         }
 
 ICON = {
+        "color": "",
+        "ico": {
+            "path": "assets/logo/fav.ico",
+            },
         "normal": {
-            "path": "assets/logo/fav.png",
-            "size": "300x300"
+            "path": "assets/logo/fav.svg",
             },
         "touch": {
-            "path": "assets/logo/touch.png",
-            "size": "300x300"
+            "path": "assets/logo/touch.png", # should be an opaque png
             },
         "mask": {
             "path": "assets/logo/mask.svg"

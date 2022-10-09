@@ -23,7 +23,9 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--bg-scrollbar);
+  transition-property: background;
+  transition-duration: 0.3s;
 }
 ::-webkit-scrollbar-thumb {
   border-radius: $radius;
